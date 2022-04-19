@@ -7,8 +7,8 @@ import {domainDetails, getSegmentPath} from '../core/getType';
  *
  * @since 1.0.1
  * @category environment
- * @param {any} url The first number in an addition.
- * @param {any} config The first number in an addition.
+ * @param {string} url The first number in an addition.
+ * @param {any} [config] The first number in an addition.
  * @returns {Promise<any>} Returns the total.
  * @example
  *
@@ -29,12 +29,12 @@ const Get = function (url, config) {
  *
  * @since 1.0.1
  * @category environment
- * @param {any} url The first number in an addition.
- * @param {any} config The first number in an addition.
+ * @param {string} url The first number in an addition.
+ * @param {any} [config] The first number in an addition.
  * @returns {Promise<any>} Returns the total.
  * @example
  *
- * get('/')
+ * Delete('/')
  * // => {'as':2}
  */
 const Delete = function (url, config) {
@@ -52,7 +52,7 @@ const Delete = function (url, config) {
  * @since 1.0.1
  * @category environment
  * @param {any} url The first number in an addition.
- * @param {any} config The first number in an addition.
+ * @param {any} [config] The first number in an addition.
  * @returns {Promise<any>} Returns the total.
  * @example
  *
@@ -75,7 +75,7 @@ const Post = function (url, config) {
  * @since 1.0.1
  * @category environment
  * @param {any} url The first number in an addition.
- * @param {any} config The first number in an addition.
+ * @param {any} [config] The first number in an addition.
  * @returns {Promise<any>} Returns the total.
  * @example
  *
@@ -97,7 +97,7 @@ const Options = function (url, config) {
  * @since 1.0.1
  * @category environment
  * @param {any} url The first number in an addition.
- * @param {any} config The first number in an addition.
+ * @param {any} [config] The first number in an addition.
  * @returns {Promise<any>} Returns the total.
  * @example
  *
@@ -119,11 +119,11 @@ const Put = function (url, config) {
  * @since 1.0.1
  * @category environment
  * @param {any} url The first number in an addition.
- * @param {any} config The first number in an addition.
+ * @param {any} [config] The first number in an addition.
  * @returns {Promise<any>} Returns the total.
  * @example
  *
- * get('/')
+ * Patch('/')
  * // => {'as':2}
  */
 const Patch = function (url, config) {
@@ -141,7 +141,7 @@ const Patch = function (url, config) {
  * @since 1.0.1
  * @category environment
  * @param {any} config The first number in an addition.
- * @returns {Promise<any>} Returns the total.
+ * @returns {any} Returns the total.
  * @example
  *
  * initialize({"baseUrl": "http://localhost:4040/"})

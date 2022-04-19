@@ -22,7 +22,7 @@ function Requests (api, config) {
  * @category environment
  * @param {any} path The first number in an addition.
  * @param {any} subconfig The first number in an addition.
- * @returns {any} Returns the total.
+ * @returns {Promise<any>} Returns the total.
  * @example
  *
  * append({'as':1}, 'as',2)
@@ -30,7 +30,7 @@ function Requests (api, config) {
  */
 Requests.prototype.get =function (path, subconfig) {
 
-    return loaderApi(this.api, this.config,subconfig, path, "get");
+    return loaderApi(this.api, this.config, subconfig, path, "get");
 
 };
 
@@ -41,7 +41,7 @@ Requests.prototype.get =function (path, subconfig) {
  * @category environment
  * @param {any} path The first number in an addition.
  * @param {any} subconfig The first number in an addition.
- * @returns {any} Returns the total.
+ * @returns {Promise<any>} Returns the total.
  * @example
  *
  * append({'as':1}, 'as',2)
@@ -60,7 +60,7 @@ Requests.prototype.delete =function (path, subconfig) {
  * @category environment
  * @param {any} path The first number in an addition.
  * @param {any} subconfig The first number in an addition.
- * @returns {any} Returns the total.
+ * @returns {Promise<any>} Returns the total.
  * @example
  *
  * append({'as':1}, 'as',2)
@@ -79,7 +79,7 @@ Requests.prototype.post =function (path, subconfig) {
  * @category environment
  * @param {any} path The first number in an addition.
  * @param {any} subconfig The first number in an addition.
- * @returns {any} Returns the total.
+ * @returns {Promise<any>} Returns the total.
  * @example
  *
  * append({'as':1}, 'as',2)
@@ -98,7 +98,7 @@ Requests.prototype.options =function (path, subconfig) {
  * @category environment
  * @param {any} path The first number in an addition.
  * @param {any} subconfig The first number in an addition.
- * @returns {any} Returns the total.
+ * @returns {Promise<any>} Returns the total.
  * @example
  *
  * append({'as':1}, 'as',2)
@@ -117,7 +117,7 @@ Requests.prototype.put =function (path, subconfig) {
  * @category environment
  * @param {any} path The first number in an addition.
  * @param {any} subconfig The first number in an addition.
- * @returns {any} Returns the total.
+ * @returns {Promise<any>} Returns the total.
  * @example
  *
  * append({'as':1}, 'as',2)

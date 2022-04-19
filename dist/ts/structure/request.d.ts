@@ -27,13 +27,13 @@ declare class Requests {
      * @category environment
      * @param {any} path The first number in an addition.
      * @param {any} subconfig The first number in an addition.
-     * @returns {any} Returns the total.
+     * @returns {Promise<any>} Returns the total.
      * @example
      *
      * append({'as':1}, 'as',2)
      * // => {'as':2}
      */
-    get(path: any, subconfig: any): any;
+    get(path: any, subconfig: any): Promise<any>;
     /**
      * Check if object or value
      *
@@ -41,13 +41,13 @@ declare class Requests {
      * @category environment
      * @param {any} path The first number in an addition.
      * @param {any} subconfig The first number in an addition.
-     * @returns {any} Returns the total.
+     * @returns {Promise<any>} Returns the total.
      * @example
      *
      * append({'as':1}, 'as',2)
      * // => {'as':2}
      */
-    delete(path: any, subconfig: any): any;
+    delete(path: any, subconfig: any): Promise<any>;
     /**
      * Check if object or value
      *
@@ -55,13 +55,13 @@ declare class Requests {
      * @category environment
      * @param {any} path The first number in an addition.
      * @param {any} subconfig The first number in an addition.
-     * @returns {any} Returns the total.
+     * @returns {Promise<any>} Returns the total.
      * @example
      *
      * append({'as':1}, 'as',2)
      * // => {'as':2}
      */
-    post(path: any, subconfig: any): any;
+    post(path: any, subconfig: any): Promise<any>;
     /**
      * Check if object or value
      *
@@ -69,13 +69,13 @@ declare class Requests {
      * @category environment
      * @param {any} path The first number in an addition.
      * @param {any} subconfig The first number in an addition.
-     * @returns {any} Returns the total.
+     * @returns {Promise<any>} Returns the total.
      * @example
      *
      * append({'as':1}, 'as',2)
      * // => {'as':2}
      */
-    options(path: any, subconfig: any): any;
+    options(path: any, subconfig: any): Promise<any>;
     /**
      * Check if object or value
      *
@@ -83,13 +83,13 @@ declare class Requests {
      * @category environment
      * @param {any} path The first number in an addition.
      * @param {any} subconfig The first number in an addition.
-     * @returns {any} Returns the total.
+     * @returns {Promise<any>} Returns the total.
      * @example
      *
      * append({'as':1}, 'as',2)
      * // => {'as':2}
      */
-    put(path: any, subconfig: any): any;
+    put(path: any, subconfig: any): Promise<any>;
     /**
      * Check if object or value
      *
@@ -97,11 +97,11 @@ declare class Requests {
      * @category environment
      * @param {any} path The first number in an addition.
      * @param {any} subconfig The first number in an addition.
-     * @returns {any} Returns the total.
+     * @returns {Promise<any>} Returns the total.
      * @example
      *
      * append({'as':1}, 'as',2)
      * // => {'as':2}
      */
-    patch(path: any, subconfig: any): any;
+    patch(path: any, subconfig: any): Promise<any>;
 }
