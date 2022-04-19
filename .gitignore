@@ -12,3 +12,8 @@ src_copy
 src_copy/*
 package-lock.json
 src_backup
+.DS_Store
+dist/.DS_Store
+src/.DS_Store
+example/.DS_Store
+test/.DS_Store
