@@ -1,0 +1,41 @@
+{
+  "name": "getkit",
+  "version": "1.0.0",
+  "description": "HTTP base promised and callback and User agent",
+  "main": "src/module/main.js",
+  "module": "dist/esm/src/module/main.js",
+  "types": "dist/ts/src/module/main.d.ts",
+  "scripts": {
+    "es_linter": "eslint   src/module/*/*.js src/lib/*/*.js src/core/*.js *.js --fix",
+    "test_esm": "mocha -r esm test/esm/*.test.js",
+    "test_cjs": "mocha test/cjs/*.test.js",
+    "validate": "npm run style && npm run test"
+  },
+  "tsd": {
+    "directory": "test/ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/compts/getkit.git"
+  },
+  "keywords": [
+    "compt"
+  ],
+  "author": "Pein Freccs",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/compts/getkit/issues"
+  },
+  "homepage": "https://github.com/compts/getkit#readme",
+  "dependencies": {
+    "structkit": "^1.3.1",
+    "url-assist":"^1.0.0",
+    "tsd": "^0.19.1"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.22",
+    "eslint": "^7.13.0",
+    "eslint-config-strongloop": "^2.1.0",
+    "fornetserve":"^0.0.1"
+  }
+}
