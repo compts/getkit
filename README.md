@@ -11,7 +11,7 @@ In a browser:
 ```
 ## Download
 
- * [Core build](https://raw.githubusercontent.com/compts/getkit/main/dist/web/getkit-full.cjs.js) ([~65KB](https://raw.githubusercontent.com/compts/getkit/main/dist/web/getkit-full.cjs.js))
+ * [Core build](https://raw.githubusercontent.com/compts/getkit/main/dist/web/getkit-full.js) ([~65KB](https://raw.githubusercontent.com/compts/getkit/main/dist/web/getkit-full.js))
 
 Using npm:
 ```shell
