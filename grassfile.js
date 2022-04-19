@@ -56,7 +56,7 @@ exports.module=function (grassconf) {
             }
         )
             //
-            .pipe(grass_concat("dist/web/getkit-full.cjs.js", {
+            .pipe(grass_concat("dist/web/getkit-full.js", {
                 "istruncate": true
             }));
 
