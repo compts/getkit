@@ -4,7 +4,7 @@
   "description": "HTTP base promised and callback and User agent",
   "main": "src/module/main.js",
   "module": "dist/esm/src/module/main.js",
-  "types": "dist/ts/src/module/main.d.ts",
+  "types": "dist/ts/module/main.d.ts",
   "scripts": {
     "es_linter": "eslint   src/module/*/*.js src/lib/*/*.js src/core/*.js *.js --fix",
     "test_esm": "mocha -r esm test/esm/*.test.js",
