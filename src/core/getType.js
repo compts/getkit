@@ -85,7 +85,7 @@ function isHttps (config) {
  */
 function checkHttpProtocol (config) {
 
-    return (/^(https|http):\/\/$/g).test(config);
+    return (/^(https|http):\/\//g).test(config);
 
 }
 
