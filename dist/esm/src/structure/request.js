@@ -49,7 +49,7 @@ Requests.prototype.get =function (path, subconfig) {
  */
 Requests.prototype.delete =function (path, subconfig) {
 
-    return loaderApi(this.api, this.config, subconfig, path, "get");
+    return loaderApi(this.api, this.config, subconfig, path, "delete");
 
 };
 

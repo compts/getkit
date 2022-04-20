@@ -102,9 +102,21 @@ function checkHttpProtocol (config) {
  */
 function getSegmentPath (config, path) {
 
-    if (checkHttpProtocol(path)) {
+    if (config.hostArgument === path) {
 
-        return path;
+        if (checkHttpProtocol(path)) {
+
+            return path;
+
+        }
+
+        return config.protocol+"://"+path;
+
+    }
+
+    if (checkHttpProtocol(config.hostArgument)) {
+
+        return config.hostArgument;
 
     }
 

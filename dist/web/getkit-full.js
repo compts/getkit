@@ -101,9 +101,21 @@ function checkHttpProtocol (config) {
  */
 function getSegmentPath (config, path) {
 
-    if (checkHttpProtocol(path)) {
+    if (config.hostArgument === path) {
 
-        return path;
+        if (checkHttpProtocol(path)) {
+
+            return path;
+
+        }
+
+        return config.protocol+"://"+path;
+
+    }
+
+    if (checkHttpProtocol(config.hostArgument)) {
+
+        return config.hostArgument;
 
     }
 
@@ -596,7 +608,7 @@ Requests.prototype.get =function (path, subconfig) {
  */
 Requests.prototype.delete =function (path, subconfig) {
 
-    return loaderApi(this.api, this.config, subconfig, path, "get");
+    return loaderApi(this.api, this.config, subconfig, path, "delete");
 
 };
 
