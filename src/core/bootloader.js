@@ -1,4 +1,5 @@
-const {domainDetails, isHttps, hostDetails} = require("./getType");
+const {domainDetails, hostDetails} = require("./getType");
+const {isHttps} = require("url-assist");
 const {requestApi} = require("./referenceRequest");
 const Requests = require("../structure/request");
 const {varExtend} = require("structkit");

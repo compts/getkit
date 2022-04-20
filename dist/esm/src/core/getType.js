@@ -1,6 +1,6 @@
 import {isEmpty, has, varExtend} from 'structkit';
 
-import {getHostDetails} from 'url-assist';
+import {getHostDetails, isHttpProtocolValid, joinUrlPath} from 'url-assist';
 
 /**
  * Is Exact
@@ -56,42 +56,6 @@ function hostDetails () {
  *
  * @since 1.0.1
  * @category environment
- * @param {string} config The first number in an addition.
- * @returns {boolean} Returns the total.
- * @example
- *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
- */
-function isHttps (config) {
-
-    return (/^(https)$/g).test(config);
-
-}
-
-/**
- * Check if object or value
- *
- * @since 1.0.1
- * @category environment
- * @param {string} config The first number in an addition.
- * @returns {boolean} Returns the total.
- * @example
- *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
- */
-function checkHttpProtocol (config) {
-
-    return (/^(https|http):\/\//g).test(config);
-
-}
-
-/**
- * Check if object or value
- *
- * @since 1.0.1
- * @category environment
  * @param {any} config The first number in an addition.
  * @param {any} path The first number in an addition.
  * @returns {string} Returns the total.
@@ -104,7 +68,7 @@ function getSegmentPath (config, path) {
 
     if (config.hostArgument === path) {
 
-        if (checkHttpProtocol(path)) {
+        if (isHttpProtocolValid(path)) {
 
             return path;
 
@@ -114,22 +78,20 @@ function getSegmentPath (config, path) {
 
     }
 
-    if (checkHttpProtocol(config.hostArgument)) {
+    if (isHttpProtocolValid(config.hostArgument)) {
 
-        return config.hostArgument;
+        return joinUrlPath(config.hostArgument, path);
 
     }
 
-    let defaultPath = config.protocol+"://"+config.hostname;
+    let defaultPath = joinUrlPath(config.protocol+"://"+config.hostname, config.pathname);
 
     if (isEmpty(config.port) === false) {
 
         defaultPath += ":"+config.port;
 
     }
-    defaultPath += (/^\//g).test(path)
-        ? path
-        : "/"+path;
+    defaultPath =joinUrlPath(defaultPath, path);
 
     return defaultPath;
 
@@ -187,4 +149,4 @@ function getRequestDefaultConfig (config, subconfig, method) {
 
 }
 
-export {domainDetails, hostDetails, isHttps, getSegmentPath, checkHttpProtocol, getRequestDefaultConfig};
+export {domainDetails, hostDetails, getSegmentPath, getRequestDefaultConfig};

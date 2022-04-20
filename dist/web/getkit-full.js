@@ -55,42 +55,6 @@ function hostDetails () {
  *
  * @since 1.0.1
  * @category environment
- * @param {string} config The first number in an addition.
- * @returns {boolean} Returns the total.
- * @example
- *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
- */
-function isHttps (config) {
-
-    return (/^(https)$/g).test(config);
-
-}
-
-/**
- * Check if object or value
- *
- * @since 1.0.1
- * @category environment
- * @param {string} config The first number in an addition.
- * @returns {boolean} Returns the total.
- * @example
- *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
- */
-function checkHttpProtocol (config) {
-
-    return (/^(https|http):\/\//g).test(config);
-
-}
-
-/**
- * Check if object or value
- *
- * @since 1.0.1
- * @category environment
  * @param {any} config The first number in an addition.
  * @param {any} path The first number in an addition.
  * @returns {string} Returns the total.
@@ -103,7 +67,7 @@ function getSegmentPath (config, path) {
 
     if (config.hostArgument === path) {
 
-        if (checkHttpProtocol(path)) {
+        if (urs.isHttpProtocolValid(path)) {
 
             return path;
 
@@ -113,22 +77,20 @@ function getSegmentPath (config, path) {
 
     }
 
-    if (checkHttpProtocol(config.hostArgument)) {
+    if (urs.isHttpProtocolValid(config.hostArgument)) {
 
-        return config.hostArgument;
+        return urs.joinUrlPath(config.hostArgument, path);
 
     }
 
-    var defaultPath = config.protocol+"://"+config.hostname;
+    var defaultPath = urs.joinUrlPath(config.protocol+"://"+config.hostname, config.pathname);
 
     if (_stk.isEmpty(config.port) === false) {
 
         defaultPath += ":"+config.port;
 
     }
-    defaultPath += (/^\//g).test(path)
-        ? path
-        : "/"+path;
+    defaultPath =urs.joinUrlPath(defaultPath, path);
 
     return defaultPath;
 
@@ -544,6 +506,12 @@ function loaderApi (api, config, subconfig, path, method) {
 
     var defaultRequestDefaultConfig = getRequestDefaultConfig(config, subconfig, method);
 
+    if (urs.isHttpProtocolValid(defaultPath) === false) {
+
+        return Promise.reject(String("Invalid Http Protocol"));
+
+    }
+
     if (api.status ==="ajax") {
 
         return adapterXhr(api, defaultRequestDefaultConfig, defaultPath, method);
@@ -703,7 +671,7 @@ Requests.prototype.patch =function (path, subconfig) {
  */
 function singleRequest (details, config) {
 
-    var validHttp = isHttps(details.protocol);
+    var validHttp = urs.isHttps(details.protocol);
 
     var api = requestApi({
         "detail": details,
@@ -736,7 +704,7 @@ function configRequest (config) {
 
     var details = domainDetails(detailsExtend.baseUrl);
 
-    var validHttp = isHttps(details.baseUrl);
+    var validHttp = urs.isHttps(details.baseUrl);
 
     var api = requestApi({
         "detail": details,

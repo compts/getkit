@@ -12,6 +12,10 @@ import https from 'https';
 
 import {getSegmentPath, getRequestDefaultConfig} from '../core/getType';
 
+import {isHttpProtocolValid} from 'url-assist';
+
+import { has } from 'structkit';
+
 /**
  * Check if object or value
  *
@@ -100,6 +104,12 @@ function loaderApi (api, config, subconfig, path, method) {
     const defaultPath =getSegmentPath(api.detail, path);
 
     const defaultRequestDefaultConfig = getRequestDefaultConfig(config, subconfig, method);
+
+    if (isHttpProtocolValid(defaultPath) === false) {
+
+        return Promise.reject(String("Invalid Http Protocol"));
+
+    }
 
     if (api.status ==="ajax") {
 

@@ -9,6 +9,9 @@ const https = require("https");
 
 const {getSegmentPath, getRequestDefaultConfig} = require("../core/getType");
 
+const {isHttpProtocolValid} = require("url-assist");
+const { has } = require('structkit');
+
 /**
  * Check if object or value
  *
@@ -100,6 +103,12 @@ function loaderApi (api, config, subconfig, path, method) {
     const defaultPath =getSegmentPath(api.detail, path);
 
     const defaultRequestDefaultConfig = getRequestDefaultConfig(config, subconfig, method);
+
+    if (isHttpProtocolValid(defaultPath) === false) {
+
+        return Promise.reject(String("Invalid Http Protocol"));
+
+    }
 
     if (api.status ==="ajax") {
 

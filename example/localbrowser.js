@@ -17,8 +17,13 @@ setTimeout( function() {
 },10 );
 
 
-gtk.Get("http://localhost:4040/index.php/yahooo").then( function(data) {
+gtk.Get("https://localhost:4040/index.php/yahooo").then( function(data) {
     
     console.log(data,"yahoo");
+
+})
+.catch (function(data) {
+
+    console.log(data,":::Error");
 
 });

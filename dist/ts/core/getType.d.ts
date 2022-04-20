@@ -28,19 +28,6 @@ export function hostDetails(): any;
  *
  * @since 1.0.1
  * @category environment
- * @param {string} config The first number in an addition.
- * @returns {boolean} Returns the total.
- * @example
- *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
- */
-export function isHttps(config: string): boolean;
-/**
- * Check if object or value
- *
- * @since 1.0.1
- * @category environment
  * @param {any} config The first number in an addition.
  * @param {any} path The first number in an addition.
  * @returns {string} Returns the total.
@@ -50,19 +37,6 @@ export function isHttps(config: string): boolean;
  * // => {'as':2}
  */
 export function getSegmentPath(config: any, path: any): string;
-/**
- * Check if object or value
- *
- * @since 1.0.1
- * @category environment
- * @param {string} config The first number in an addition.
- * @returns {boolean} Returns the total.
- * @example
- *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
- */
-export function checkHttpProtocol(config: string): boolean;
 /**
  * Check if object or value
  *

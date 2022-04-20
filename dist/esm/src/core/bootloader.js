@@ -1,4 +1,6 @@
-import {domainDetails, isHttps, hostDetails} from './getType';
+import {domainDetails, hostDetails} from './getType';
+
+import {isHttps} from 'url-assist';
 
 import {requestApi} from './referenceRequest';
 
