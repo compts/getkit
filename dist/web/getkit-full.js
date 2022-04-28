@@ -261,7 +261,7 @@ function DummyReq() {
  */
 function setRequestParameter (param, header) {
 
-    // Console.log(param,_stk.getTypeof(param),"$$param",_stk.delimiter(param,"=","&"));
+    // Console.log(param,_stk.getTypeof(param),"$$param",delimiter(param,"=","&"));
     if (typeof FormData !== "undefined") {
 
         if (param instanceof FormData) {

@@ -1,4 +1,4 @@
-const {each, has, indexOf, delimiter, getTypeof, getValue, getKey} = require("structkit");
+const {each, getTypeof} = require("structkit");
 const {setRequestParameter} = require("../lib/request");
 const {setRespondData} = require("../lib/response");
 

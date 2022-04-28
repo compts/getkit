@@ -1,4 +1,4 @@
-const {indexOf} = require("structkit")
+const {indexOf} = require("structkit");
 
 /**
  * Check if object or value

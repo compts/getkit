@@ -1,6 +1,6 @@
 import {domainDetails} from '../core/getType';
 
-import {each, has, indexOf, delimiter, getTypeof, getValue, getKey} from 'structkit';
+import {getTypeof} from 'structkit';
 
 import {setRequestParameter} from '../lib/request';
 

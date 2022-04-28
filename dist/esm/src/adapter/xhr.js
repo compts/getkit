@@ -1,4 +1,4 @@
-import {each, has, indexOf, delimiter, getTypeof, getValue, getKey} from 'structkit';
+import {each, getTypeof} from 'structkit';
 
 import {setRequestParameter} from '../lib/request';
 

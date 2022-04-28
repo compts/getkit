@@ -115,7 +115,6 @@ function getSegmentPath (config, path) {
  */
 function getRequestDefaultConfig (config, subconfig, method) {
 
-
     const referenceConfig = {
         "data": {},
         "header": {},

@@ -1,5 +1,4 @@
-const {qsStringify} = require("url-assist");
-const {each, indexOf, delimiter, getTypeof, getValue, getKey} = require("structkit");
+const {indexOf, getTypeof} = require("structkit");
 
 /**
  * Check if object or value

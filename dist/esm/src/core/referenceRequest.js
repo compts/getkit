@@ -14,8 +14,6 @@ import {getSegmentPath, getRequestDefaultConfig} from '../core/getType';
 
 import {isHttpProtocolValid} from 'url-assist';
 
-import { has } from 'structkit';
-
 /**
  * Check if object or value
  *

@@ -6,11 +6,8 @@ const adapterXhr = require('../adapter/xhr');
 
 const http = require("http");
 const https = require("https");
-
 const {getSegmentPath, getRequestDefaultConfig} = require("../core/getType");
-
 const {isHttpProtocolValid} = require("url-assist");
-const { has } = require('structkit');
 
 /**
  * Check if object or value
