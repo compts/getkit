@@ -1,23 +1,18 @@
 
 const main = gtk.initialize({"baseUrl": "http://localhost:4040"});
 
-main.get("/api").then( function(data) {
+
+gtk.Get("http://localhost:4040/api", {isJson:true,timeout:1000, setResponse:function(daa) { 
     
-    console.log(data,"get");
+    daa.data = "gudnam";
+    return daa;
 
-});
+ },
+ onDownloadProgress:function(data) {
 
-setTimeout( function() {
+    console.log(data,"::onDownloadProgress")
 
-    main.post("/api",{"data":{"test":"s"}}).then( function(data) {
-    
-        console.log(data,"post");
-    })
-
-},10 );
-
-
-gtk.Get("https://localhost:4040/index.php/yahooo").then( function(data) {
+ }}).then( function(data) {
     
     console.log(data,"yahoo");
 

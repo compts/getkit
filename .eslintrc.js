@@ -185,7 +185,7 @@ module.exports = {
         "no-unmodified-loop-condition": "error",
         "no-unneeded-ternary": "error",
         "no-unreachable-loop": "error",
-        "no-unsafe-optional-chaining": "error",
+        // "no-unsafe-optional-chaining": "error",
         "no-unused-expressions": "error",
         // "no-use-before-define": "error",
         "no-useless-backreference": "error",

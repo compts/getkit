@@ -12,7 +12,9 @@ const gtk = require('../src/module/main');
 
 const main = gtk.initialize({"baseUrl": "http://localhost:4040/"});
 
-main.get("/api").then( function(data) {
+main.get("/api",{
+    header:{}
+}).then( function(data) {
     
     console.log(data,"get");
 

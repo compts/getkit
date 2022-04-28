@@ -115,13 +115,29 @@ function getSegmentPath (config, path) {
  */
 function getRequestDefaultConfig (config, subconfig, method) {
 
-    console.log(config, subconfig, method, "::config, subconfig, method");
 
     const referenceConfig = {
         "data": {},
         "header": {},
-        "isJsonRequest": false
+        "isJson": false,
+        "onDownloadProgress": null,
+        "onUploadProgress": null,
+        "timeout": 0,
+        "withCredential": false
     };
+
+    referenceConfig.setRequest= function (data) {
+
+        return data;
+
+    };
+
+    referenceConfig.setResponse= function (data) {
+
+        return data;
+
+    };
+
     let initialConfig = varExtend(config, subconfig);
 
     if (has(subconfig)) {
@@ -134,7 +150,7 @@ function getRequestDefaultConfig (config, subconfig, method) {
 
     if (method !== "get") {
 
-        if (referenceValue.isJsonRequest) {
+        if (referenceValue.isJson) {
 
             referenceValue.header["content-type"] = "application/json";
 

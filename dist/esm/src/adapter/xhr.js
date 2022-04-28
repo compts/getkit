@@ -1,6 +1,8 @@
-import {each, indexOf, delimiter, getTypeof, getValue, getKey} from 'structkit';
+import {each, has, indexOf, delimiter, getTypeof, getValue, getKey} from 'structkit';
 
-import {qsStringify} from 'url-assist';
+import {setRequestParameter} from '../lib/request';
+
+import {setRespondData} from '../lib/response';
 
 /**
  * Check if object or value
@@ -30,38 +32,6 @@ function setRequestHeader (xhttp, header) {
  *
  * @since 1.0.1
  * @category environment
- * @param {any} param The first number in an addition.
- * @param {any} header The first number in an addition.
- * @returns {any} Returns the total.
- * @example
- *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
- */
-function setRequestParameter (param, header) {
-
-    // Console.log(param,getTypeof(param),"$$param",delimiter(param,"=","&"));
-    if (param instanceof FormData) {
-
-        return param;
-
-    }
-
-    if (indexOf(["application/json"], header["content-type"]) >= 0 && indexOf(["json" ,"array"], getTypeof(param)) >= 0) {
-
-        return JSON.stringify(param);
-
-    }
-
-    return qsStringify(param);
-
-}
-
-/**
- * Check if object or value
- *
- * @since 1.0.1
- * @category environment
  * @param {any} api The first number in an addition.
  * @param {any} config The first number in an addition.
  * @param {any} path The first number in an addition.
@@ -80,19 +50,89 @@ function xhrInit (api, config, path, method) {
 
         try {
 
+            xhttp.withCredential = config.withCredential;
+
             xhttp.onreadystatechange = function () {
-                console.log(this,":")
+
+                const rawTextResponseHeader = this.getAllResponseHeaders();
+
+                // Convert the header string into an array  of individual headers
+
+                const arr = rawTextResponseHeader.trim().split(/[\r\n]+/);
+
+                // Create a map of header names to values
+                const headerMap = {};
+
+                arr.forEach(function (line) {
+
+                    const parts = line.split(': ');
+                    const header = parts.shift();
+                    const value = parts.join(': ');
+
+                    headerMap[header] = value;
+
+                });
+
                 if (this.readyState === 4) {
 
-                    resolve({
-                        "data": this.response
-                    });
+                    const outputResponse = {
+                        "data": setRespondData(this.response, headerMap, config),
+                        "header": headerMap,
+                        "status": this.status
+                    };
+                    const dataResponse = config.setResponse(outputResponse);
+
+                    if (getTypeof(dataResponse) === "json") {
+
+                        resolve(dataResponse);
+
+                    } else {
+
+                        resolve(outputResponse);
+
+                    }
 
                 }
 
             };
+
+            const dataRequest = config.setRequest({
+
+                "data": config.data,
+                "header": config.header
+
+            });
+
             xhttp.open(method, path, method !== "get");
-            setRequestHeader(xhttp, config.header);
+
+            if (getTypeof(dataRequest) ==="json") {
+
+                setRequestHeader(xhttp, dataRequest.header);
+
+            } else {
+
+                setRequestHeader(xhttp, config.header);
+
+            }
+           // xhttp.timeout = config.timeout;
+
+           // xhttp.ontimeout = function (e) {
+                // XMLHttpRequest timed out. Do something here.
+           // };
+
+           
+            if (getTypeof(config.onDownloadProgress) === "function") {
+
+                xhttp.addEventListener('progress', config.onDownloadProgress);
+
+            }
+
+            if (getTypeof(config.onUploadProgress) === "function" && xhttp.upload) {
+
+                xhttp.upload.addEventListener('progress', config.onUploadProgress);
+
+            }
+
             if (method === "get") {
 
                 xhttp.send();

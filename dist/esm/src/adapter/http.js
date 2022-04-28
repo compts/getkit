@@ -1,5 +1,11 @@
 import {domainDetails} from '../core/getType';
 
+import {each, has, indexOf, delimiter, getTypeof, getValue, getKey} from 'structkit';
+
+import {setRequestParameter} from '../lib/request';
+
+import {setRespondData} from '../lib/response';
+
 /**
  * Check if object or value
  *
@@ -30,32 +36,61 @@ function httpInit (api, config, path, methods) {
 
     };
 
+    const dataRequest = config.setRequest({
+
+        "data": config.data,
+        "header": config.header
+
+    });
+
+    if (getTypeof(dataRequest) ==="json") {
+
+        options.headers = dataRequest.header;
+
+    }
+
     const myPromise = new Promise((resolve, reject) => {
 
         try {
 
-            req.get(options, function (res) {
+            let str = '';
+            const callback = function (response) {
 
-                const list_chunk_data = [];
+                response.on('data', function (chunk) {
 
-                res.on('data', function (chunk_data) {
-
-                    list_chunk_data.push(chunk_data.toString());
-
-                });
-                res.on('end', function () {
-
-                    resolve({
-                        "data": list_chunk_data.join().toString()
-                    });
+                    str += chunk;
 
                 });
 
-            }).on('error', function (error) {
+                response.on('end', function () {
 
-                reject(error);
+                    const outputResponse = {
+                        "data": setRespondData(str, response.headers, config),
+                        "header": response.headers,
+                        "status": response.statusCode
+                    };
 
-            });
+                    const dataResponse = config.setResponse(outputResponse);
+
+                    if (getTypeof(dataResponse) === "json") {
+
+                        resolve(dataResponse);
+
+                    } else {
+
+                        resolve(outputResponse);
+
+                    }
+
+                });
+
+            };
+
+            const reqServer = req.request(options, callback);
+
+            // This is the data we are posting, it needs to be a string or a buffer
+            reqServer.write(setRequestParameter(config.data, config.header));
+            reqServer.end();
 
         } catch (err) {
 

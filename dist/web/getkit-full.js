@@ -112,13 +112,28 @@ function getSegmentPath (config, path) {
  */
 function getRequestDefaultConfig (config, subconfig, method) {
 
-    console.log(config, subconfig, method, "::config, subconfig, method");
-
     var referenceConfig = {
         "data": {},
         "header": {},
-        "isJsonRequest": false
+        "isJson": false,
+        "onDownloadProgress": null,
+        "onUploadProgress": null,
+        "timeout": 0,
+        "withCredential": false
     };
+
+    referenceConfig.setRequest= function (data) {
+
+        return data;
+
+    };
+
+    referenceConfig.setResponse= function (data) {
+
+        return data;
+
+    };
+
     var initialConfig = _stk.varExtend(config, subconfig);
 
     if (_stk.has(subconfig)) {
@@ -131,7 +146,7 @@ function getRequestDefaultConfig (config, subconfig, method) {
 
     if (method !== "get") {
 
-        if (referenceValue.isJsonRequest) {
+        if (referenceValue.isJson) {
 
             referenceValue.header["content-type"] = "application/json";
 
@@ -236,6 +251,74 @@ function DummyReq() {
  *
  * @since 1.0.1
  * @category environment
+ * @param {any} param The first number in an addition.
+ * @param {any} header The first number in an addition.
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * append({'as':1}, 'as',2)
+ * // => {'as':2}
+ */
+function setRequestParameter (param, header) {
+
+    // Console.log(param,_stk.getTypeof(param),"$$param",_stk.delimiter(param,"=","&"));
+    if (typeof FormData !== "undefined") {
+
+        if (param instanceof FormData) {
+
+            return param;
+
+        }
+
+    }
+
+    if (_stk.indexOf(["application/json"], header["content-type"]) >= 0 && _stk.indexOf(["json" ,"array"], _stk.getTypeof(param)) >= 0) {
+
+        return JSON.stringify(param);
+
+    }
+
+    return urs.qsStringify(param);
+
+}
+
+/**
+ * Check if object or value
+ *
+ * @since 1.0.1
+ * @category environment
+ * @param {any} param The first number in an addition.
+ * @param {any} header The first number in an addition.
+ * @param {any} config The first number in an addition.
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * append({'as':1}, 'as',2)
+ * // => {'as':2}
+ */
+function setRespondData (param, header ,config) {
+
+    if (_stk.indexOf(["application/json"], header["content-type"]) >= 0 && _stk.indexOf(["json" ,"array"], _stk.getTypeof(param)) >= 0) {
+
+        return JSON.parse(param.trim());
+
+    }
+
+    if (config.isJson) {
+
+        return JSON.parse(param.trim());
+
+    }
+
+    return param;
+
+}
+
+/**
+ * Check if object or value
+ *
+ * @since 1.0.1
+ * @category environment
  * @param {any} api The first number in an addition.
  * @param {any} config The first number in an addition.
  * @param {any} path The first number in an addition.
@@ -261,32 +344,61 @@ function httpInit (api, config, path, methods) {
 
     };
 
+    var dataRequest = config.setRequest({
+
+        "data": config.data,
+        "header": config.header
+
+    });
+
+    if (_stk.getTypeof(dataRequest) ==="json") {
+
+        options.headers = dataRequest.header;
+
+    }
+
     var myPromise = new Promise((resolve, reject) => {
 
         try {
 
-            req.get(options, function (res) {
+            var str = '';
+            var callback = function (response) {
 
-                var list_chunk_data = [];
+                response.on('data', function (chunk) {
 
-                res.on('data', function (chunk_data) {
-
-                    list_chunk_data.push(chunk_data.toString());
-
-                });
-                res.on('end', function () {
-
-                    resolve({
-                        "data": list_chunk_data.join().toString()
-                    });
+                    str += chunk;
 
                 });
 
-            }).on('error', function (error) {
+                response.on('end', function () {
 
-                reject(error);
+                    var outputResponse = {
+                        "data": setRespondData(str, response.headers, config),
+                        "header": response.headers,
+                        "status": response.statusCode
+                    };
 
-            });
+                    var dataResponse = config.setResponse(outputResponse);
+
+                    if (_stk.getTypeof(dataResponse) === "json") {
+
+                        resolve(dataResponse);
+
+                    } else {
+
+                        resolve(outputResponse);
+
+                    }
+
+                });
+
+            };
+
+            var reqServer = req.request(options, callback);
+
+            // This is the data we are posting, it needs to be a string or a buffer
+            reqServer.write(setRequestParameter(config.data, config.header));
+            reqServer.end();
 
         } catch (err) {
 
@@ -300,7 +412,7 @@ function httpInit (api, config, path, methods) {
 
 }
 
-adapterHttp=httpInit;
+adapterHttp=httpInit
 
 /**
  * Check if object or value
@@ -330,38 +442,6 @@ function setRequestHeader (xhttp, header) {
  *
  * @since 1.0.1
  * @category environment
- * @param {any} param The first number in an addition.
- * @param {any} header The first number in an addition.
- * @returns {any} Returns the total.
- * @example
- *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
- */
-function setRequestParameter (param, header) {
-
-    // Console.log(param,_stk.getTypeof(param),"$$param",_stk.delimiter(param,"=","&"));
-    if (param instanceof FormData) {
-
-        return param;
-
-    }
-
-    if (_stk.indexOf(["application/json"], header["content-type"]) >= 0 && _stk.indexOf(["json" ,"array"], _stk.getTypeof(param)) >= 0) {
-
-        return JSON.stringify(param);
-
-    }
-
-    return urs.qsStringify(param);
-
-}
-
-/**
- * Check if object or value
- *
- * @since 1.0.1
- * @category environment
  * @param {any} api The first number in an addition.
  * @param {any} config The first number in an addition.
  * @param {any} path The first number in an addition.
@@ -380,19 +460,89 @@ function xhrInit (api, config, path, method) {
 
         try {
 
+            xhttp.withCredential = config.withCredential;
+
             xhttp.onreadystatechange = function () {
-                console.log(this,":")
+
+                var rawTextResponseHeader = this.getAllResponseHeaders();
+
+                // Convert the header string into an array  of individual headers
+
+                var arr = rawTextResponseHeader.trim().split(/[\r\n]+/);
+
+                // Create a map of header names to values
+                var headerMap = {};
+
+                arr.forEach(function (line) {
+
+                    var parts = line.split(': ');
+                    var header = parts.shift();
+                    var value = parts.join(': ');
+
+                    headerMap[header] = value;
+
+                });
+
                 if (this.readyState === 4) {
 
-                    resolve({
-                        "data": this.response
-                    });
+                    var outputResponse = {
+                        "data": setRespondData(this.response, headerMap, config),
+                        "header": headerMap,
+                        "status": this.status
+                    };
+                    var dataResponse = config.setResponse(outputResponse);
+
+                    if (_stk.getTypeof(dataResponse) === "json") {
+
+                        resolve(dataResponse);
+
+                    } else {
+
+                        resolve(outputResponse);
+
+                    }
 
                 }
 
             };
+
+            var dataRequest = config.setRequest({
+
+                "data": config.data,
+                "header": config.header
+
+            });
+
             xhttp.open(method, path, method !== "get");
-            setRequestHeader(xhttp, config.header);
+
+            if (_stk.getTypeof(dataRequest) ==="json") {
+
+                setRequestHeader(xhttp, dataRequest.header);
+
+            } else {
+
+                setRequestHeader(xhttp, config.header);
+
+            }
+           // xhttp.timeout = config.timeout;
+
+           // xhttp.ontimeout = function (e) {
+                // XMLHttpRequest timed out. Do something here.
+           // };
+
+           
+            if (_stk.getTypeof(config.onDownloadProgress) === "function") {
+
+                xhttp.addEventListener('progress', config.onDownloadProgress);
+
+            }
+
+            if (_stk.getTypeof(config.onUploadProgress) === "function" && xhttp.upload) {
+
+                xhttp.upload.addEventListener('progress', config.onUploadProgress);
+
+            }
+
             if (method === "get") {
 
                 xhttp.send();
@@ -415,7 +565,7 @@ function xhrInit (api, config, path, method) {
 
 }
 
-adapterXhr=xhrInit;
+adapterXhr=xhrInit
 
 /**
  * Check if object or value
