@@ -298,7 +298,7 @@ function setRequestParameter (param, header) {
  */
 function setRespondData (param, header ,config) {
 
-    if (_stk.indexOf(["application/json"], header["content-type"]) >= 0 && _stk.indexOf(["json" ,"array"], _stk.getTypeof(param)) >= 0) {
+    if (_stk.indexOf(["application/json"], header["content-type"].toLocaleLowerCase()) >= 0) {
 
         return JSON.parse(param.trim());
 
