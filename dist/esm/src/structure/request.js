@@ -16,10 +16,10 @@ function Requests (api, config) {
 }
 
 /**
- * Check if object or value
+ * Request Get
  *
- * @since 1.0.1
- * @category environment
+ * @since 1.0.0
+ * @category request
  * @param {any} path The first number in an addition.
  * @param {any} subconfig The first number in an addition.
  * @returns {Promise<any>} Returns the total.
@@ -35,10 +35,10 @@ Requests.prototype.get =function (path, subconfig) {
 };
 
 /**
- * Check if object or value
+ * Request Delete
  *
- * @since 1.0.1
- * @category environment
+ * @since 1.0.0
+ * @category request
  * @param {any} path The first number in an addition.
  * @param {any} subconfig The first number in an addition.
  * @returns {Promise<any>} Returns the total.
@@ -54,10 +54,10 @@ Requests.prototype.delete =function (path, subconfig) {
 };
 
 /**
- * Check if object or value
+ * Request Post
  *
- * @since 1.0.1
- * @category environment
+ * @since 1.0.0
+ * @category request
  * @param {any} path The first number in an addition.
  * @param {any} subconfig The first number in an addition.
  * @returns {Promise<any>} Returns the total.
@@ -73,10 +73,10 @@ Requests.prototype.post =function (path, subconfig) {
 };
 
 /**
- * Check if object or value
+ * Request Options
  *
- * @since 1.0.1
- * @category environment
+ * @since 1.0.0
+ * @category request
  * @param {any} path The first number in an addition.
  * @param {any} subconfig The first number in an addition.
  * @returns {Promise<any>} Returns the total.
@@ -92,10 +92,10 @@ Requests.prototype.options =function (path, subconfig) {
 };
 
 /**
- * Check if object or value
+ * Request Put
  *
- * @since 1.0.1
- * @category environment
+ * @since 1.0.0
+ * @category request
  * @param {any} path The first number in an addition.
  * @param {any} subconfig The first number in an addition.
  * @returns {Promise<any>} Returns the total.
@@ -111,10 +111,10 @@ Requests.prototype.put =function (path, subconfig) {
 };
 
 /**
- * Check if object or value
+ * Request Patch
  *
- * @since 1.0.1
- * @category environment
+ * @since 1.0.0
+ * @category request
  * @param {any} path The first number in an addition.
  * @param {any} subconfig The first number in an addition.
  * @returns {Promise<any>} Returns the total.

@@ -3,7 +3,7 @@ import {qsStringify} from 'url-assist';
 import {indexOf, getTypeof} from 'structkit';
 
 /**
- * Check if object or value
+ * Request config
  *
  * @since 1.0.1
  * @category environment

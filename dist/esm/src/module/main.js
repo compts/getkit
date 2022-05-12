@@ -6,14 +6,14 @@ import {domainDetails, getSegmentPath} from '../core/getType';
  * Request Get
  *
  * @since 1.0.1
- * @category environment
- * @param {string} url The first number in an addition.
- * @param {any} [config] The first number in an addition.
- * @returns {Promise<any>} Returns the total.
+ * @category request
+ * @param {string} url The url of request
+ * @param {any} [config] The request config
+ * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
  * Get('/')
- * // => {'as':2}
+ * // => Promise<any>
  */
 const Get = function (url, config) {
 
@@ -28,14 +28,14 @@ const Get = function (url, config) {
  * Request Delete
  *
  * @since 1.0.1
- * @category environment
- * @param {string} url The first number in an addition.
- * @param {any} [config] The first number in an addition.
- * @returns {Promise<any>} Returns the total.
+ * @category request
+ * @param {string} url The url of request
+ * @param {any} [config] The request config
+ * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
  * Delete('/')
- * // => {'as':2}
+ * // => Promise<any>
  */
 const Delete = function (url, config) {
 
@@ -50,14 +50,14 @@ const Delete = function (url, config) {
  * Request Post
  *
  * @since 1.0.1
- * @category environment
- * @param {any} url The first number in an addition.
- * @param {any} [config] The first number in an addition.
- * @returns {Promise<any>} Returns the total.
+ * @category request
+ * @param {string} url The url of request
+ * @param {any} [config] The request config
+ * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
  * Post('/')
- * // => {'as':2}
+ * // => Promise<any>
  */
 const Post = function (url, config) {
 
@@ -73,14 +73,14 @@ const Post = function (url, config) {
  * Request Options
  *
  * @since 1.0.1
- * @category environment
- * @param {any} url The first number in an addition.
- * @param {any} [config] The first number in an addition.
- * @returns {Promise<any>} Returns the total.
+ * @category request
+ * @param {string} url The url of request
+ * @param {any} [config] The request config
+ * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
  * Options('/')
- * // => {'as':2}
+ * // => Promise<any>
  */
 const Options = function (url, config) {
 
@@ -95,14 +95,14 @@ const Options = function (url, config) {
  * Request Put
  *
  * @since 1.0.1
- * @category environment
- * @param {any} url The first number in an addition.
- * @param {any} [config] The first number in an addition.
- * @returns {Promise<any>} Returns the total.
+ * @category request
+ * @param {string} url The url of request
+ * @param {any} [config] The request config
+ * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
  * Put('/')
- * // => {'as':2}
+ * // => Promise<any>
  */
 const Put = function (url, config) {
 
@@ -117,14 +117,14 @@ const Put = function (url, config) {
  * Request Patch
  *
  * @since 1.0.1
- * @category environment
- * @param {any} url The first number in an addition.
- * @param {any} [config] The first number in an addition.
- * @returns {Promise<any>} Returns the total.
+ * @category request
+ * @param {string} url The url of request
+ * @param {any} [config] The request config
+ * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
  * Patch('/')
- * // => {'as':2}
+ * // => Promise<any>
  */
 const Patch = function (url, config) {
 
@@ -139,13 +139,13 @@ const Patch = function (url, config) {
  * Request initialize
  *
  * @since 1.0.1
- * @category environment
- * @param {any} config The first number in an addition.
- * @returns {any} Returns the total.
+ * @category request
+ * @param {any} [config] The request config
+ * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
  * initialize({"baseUrl": "http://localhost:4040/"})
- * // => {'as':2}
+ * // => Promise<any>
  */
 const initialize = function (config) {
 

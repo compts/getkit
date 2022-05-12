@@ -247,7 +247,7 @@ function DummyReq() {
 }
 
 /**
- * Check if object or value
+ * Request config
  *
  * @since 1.0.1
  * @category environment
@@ -283,7 +283,7 @@ function setRequestParameter (param, header) {
 }
 
 /**
- * Check if object or value
+ * Request config
  *
  * @since 1.0.1
  * @category environment
@@ -693,10 +693,10 @@ function Requests (api, config) {
 }
 
 /**
- * Check if object or value
+ * Request Get
  *
- * @since 1.0.1
- * @category environment
+ * @since 1.0.0
+ * @category request
  * @param {any} path The first number in an addition.
  * @param {any} subconfig The first number in an addition.
  * @returns {Promise<any>} Returns the total.
@@ -712,10 +712,10 @@ Requests.prototype.get =function (path, subconfig) {
 };
 
 /**
- * Check if object or value
+ * Request Delete
  *
- * @since 1.0.1
- * @category environment
+ * @since 1.0.0
+ * @category request
  * @param {any} path The first number in an addition.
  * @param {any} subconfig The first number in an addition.
  * @returns {Promise<any>} Returns the total.
@@ -731,10 +731,10 @@ Requests.prototype.delete =function (path, subconfig) {
 };
 
 /**
- * Check if object or value
+ * Request Post
  *
- * @since 1.0.1
- * @category environment
+ * @since 1.0.0
+ * @category request
  * @param {any} path The first number in an addition.
  * @param {any} subconfig The first number in an addition.
  * @returns {Promise<any>} Returns the total.
@@ -750,10 +750,10 @@ Requests.prototype.post =function (path, subconfig) {
 };
 
 /**
- * Check if object or value
+ * Request Options
  *
- * @since 1.0.1
- * @category environment
+ * @since 1.0.0
+ * @category request
  * @param {any} path The first number in an addition.
  * @param {any} subconfig The first number in an addition.
  * @returns {Promise<any>} Returns the total.
@@ -769,10 +769,10 @@ Requests.prototype.options =function (path, subconfig) {
 };
 
 /**
- * Check if object or value
+ * Request Put
  *
- * @since 1.0.1
- * @category environment
+ * @since 1.0.0
+ * @category request
  * @param {any} path The first number in an addition.
  * @param {any} subconfig The first number in an addition.
  * @returns {Promise<any>} Returns the total.
@@ -788,10 +788,10 @@ Requests.prototype.put =function (path, subconfig) {
 };
 
 /**
- * Check if object or value
+ * Request Patch
  *
- * @since 1.0.1
- * @category environment
+ * @since 1.0.0
+ * @category request
  * @param {any} path The first number in an addition.
  * @param {any} subconfig The first number in an addition.
  * @returns {Promise<any>} Returns the total.
@@ -871,14 +871,14 @@ function configRequest (config) {
  * Request Get
  *
  * @since 1.0.1
- * @category environment
- * @param {string} url The first number in an addition.
- * @param {any} [config] The first number in an addition.
- * @returns {Promise<any>} Returns the total.
+ * @category request
+ * @param {string} url The url of request
+ * @param {any} [config] The request config
+ * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
  * Get('/')
- * // => {'as':2}
+ * // => Promise<any>
  */
 gtk.Get=function (url, config) {
 
@@ -893,14 +893,14 @@ gtk.Get=function (url, config) {
  * Request Delete
  *
  * @since 1.0.1
- * @category environment
- * @param {string} url The first number in an addition.
- * @param {any} [config] The first number in an addition.
- * @returns {Promise<any>} Returns the total.
+ * @category request
+ * @param {string} url The url of request
+ * @param {any} [config] The request config
+ * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
  * Delete('/')
- * // => {'as':2}
+ * // => Promise<any>
  */
 gtk.Delete=function (url, config) {
 
@@ -915,14 +915,14 @@ gtk.Delete=function (url, config) {
  * Request Post
  *
  * @since 1.0.1
- * @category environment
- * @param {any} url The first number in an addition.
- * @param {any} [config] The first number in an addition.
- * @returns {Promise<any>} Returns the total.
+ * @category request
+ * @param {string} url The url of request
+ * @param {any} [config] The request config
+ * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
  * Post('/')
- * // => {'as':2}
+ * // => Promise<any>
  */
 gtk.Post=function (url, config) {
 
@@ -938,14 +938,14 @@ gtk.Post=function (url, config) {
  * Request Options
  *
  * @since 1.0.1
- * @category environment
- * @param {any} url The first number in an addition.
- * @param {any} [config] The first number in an addition.
- * @returns {Promise<any>} Returns the total.
+ * @category request
+ * @param {string} url The url of request
+ * @param {any} [config] The request config
+ * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
  * Options('/')
- * // => {'as':2}
+ * // => Promise<any>
  */
 gtk.Options=function (url, config) {
 
@@ -960,14 +960,14 @@ gtk.Options=function (url, config) {
  * Request Put
  *
  * @since 1.0.1
- * @category environment
- * @param {any} url The first number in an addition.
- * @param {any} [config] The first number in an addition.
- * @returns {Promise<any>} Returns the total.
+ * @category request
+ * @param {string} url The url of request
+ * @param {any} [config] The request config
+ * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
  * Put('/')
- * // => {'as':2}
+ * // => Promise<any>
  */
 gtk.Put=function (url, config) {
 
@@ -982,14 +982,14 @@ gtk.Put=function (url, config) {
  * Request Patch
  *
  * @since 1.0.1
- * @category environment
- * @param {any} url The first number in an addition.
- * @param {any} [config] The first number in an addition.
- * @returns {Promise<any>} Returns the total.
+ * @category request
+ * @param {string} url The url of request
+ * @param {any} [config] The request config
+ * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
  * Patch('/')
- * // => {'as':2}
+ * // => Promise<any>
  */
 gtk.Patch=function (url, config) {
 
@@ -1004,13 +1004,13 @@ gtk.Patch=function (url, config) {
  * Request initialize
  *
  * @since 1.0.1
- * @category environment
- * @param {any} config The first number in an addition.
- * @returns {any} Returns the total.
+ * @category request
+ * @param {any} [config] The request config
+ * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
  * initialize({"baseUrl": "http://localhost:4040/"})
- * // => {'as':2}
+ * // => Promise<any>
  */
 gtk.initialize=function (config) {
 

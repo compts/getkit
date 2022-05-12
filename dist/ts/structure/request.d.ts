@@ -21,10 +21,10 @@ declare class Requests {
     api: any;
     config: any;
     /**
-     * Check if object or value
+     * Request Get
      *
-     * @since 1.0.1
-     * @category environment
+     * @since 1.0.0
+     * @category request
      * @param {any} path The first number in an addition.
      * @param {any} subconfig The first number in an addition.
      * @returns {Promise<any>} Returns the total.
@@ -35,10 +35,10 @@ declare class Requests {
      */
     get(path: any, subconfig: any): Promise<any>;
     /**
-     * Check if object or value
+     * Request Delete
      *
-     * @since 1.0.1
-     * @category environment
+     * @since 1.0.0
+     * @category request
      * @param {any} path The first number in an addition.
      * @param {any} subconfig The first number in an addition.
      * @returns {Promise<any>} Returns the total.
@@ -49,10 +49,10 @@ declare class Requests {
      */
     delete(path: any, subconfig: any): Promise<any>;
     /**
-     * Check if object or value
+     * Request Post
      *
-     * @since 1.0.1
-     * @category environment
+     * @since 1.0.0
+     * @category request
      * @param {any} path The first number in an addition.
      * @param {any} subconfig The first number in an addition.
      * @returns {Promise<any>} Returns the total.
@@ -63,10 +63,10 @@ declare class Requests {
      */
     post(path: any, subconfig: any): Promise<any>;
     /**
-     * Check if object or value
+     * Request Options
      *
-     * @since 1.0.1
-     * @category environment
+     * @since 1.0.0
+     * @category request
      * @param {any} path The first number in an addition.
      * @param {any} subconfig The first number in an addition.
      * @returns {Promise<any>} Returns the total.
@@ -77,10 +77,10 @@ declare class Requests {
      */
     options(path: any, subconfig: any): Promise<any>;
     /**
-     * Check if object or value
+     * Request Put
      *
-     * @since 1.0.1
-     * @category environment
+     * @since 1.0.0
+     * @category request
      * @param {any} path The first number in an addition.
      * @param {any} subconfig The first number in an addition.
      * @returns {Promise<any>} Returns the total.
@@ -91,10 +91,10 @@ declare class Requests {
      */
     put(path: any, subconfig: any): Promise<any>;
     /**
-     * Check if object or value
+     * Request Patch
      *
-     * @since 1.0.1
-     * @category environment
+     * @since 1.0.0
+     * @category request
      * @param {any} path The first number in an addition.
      * @param {any} subconfig The first number in an addition.
      * @returns {Promise<any>} Returns the total.

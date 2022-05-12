@@ -2,7 +2,7 @@ const {qsStringify} = require("url-assist");
 const {indexOf, getTypeof} = require("structkit");
 
 /**
- * Check if object or value
+ * Request config
  *
  * @since 1.0.1
  * @category environment
