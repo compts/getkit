@@ -13,7 +13,7 @@ In a browser:
 ## Download
 
  * [Core build](https://raw.githubusercontent.com/compts/getkit/main/dist/web/getkit-full.js) ([~65KB](https://raw.githubusercontent.com/compts/getkit/main/dist/web/getkit-full.js))
- * [Dependency build](https://raw.githubusercontent.com/compts/structkit/main/dist/web/structkit-full.iife.js) ([~65KB](https://raw.githubusercontent.com/compts/structkit/main/dist/web/web/structkit-full.iife.js) ([~65KB](https://raw.githubusercontent.com/compts/structkit/main/dist/web/structkit-full.iife.js) ([~65KB](https://raw.githubusercontent.com/compts/structkit/main/dist/web/web/structkit-full.iife.js))
+ * [Dependency build](https://raw.githubusercontent.com/compts/structkit/main/dist/web/structkit-full.iife.js) 
 
 Using npm:
 ```shell
@@ -41,5 +41,5 @@ Get('https://example.com/example.js')
 
 ```
 [npm-url]: https://www.npmjs.com/package/getkit
-[npm-image]: https://img.shields.io/badge/getkit-1.0.0-brightgreen
+[npm-image]: https://img.shields.io/badge/getkit-0.5.0-brightgreen
 
