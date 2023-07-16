@@ -32,7 +32,7 @@ In a browser
 ```html
 gtk.Get('https://example.com/example.js')
 ```
-keep in my `gtk` is used as global library at html
+keep in mind `gtk` is used as global library at html
 
 
 CJS, ESM and TS use this code below
