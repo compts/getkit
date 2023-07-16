@@ -23,7 +23,7 @@ import {varExtend} from 'structkit';
  */
 function singleRequest (details, config) {
 
-    const validHttp = isHttps(details.protocol);
+    const validHttp = isHttps(details.hostArgument);
 
     const api = requestApi({
         "detail": details,
@@ -69,4 +69,4 @@ function configRequest (config) {
 
 }
 
-export {singleRequest, configRequest};
+export {singleRequest,configRequest};

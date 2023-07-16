@@ -164,4 +164,4 @@ function getRequestDefaultConfig (config, subconfig, method) {
 
 }
 
-export {domainDetails, hostDetails, getSegmentPath, getRequestDefaultConfig};
+export {domainDetails,hostDetails,getSegmentPath,getRequestDefaultConfig};

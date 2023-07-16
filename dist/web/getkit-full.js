@@ -261,7 +261,6 @@ function DummyReq() {
  */
 function setRequestParameter (param, header) {
 
-    // Console.log(param,_stk.getTypeof(param),"$$param",delimiter(param,"=","&"));
     if (typeof FormData !== "undefined") {
 
         if (param instanceof FormData) {
@@ -272,7 +271,7 @@ function setRequestParameter (param, header) {
 
     }
 
-    if (_stk.indexOf(["application/json"], header["content-type"]) >= 0 && _stk.indexOf(["json" ,"array"], _stk.getTypeof(param)) >= 0) {
+    if (_stk.indexOf(["application/json"], header["content-type"]) >= 0 && _stk.indexOf(["json", "array"], _stk.getTypeof(param)) >= 0) {
 
         return JSON.stringify(param);
 
@@ -296,9 +295,9 @@ function setRequestParameter (param, header) {
  * append({'as':1}, 'as',2)
  * // => {'as':2}
  */
-function setRespondData (param, header ,config) {
+function setRespondData (param, header, config) {
 
-    if (_stk.indexOf(["application/json"], header["content-type"].toLocaleLowerCase()) >= 0) {
+    if (_stk.indexOf(["application/json"], header["content-type"]?header["content-type"].toLowerCase():"") >= 0) {
 
         return JSON.parse(param.trim());
 
@@ -821,7 +820,7 @@ Requests.prototype.patch =function (path, subconfig) {
  */
 function singleRequest (details, config) {
 
-    var validHttp = urs.isHttps(details.protocol);
+    var validHttp = urs.isHttps(details.hostArgument);
 
     var api = requestApi({
         "detail": details,
@@ -868,6 +867,129 @@ function configRequest (config) {
 }
 
 /**
+ * Request initialize
+ *
+ * @since 1.0.1
+ * @category request
+ * @param {string} url The url of request
+ * @param {any} [config] The request config
+ * @returns {Promise<any>} Returns Promise for response.
+ * @example
+ *
+ * importScipt("http://localhost:4040/")
+ * // => Promise<any>
+ */
+function amdLocal (url, config) {
+
+    var isValidExt = false;
+    var zero = 0;
+
+    if (typeof document !== "undefined") {
+
+        var headHtm = document.getElementsByTagName('head');
+
+        if (urs.isUrlExtValid(url, "js")) {
+
+            isValidExt = true;
+            var ps = document.createElement('script');
+            var script = document.getElementsByTagName('script');
+
+            ps.type = 'text/javascript';
+            ps.src = url;
+            ps.async = true;
+            ps.onload = function (err) {
+
+                handleCallback(err, config);
+
+            };
+
+            ps.onerror = function (err) {
+
+                handleCallback(err, config);
+
+            };
+
+            if (headHtm.length >zero) {
+
+                headHtm[zero].appendChild(ps);
+
+            }
+            if (headHtm.length === zero && script.length > zero) {
+
+                script[zero].appendChild(ps);
+
+            }
+
+        }
+
+        if (urs.isUrlExtValid(url, "css")) {
+
+            isValidExt = true;
+
+            if (headHtm.length > zero) {
+
+                var link = document.createElement("link");
+
+                link.type = "text/css";
+                link.rel = "stylesheet";
+                link.href = url;
+                headHtm[zero].appendChild(link);
+
+                link.onload = function (err) {
+
+                    handleCallback(err, config);
+
+                };
+
+                link.onerror = function (err) {
+
+                    handleCallback(err, config);
+
+                };
+                if (headHtm.length >zero) {
+
+                    headHtm[zero].appendChild(link);
+
+                }
+
+            }
+
+        }
+
+    }
+
+    if (!isValidExt) {
+
+        throw new Error("This library supported css and js");
+
+    }
+
+}
+
+/**
+ * Handle callback
+ *
+ * @since 1.0.1
+ * @category request
+ * @param {string} data The url of request
+ * @param {any} [config] The request config
+ * @returns {Promise<any>} Returns Promise for response.
+ * @example
+ *
+ * handleCallback('error',()=>{})
+ * // => Promise<any>
+ */
+function handleCallback (data, config) {
+
+    if (_stk.getTypeof(config) === "function") {
+
+        config(data);
+
+    }
+
+}
+
+/**
  * Request Get
  *
  * @since 1.0.1
@@ -880,6 +1002,7 @@ function configRequest (config) {
  * Get('/')
  * // => Promise<any>
  */
+
 gtk.Get=function (url, config) {
 
     var details = domainDetails(url);
@@ -902,6 +1025,7 @@ gtk.Get=function (url, config) {
  * Delete('/')
  * // => Promise<any>
  */
+
 gtk.Delete=function (url, config) {
 
     var details = domainDetails(url);
@@ -924,13 +1048,13 @@ gtk.Delete=function (url, config) {
  * Post('/')
  * // => Promise<any>
  */
+
 gtk.Post=function (url, config) {
 
     var details = domainDetails(url);
-    var path = getSegmentPath(details);
     var init = singleRequest(details, config);
 
-    return init.post(path, config);
+    return init.post(url, config);
 
 };
 
@@ -947,6 +1071,7 @@ gtk.Post=function (url, config) {
  * Options('/')
  * // => Promise<any>
  */
+
 gtk.Options=function (url, config) {
 
     var details = domainDetails(url);
@@ -969,6 +1094,7 @@ gtk.Options=function (url, config) {
  * Put('/')
  * // => Promise<any>
  */
+
 gtk.Put=function (url, config) {
 
     var details = domainDetails(url);
@@ -991,6 +1117,7 @@ gtk.Put=function (url, config) {
  * Patch('/')
  * // => Promise<any>
  */
+
 gtk.Patch=function (url, config) {
 
     var details = domainDetails(url);
@@ -1012,11 +1139,40 @@ gtk.Patch=function (url, config) {
  * initialize({"baseUrl": "http://localhost:4040/"})
  * // => Promise<any>
  */
+
 gtk.initialize=function (config) {
 
     var init = configRequest(config);
 
     return init;
+
+};
+
+/**
+ * Importing JS in CDN, this is experimental feature
+ *
+ * @since 1.0.1
+ * @category request
+ * @param {string} url The url of request
+ * @param {any} [config] The request config
+ * @returns {Promise<any>} Returns Promise for response.
+ * @example
+ *
+ * importScipt("http://localhost:4040/")
+ * // => Promise<any>
+ */
+
+gtk.importScipt=function (url, config) {
+
+    if (typeof document !== "undefined") {
+
+        amdLocal(url, config);
+
+        return;
+
+    }
+
+    throw new Error("This is supported only in browser, but we are working nodejs compability");
 
 };
 

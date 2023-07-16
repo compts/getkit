@@ -19,7 +19,7 @@ const {varExtend} = require("structkit");
  */
 function singleRequest (details, config) {
 
-    const validHttp = isHttps(details.protocol);
+    const validHttp = isHttps(details.hostArgument);
 
     const api = requestApi({
         "detail": details,

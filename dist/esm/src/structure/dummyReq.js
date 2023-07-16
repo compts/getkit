@@ -7,5 +7,5 @@ function DummyReq() {
 
 }
 
-export default  DummyReq;
+export default DummyReq;
 

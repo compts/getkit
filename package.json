@@ -7,9 +7,10 @@
   "types": "dist/ts/module/main.d.ts",
   "scripts": {
     "es_linter": "eslint   src/module/*/*.js src/lib/*/*.js src/core/*.js *.js --fix",
-    "test_esm": "mocha -r esm test/esm/*.test.js",
-    "test_cjs": "mocha test/cjs/*.test.js",
-    "validate": "npm run style && npm run test"
+    "test_esm": "mocha test/library/cjs/*.test.js --timeout 4000 --exit",
+    "test_cjs": "mocha test/library/cjs/*.test.js --timeout 4000 --exit",
+    "validate": "npm run style && npm run test",
+    "test": "jest"
   },
   "tsd": {
     "directory": "test/ts"
@@ -28,14 +29,16 @@
   },
   "homepage": "https://github.com/compts/getkit#readme",
   "dependencies": {
-    "structkit": "^1.3.1",
-    "url-assist":"^1.0.0",
+    "structkit": "^1.4.1",
+    "url-assist":"^1.0.2",
     "tsd": "^0.19.1"
   },
   "devDependencies": {
     "@types/node": "^17.0.22",
     "eslint": "^7.13.0",
     "eslint-config-strongloop": "^2.1.0",
-    "fornetserve":"^0.0.1"
+    "esm": "^3.2.25",
+    "jest": "^27.5.1",
+    "mocha": "^5.2.0"
   }
 }

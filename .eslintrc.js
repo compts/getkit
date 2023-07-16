@@ -6,8 +6,12 @@ module.exports = {
     "extends": "eslint:recommended",
     "globals": {
         "ActiveXObject": true,
+
         "__dirname": true,
+        "afterAll": true,
+        "beforeAll": true,
         "describe": true,
+        "expect": true,
         "exports": true,
         "it": true,
         "module": true,

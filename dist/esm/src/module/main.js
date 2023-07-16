@@ -2,6 +2,8 @@ import {singleRequest, configRequest} from '../core/bootloader';
 
 import {domainDetails, getSegmentPath} from '../core/getType';
 
+import {amdLocal} from '../core/importScript';
+
 /**
  * Request Get
  *
@@ -62,10 +64,9 @@ const Delete = function (url, config) {
 const Post = function (url, config) {
 
     const details = domainDetails(url);
-    const path = getSegmentPath(details);
     const init = singleRequest(details, config);
 
-    return init.post(path, config);
+    return init.post(url, config);
 
 };
 
@@ -155,4 +156,31 @@ const initialize = function (config) {
 
 };
 
-export {Get,Delete,Post,Options,Put,Patch,initialize};
+/**
+ * Importing JS in CDN, this is experimental feature
+ *
+ * @since 1.0.1
+ * @category request
+ * @param {string} url The url of request
+ * @param {any} [config] The request config
+ * @returns {Promise<any>} Returns Promise for response.
+ * @example
+ *
+ * importScipt("http://localhost:4040/")
+ * // => Promise<any>
+ */
+const importScipt = function (url, config) {
+
+    if (typeof document !== "undefined") {
+
+        amdLocal(url, config);
+
+        return;
+
+    }
+
+    throw new Error("This is supported only in browser, but we are working nodejs compability");
+
+};
+
+export {Get,Delete,Post,Options,Put,Patch,initialize,importScipt};

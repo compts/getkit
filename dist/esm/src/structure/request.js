@@ -129,5 +129,5 @@ Requests.prototype.patch =function (path, subconfig) {
 
 };
 
-export default  Requests;
+export default Requests;
 

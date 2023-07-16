@@ -25,5 +25,21 @@ You need to install this in your machine to compile in your machine
 npm install grasseum -g
 ```
 
+
+## Example
+
+In a browser
+```html
+gtk.Get('https://example.com/example.js')
+```
+keep in my `gtk` is used as global library at html
+
+
+CJS, ESM and TS use this code below
+```bash
+Get('https://example.com/example.js')
+
+```
 [npm-url]: https://www.npmjs.com/package/getkit
 [npm-image]: https://img.shields.io/badge/getkit-1.0.0-brightgreen
+

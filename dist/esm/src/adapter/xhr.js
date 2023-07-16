@@ -155,5 +155,5 @@ function xhrInit (api, config, path, method) {
 
 }
 
-export default  xhrInit;
+export default xhrInit;
 

@@ -104,5 +104,5 @@ function httpInit (api, config, path, methods) {
 
 }
 
-export default  httpInit;
+export default httpInit;
 

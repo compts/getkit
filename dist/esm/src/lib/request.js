@@ -17,7 +17,6 @@ import {indexOf, getTypeof} from 'structkit';
  */
 function setRequestParameter (param, header) {
 
-    // Console.log(param,getTypeof(param),"$$param",delimiter(param,"=","&"));
     if (typeof FormData !== "undefined") {
 
         if (param instanceof FormData) {
@@ -28,7 +27,7 @@ function setRequestParameter (param, header) {
 
     }
 
-    if (indexOf(["application/json"], header["content-type"]) >= 0 && indexOf(["json" ,"array"], getTypeof(param)) >= 0) {
+    if (indexOf(["application/json"], header["content-type"]) >= 0 && indexOf(["json", "array"], getTypeof(param)) >= 0) {
 
         return JSON.stringify(param);
 
