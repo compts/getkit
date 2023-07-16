@@ -1,6 +1,6 @@
 {
   "name": "getkit",
-  "version": "1.0.0",
+  "version": "0.5.0",
   "description": "HTTP base promised and callback and User agent",
   "main": "src/module/main.js",
   "module": "dist/esm/src/module/main.js",
@@ -27,7 +27,7 @@
   "bugs": {
     "url": "https://github.com/compts/getkit/issues"
   },
-  "homepage": "https://github.com/compts/getkit#readme",
+  "homepage": "https://getkit.codehyouka.xyz",
   "dependencies": {
     "structkit": "^1.4.1",
     "url-assist":"^1.0.2",
