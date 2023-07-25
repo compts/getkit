@@ -1,6 +1,6 @@
 {
   "name": "getkit",
-  "version": "0.5.0",
+  "version": "1.0.0",
   "description": "HTTP base promised and callback and User agent",
   "main": "src/module/main.js",
   "module": "dist/esm/src/module/main.js",
