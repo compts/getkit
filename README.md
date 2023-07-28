@@ -30,14 +30,14 @@ npm install grasseum -g
 
 In a browser
 ```html
-gtk.Get('https://example.com/example.js')
+gtk.httpGet('https://example.com/example.js')
 ```
 keep in mind `gtk` is used as global library at html
 
 
 CJS, ESM and TS use this code below
 ```bash
-Get('https://example.com/example.js')
+httpGet('https://example.com/example.js')
 
 ```
 [npm-url]: https://www.npmjs.com/package/getkit

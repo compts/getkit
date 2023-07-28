@@ -1,5 +1,5 @@
 const {singleRequest, configRequest} = require("../core/bootloader");
-const {domainDetails, getSegmentPath} = require("../core/getType");
+const {domainDetails} = require("../core/getType");
 const {amdLocal} = require("../core/importScript");
 
 
@@ -16,7 +16,7 @@ const {amdLocal} = require("../core/importScript");
  * Get('/')
  * // => Promise<any>
  */
-exports.Get = function (url, config) {
+exports.httpGet = function (url, config) {
 
     const details = domainDetails(url);
     const init = singleRequest(details, config);
@@ -38,7 +38,7 @@ exports.Get = function (url, config) {
  * Delete('/')
  * // => Promise<any>
  */
-exports.Delete = function (url, config) {
+exports.httpDelete = function (url, config) {
 
     const details = domainDetails(url);
     const init = singleRequest(details, config);
@@ -60,7 +60,7 @@ exports.Delete = function (url, config) {
  * Post('/')
  * // => Promise<any>
  */
-exports.Post = function (url, config) {
+exports.httpPost = function (url, config) {
 
     const details = domainDetails(url);
     const init = singleRequest(details, config);
@@ -82,7 +82,7 @@ exports.Post = function (url, config) {
  * Options('/')
  * // => Promise<any>
  */
-exports.Options = function (url, config) {
+exports.httpOptions = function (url, config) {
 
     const details = domainDetails(url);
     const init = singleRequest(details, config);
@@ -104,7 +104,7 @@ exports.Options = function (url, config) {
  * Put('/')
  * // => Promise<any>
  */
-exports.Put = function (url, config) {
+exports.httpPut = function (url, config) {
 
     const details = domainDetails(url);
     const init = singleRequest(details, config);
@@ -126,7 +126,7 @@ exports.Put = function (url, config) {
  * Patch('/')
  * // => Promise<any>
  */
-exports.Patch = function (url, config) {
+exports.httpPatch = function (url, config) {
 
     const details = domainDetails(url);
     const init = singleRequest(details, config);
@@ -147,7 +147,7 @@ exports.Patch = function (url, config) {
  * initialize({"baseUrl": "http://localhost:4040/"})
  * // => Promise<any>
  */
-exports.initialize = function (config) {
+exports.httpInitialize = function (config) {
 
     const init = configRequest(config);
 
