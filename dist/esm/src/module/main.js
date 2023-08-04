@@ -1,6 +1,6 @@
 import {singleRequest, configRequest} from '../core/bootloader';
 
-import {domainDetails, getSegmentPath} from '../core/getType';
+import {domainDetails} from '../core/getType';
 
 import {amdLocal} from '../core/importScript';
 
@@ -17,7 +17,7 @@ import {amdLocal} from '../core/importScript';
  * Get('/')
  * // => Promise<any>
  */
-const Get = function (url, config) {
+const httpGet = function (url, config) {
 
     const details = domainDetails(url);
     const init = singleRequest(details, config);
@@ -39,7 +39,7 @@ const Get = function (url, config) {
  * Delete('/')
  * // => Promise<any>
  */
-const Delete = function (url, config) {
+const httpDelete = function (url, config) {
 
     const details = domainDetails(url);
     const init = singleRequest(details, config);
@@ -61,7 +61,7 @@ const Delete = function (url, config) {
  * Post('/')
  * // => Promise<any>
  */
-const Post = function (url, config) {
+const httpPost = function (url, config) {
 
     const details = domainDetails(url);
     const init = singleRequest(details, config);
@@ -83,7 +83,7 @@ const Post = function (url, config) {
  * Options('/')
  * // => Promise<any>
  */
-const Options = function (url, config) {
+const httpOptions = function (url, config) {
 
     const details = domainDetails(url);
     const init = singleRequest(details, config);
@@ -105,7 +105,7 @@ const Options = function (url, config) {
  * Put('/')
  * // => Promise<any>
  */
-const Put = function (url, config) {
+const httpPut = function (url, config) {
 
     const details = domainDetails(url);
     const init = singleRequest(details, config);
@@ -127,7 +127,7 @@ const Put = function (url, config) {
  * Patch('/')
  * // => Promise<any>
  */
-const Patch = function (url, config) {
+const httpPatch = function (url, config) {
 
     const details = domainDetails(url);
     const init = singleRequest(details, config);
@@ -142,13 +142,16 @@ const Patch = function (url, config) {
  * @since 1.0.1
  * @category request
  * @param {any} [config] The request config
- * @returns {Promise<any>} Returns Promise for response.
+ * @template T
+ * @type {import('../structure/request')}
+ * @returns {Requests<T>} Returns Promise for response.
  * @example
  *
  * initialize({"baseUrl": "http://localhost:4040/"})
- * // => Promise<any>
+ * // => Requests<any>
  */
-const initialize = function (config) {
+
+const httpInitialize = function (config) {
 
     const init = configRequest(config);
 
@@ -183,4 +186,4 @@ const importScipt = function (url, config) {
 
 };
 
-export {Get,Delete,Post,Options,Put,Patch,initialize,importScipt};
+export {httpGet,httpDelete,httpPost,httpOptions,httpPut,httpPatch,httpInitialize,importScipt};

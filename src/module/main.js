@@ -141,12 +141,16 @@ exports.httpPatch = function (url, config) {
  * @since 1.0.1
  * @category request
  * @param {any} [config] The request config
- * @returns {Promise<any>} Returns Promise for response.
+ * @template T
+ * @type {import('../structure/request')}
+ * @returns {Requests<T>} Returns Promise for response.
  * @example
  *
  * initialize({"baseUrl": "http://localhost:4040/"})
- * // => Promise<any>
+ * // => Requests<any>
  */
+
+
 exports.httpInitialize = function (config) {
 
     const init = configRequest(config);

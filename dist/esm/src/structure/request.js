@@ -3,7 +3,7 @@ import {loaderApi} from '../core/referenceRequest';
 /**
  * A getkit intiator
  * @category Seq
- * @class
+ * @class Requests
  * @param {any} api request body
  * @param {any} config request body
  * @name getKit

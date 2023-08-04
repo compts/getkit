@@ -679,7 +679,7 @@ function loaderApi (api, config, subconfig, path, method) {
 /**
  * A getkit intiator
  * @category Seq
- * @class
+ * @class Requests
  * @param {any} api request body
  * @param {any} config request body
  * @name getKit
@@ -1003,7 +1003,7 @@ function handleCallback (data, config) {
  * // => Promise<any>
  */
 
-gtk.Get=function (url, config) {
+gtk.httpGet=function (url, config) {
 
     var details = domainDetails(url);
     var init = singleRequest(details, config);
@@ -1026,7 +1026,7 @@ gtk.Get=function (url, config) {
  * // => Promise<any>
  */
 
-gtk.Delete=function (url, config) {
+gtk.httpDelete=function (url, config) {
 
     var details = domainDetails(url);
     var init = singleRequest(details, config);
@@ -1049,7 +1049,7 @@ gtk.Delete=function (url, config) {
  * // => Promise<any>
  */
 
-gtk.Post=function (url, config) {
+gtk.httpPost=function (url, config) {
 
     var details = domainDetails(url);
     var init = singleRequest(details, config);
@@ -1072,7 +1072,7 @@ gtk.Post=function (url, config) {
  * // => Promise<any>
  */
 
-gtk.Options=function (url, config) {
+gtk.httpOptions=function (url, config) {
 
     var details = domainDetails(url);
     var init = singleRequest(details, config);
@@ -1095,7 +1095,7 @@ gtk.Options=function (url, config) {
  * // => Promise<any>
  */
 
-gtk.Put=function (url, config) {
+gtk.httpPut=function (url, config) {
 
     var details = domainDetails(url);
     var init = singleRequest(details, config);
@@ -1118,7 +1118,7 @@ gtk.Put=function (url, config) {
  * // => Promise<any>
  */
 
-gtk.Patch=function (url, config) {
+gtk.httpPatch=function (url, config) {
 
     var details = domainDetails(url);
     var init = singleRequest(details, config);
@@ -1133,14 +1133,16 @@ gtk.Patch=function (url, config) {
  * @since 1.0.1
  * @category request
  * @param {any} [config] The request config
- * @returns {Promise<any>} Returns Promise for response.
+ * @template T
+ * @type {import('../structure/request')}
+ * @returns {Requests<T>} Returns Promise for response.
  * @example
  *
  * initialize({"baseUrl": "http://localhost:4040/"})
- * // => Promise<any>
+ * // => Requests<any>
  */
 
-gtk.initialize=function (config) {
+gtk.httpInitialize=function (config) {
 
     var init = configRequest(config);
 

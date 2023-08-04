@@ -121,7 +121,7 @@ function xhrInit (api, config, path, method) {
                 // XMLHttpRequest timed out. Do something here.
            // };
 
-           
+
             if (getTypeof(config.onDownloadProgress) === "function") {
 
                 xhttp.addEventListener('progress', config.onDownloadProgress);
