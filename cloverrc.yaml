@@ -13,4 +13,5 @@ scans:
      files:
      - 'src/*'
      - 'src/*/*'
+     - 'src/*/*/*'
 

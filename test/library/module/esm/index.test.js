@@ -1,13 +1,9 @@
-const getkit = require("../../../../src/module/main.js");
-const {httpGet, httpDelete, httpPost, httpOptions, httpPut, httpPatch, httpInitialize} = require("../../../../src/module/main.js");
-const assert = require("assert");
+import {httpGet, httpDelete, httpPost, httpOptions, httpPut, httpPatch, httpInitialize} from '../../../../dist/esm/src/module/main';
+import assert from "assert";
 
-
-describe('CJS importing test passed', () => {
+describe('ESM importing test passed', () => {
 
     it('Check function type', () => {
-
-        assert.strictEqual(typeof getkit, 'object');
 
         assert.strictEqual(typeof httpGet, 'function');
         assert.strictEqual(typeof httpDelete, 'function');

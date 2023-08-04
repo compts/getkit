@@ -3,7 +3,7 @@
  * @class
  * @name DummyReq
  */
-function DummyReq() {
+function DummyReq () {
 
 }
 

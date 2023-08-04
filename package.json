@@ -6,9 +6,11 @@
   "module": "dist/esm/src/module/main.js",
   "types": "dist/ts/module/main.d.ts",
   "scripts": {
-    "es_linter": "eslint   src/module/*/*.js src/lib/*/*.js src/core/*.js *.js --fix",
-    "test_esm": "mocha test/library/cjs/*.test.js --timeout 4000 --exit",
-    "test_cjs": "mocha test/library/cjs/*.test.js --timeout 4000 --exit",
+    "es_linter": "eslint src/adapter/*.js src/core/*.js src/lib/*.js src/module/*.js src/structure/*.js --fix",
+    "test_cjs_server": "mocha test/library/cjs/*.test.js --timeout 4000 --exit",
+    "test_cjs": "mocha test/library/module/cjs/*.test.js --timeout 4000 --exit",
+    "test_esm": "mocha -r esm test/library/module/esm/*.test.js  --timeout 4000 --exit",
+    "test_ts": "mocha --require ts-node/register test/library/module/ts/*.test.ts --timeout 4000 --exit",
     "validate": "npm run style && npm run test",
     "test": "jest"
   },
@@ -34,11 +36,35 @@
     "tsd": "^0.19.1"
   },
   "devDependencies": {
-    "@types/node": "^17.0.22",
-    "eslint": "^7.13.0",
+    "@types/assert": "^1.5.6",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "^20.4.4",
+    "eslint": "^7.16.0",
     "eslint-config-strongloop": "^2.1.0",
+    "eslint-plugin-import": "^2.22.1",
     "esm": "^3.2.25",
     "jest": "^27.5.1",
-    "mocha": "^5.2.0"
+    "mocha": "^5.2.0",
+    "ts-node": "^10.9.1"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "*.js",
+      "*.ts"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/dist/",
+      "/test/esm/"
+
+    ],
+    "coverageThreshold": {
+      "global": {
+        "statements": 100,
+        "branches": 100,
+        "functions": 100,
+        "lines": 100
+      }
+    }
   }
 }

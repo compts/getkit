@@ -178,22 +178,22 @@ function checkEnvironmentStatus () {
 
     var status = 0;
 
-    if (typeof XMLHttpRequest !== "undefined" && status === 0 ) {
+    if (typeof XMLHttpRequest !== "undefined" && status === 0) {
 
         status = 1;
 
     }
-    if (typeof ActiveXObject !== "undefined" && status === 0 ) {
+    if (typeof ActiveXObject !== "undefined" && status === 0) {
 
         status = 2;
 
     }
-    if (typeof XDomainRequest !== "undefined" && status === 0 ) {
+    if (typeof XDomainRequest !== "undefined" && status === 0) {
 
         status = 3;
 
     }
-    if (typeof process !== "undefined" && status === 0 ) {
+    if (typeof process !== "undefined" && status === 0) {
 
         status = 4;
 
@@ -216,7 +216,11 @@ function checkEnvironmentStatus () {
  */
 function isAjax () {
 
-    return _stk.indexOf([1, 2, 3], checkEnvironmentStatus())!==-1;
+    return _stk.indexOf([
+        1,
+        2,
+        3
+    ], checkEnvironmentStatus())!==-1;
 
 }
 
@@ -242,7 +246,7 @@ function isNodejsEnv () {
  * @class
  * @name DummyReq
  */
-function DummyReq() {
+function DummyReq () {
 
 }
 
@@ -271,7 +275,10 @@ function setRequestParameter (param, header) {
 
     }
 
-    if (_stk.indexOf(["application/json"], header["content-type"]) >= 0 && _stk.indexOf(["json", "array"], _stk.getTypeof(param)) >= 0) {
+    if (_stk.indexOf(["application/json"], header["content-type"]) >= 0 && _stk.indexOf([
+        "json",
+        "array"
+    ], _stk.getTypeof(param)) >= 0) {
 
         return JSON.stringify(param);
 
@@ -297,7 +304,9 @@ function setRequestParameter (param, header) {
  */
 function setRespondData (param, header, config) {
 
-    if (_stk.indexOf(["application/json"], header["content-type"]?header["content-type"].toLowerCase():"") >= 0) {
+    if (_stk.indexOf(["application/json"], header["content-type"]
+        ?header["content-type"].toLowerCase()
+        :"") >= 0) {
 
         return JSON.parse(param.trim());
 
@@ -523,13 +532,14 @@ function xhrInit (api, config, path, method) {
                 setRequestHeader(xhttp, config.header);
 
             }
-           // xhttp.timeout = config.timeout;
+            // Xhttp.timeout = config.timeout;
 
-           // xhttp.ontimeout = function (e) {
-                // XMLHttpRequest timed out. Do something here.
-           // };
+            /*
+             * Xhttp.ontimeout = function (e) {
+             * XMLHttpRequest timed out. Do something here.
+             * };
+             */
 
-           
             if (_stk.getTypeof(config.onDownloadProgress) === "function") {
 
                 xhttp.addEventListener('progress', config.onDownloadProgress);
@@ -999,7 +1009,7 @@ function handleCallback (data, config) {
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
- * Get('/')
+ * httpGet('/')
  * // => Promise<any>
  */
 
@@ -1022,7 +1032,7 @@ gtk.httpGet=function (url, config) {
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
- * Delete('/')
+ * httpDelete('/')
  * // => Promise<any>
  */
 
@@ -1045,7 +1055,7 @@ gtk.httpDelete=function (url, config) {
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
- * Post('/')
+ * httpPost('/')
  * // => Promise<any>
  */
 
@@ -1068,7 +1078,7 @@ gtk.httpPost=function (url, config) {
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
- * Options('/')
+ * httpOptions('/')
  * // => Promise<any>
  */
 
@@ -1091,7 +1101,7 @@ gtk.httpOptions=function (url, config) {
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
- * Put('/')
+ * httpPut('/')
  * // => Promise<any>
  */
 
@@ -1114,7 +1124,7 @@ gtk.httpPut=function (url, config) {
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
- * Patch('/')
+ * httpPatch('/')
  * // => Promise<any>
  */
 
@@ -1133,12 +1143,11 @@ gtk.httpPatch=function (url, config) {
  * @since 1.0.1
  * @category request
  * @param {any} [config] The request config
- * @template T
- * @type {import('../structure/request')}
- * @returns {Requests<T>} Returns Promise for response.
+ * @typedef {import('../structure/request')}
+ * @returns {Requests<any>} Returns Promise for response.
  * @example
  *
- * initialize({"baseUrl": "http://localhost:4040/"})
+ * httpInitialize({"baseUrl": "http://localhost:4040/"})
  * // => Requests<any>
  */
 

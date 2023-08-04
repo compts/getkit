@@ -14,7 +14,7 @@ import {amdLocal} from '../core/importScript';
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
- * Get('/')
+ * httpGet('/')
  * // => Promise<any>
  */
 const httpGet = function (url, config) {
@@ -36,7 +36,7 @@ const httpGet = function (url, config) {
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
- * Delete('/')
+ * httpDelete('/')
  * // => Promise<any>
  */
 const httpDelete = function (url, config) {
@@ -58,7 +58,7 @@ const httpDelete = function (url, config) {
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
- * Post('/')
+ * httpPost('/')
  * // => Promise<any>
  */
 const httpPost = function (url, config) {
@@ -80,7 +80,7 @@ const httpPost = function (url, config) {
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
- * Options('/')
+ * httpOptions('/')
  * // => Promise<any>
  */
 const httpOptions = function (url, config) {
@@ -102,7 +102,7 @@ const httpOptions = function (url, config) {
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
- * Put('/')
+ * httpPut('/')
  * // => Promise<any>
  */
 const httpPut = function (url, config) {
@@ -124,7 +124,7 @@ const httpPut = function (url, config) {
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
- * Patch('/')
+ * httpPatch('/')
  * // => Promise<any>
  */
 const httpPatch = function (url, config) {
@@ -142,12 +142,11 @@ const httpPatch = function (url, config) {
  * @since 1.0.1
  * @category request
  * @param {any} [config] The request config
- * @template T
- * @type {import('../structure/request')}
- * @returns {Requests<T>} Returns Promise for response.
+ * @typedef {import('../structure/request')}
+ * @returns {Requests<any>} Returns Promise for response.
  * @example
  *
- * initialize({"baseUrl": "http://localhost:4040/"})
+ * httpInitialize({"baseUrl": "http://localhost:4040/"})
  * // => Requests<any>
  */
 

@@ -8,7 +8,7 @@
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
- * Get('/')
+ * httpGet('/')
  * // => Promise<any>
  */
 export function httpGet(url: string, config?: any): Promise<any>;
@@ -22,7 +22,7 @@ export function httpGet(url: string, config?: any): Promise<any>;
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
- * Delete('/')
+ * httpDelete('/')
  * // => Promise<any>
  */
 export function httpDelete(url: string, config?: any): Promise<any>;
@@ -36,7 +36,7 @@ export function httpDelete(url: string, config?: any): Promise<any>;
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
- * Post('/')
+ * httpPost('/')
  * // => Promise<any>
  */
 export function httpPost(url: string, config?: any): Promise<any>;
@@ -50,7 +50,7 @@ export function httpPost(url: string, config?: any): Promise<any>;
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
- * Options('/')
+ * httpOptions('/')
  * // => Promise<any>
  */
 export function httpOptions(url: string, config?: any): Promise<any>;
@@ -64,7 +64,7 @@ export function httpOptions(url: string, config?: any): Promise<any>;
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
- * Put('/')
+ * httpPut('/')
  * // => Promise<any>
  */
 export function httpPut(url: string, config?: any): Promise<any>;
@@ -78,7 +78,7 @@ export function httpPut(url: string, config?: any): Promise<any>;
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
- * Patch('/')
+ * httpPatch('/')
  * // => Promise<any>
  */
 export function httpPatch(url: string, config?: any): Promise<any>;
@@ -88,13 +88,12 @@ export function httpPatch(url: string, config?: any): Promise<any>;
  * @since 1.0.1
  * @category request
  * @param {any} [config] The request config
- * @template T
- * @type {import('../structure/request')}
- * @returns {Requests<T>} Returns Promise for response.
+ * @type {import('../structure/request')} Requests
+ * @returns {Requests<any>} Returns Promise for response.
  * @example
  *
- * initialize({"baseUrl": "http://localhost:4040/"})
- * // => Requests<T>
+ * httpInitialize({"baseUrl": "http://localhost:4040/"})
+ * // => Requests<any>
  */
 export const httpInitialize: typeof import("../structure/request");
 /**

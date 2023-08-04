@@ -115,11 +115,13 @@ function xhrInit (api, config, path, method) {
                 setRequestHeader(xhttp, config.header);
 
             }
-           // xhttp.timeout = config.timeout;
+            // Xhttp.timeout = config.timeout;
 
-           // xhttp.ontimeout = function (e) {
-                // XMLHttpRequest timed out. Do something here.
-           // };
+            /*
+             * Xhttp.ontimeout = function (e) {
+             * XMLHttpRequest timed out. Do something here.
+             * };
+             */
 
 
             if (getTypeof(config.onDownloadProgress) === "function") {

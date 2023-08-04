@@ -2,7 +2,6 @@ const {singleRequest, configRequest} = require("../core/bootloader");
 const {domainDetails} = require("../core/getType");
 const {amdLocal} = require("../core/importScript");
 
-
 /**
  * Request Get
  *
@@ -13,7 +12,7 @@ const {amdLocal} = require("../core/importScript");
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
- * Get('/')
+ * httpGet('/')
  * // => Promise<any>
  */
 exports.httpGet = function (url, config) {
@@ -35,7 +34,7 @@ exports.httpGet = function (url, config) {
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
- * Delete('/')
+ * httpDelete('/')
  * // => Promise<any>
  */
 exports.httpDelete = function (url, config) {
@@ -57,7 +56,7 @@ exports.httpDelete = function (url, config) {
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
- * Post('/')
+ * httpPost('/')
  * // => Promise<any>
  */
 exports.httpPost = function (url, config) {
@@ -79,7 +78,7 @@ exports.httpPost = function (url, config) {
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
- * Options('/')
+ * httpOptions('/')
  * // => Promise<any>
  */
 exports.httpOptions = function (url, config) {
@@ -101,7 +100,7 @@ exports.httpOptions = function (url, config) {
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
- * Put('/')
+ * httpPut('/')
  * // => Promise<any>
  */
 exports.httpPut = function (url, config) {
@@ -123,7 +122,7 @@ exports.httpPut = function (url, config) {
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
- * Patch('/')
+ * httpPatch('/')
  * // => Promise<any>
  */
 exports.httpPatch = function (url, config) {
@@ -141,15 +140,13 @@ exports.httpPatch = function (url, config) {
  * @since 1.0.1
  * @category request
  * @param {any} [config] The request config
- * @template T
- * @type {import('../structure/request')}
- * @returns {Requests<T>} Returns Promise for response.
+ * @typedef {import('../structure/request')}
+ * @returns {Requests<any>} Returns Promise for response.
  * @example
  *
- * initialize({"baseUrl": "http://localhost:4040/"})
+ * httpInitialize({"baseUrl": "http://localhost:4040/"})
  * // => Requests<any>
  */
-
 
 exports.httpInitialize = function (config) {
 
@@ -173,7 +170,6 @@ exports.httpInitialize = function (config) {
  * // => Promise<any>
  */
 exports.importScipt = function (url, config) {
-
 
     if (typeof document !== "undefined") {
 
