@@ -41,5 +41,5 @@ httpGet('https://example.com/example.js')
 
 ```
 [npm-url]: https://www.npmjs.com/package/getkit
-[npm-image]: https://img.shields.io/badge/getkit-0.5.0-brightgreen
+[npm-image]: https://img.shields.io/badge/getkit-1.0.0-brightgreen
 
