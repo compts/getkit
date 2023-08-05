@@ -88,14 +88,13 @@ export function httpPatch(url: string, config?: any): Promise<any>;
  * @since 1.0.1
  * @category request
  * @param {any} [config] The request config
- * @type {import('../structure/request')} Requests
- * @returns {Requests<any>} Returns Promise for response.
+ * @returns {any} Returns Promise for response.
  * @example
  *
  * httpInitialize({"baseUrl": "http://localhost:4040/"})
  * // => Requests<any>
  */
-export const httpInitialize: typeof import("../structure/request");
+export function httpInitialize(config?: any): any;
 /**
  * Importing JS in CDN, this is experimental feature
  *

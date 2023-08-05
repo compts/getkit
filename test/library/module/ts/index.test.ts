@@ -1,5 +1,4 @@
 import {httpGet, httpDelete, httpPost, httpOptions, httpPut, httpPatch, httpInitialize} from '../../../../dist/esm/src/module/main';
-import Requests from '../../../../dist/esm/src/structure/request';
 import {expectType} from 'tsd';
 import assert from "assert";
 
@@ -24,7 +23,7 @@ describe('TS importing test passed', () => {
         expectType<Promise<any>>(httpOptions('https://example.com'));
         expectType<Promise<any>>(httpPatch('https://example.com'));
         expectType<Promise<any>>(httpPut('https://example.com'));
-        expectType<typeof Requests>(httpInitialize({"baseUrl": "http://localhost:4040/"}));
+        expectType<any>(httpInitialize({"baseUrl": "http://localhost:4040/"}));
 
     });
 

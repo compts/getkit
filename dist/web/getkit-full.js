@@ -1143,8 +1143,7 @@ gtk.httpPatch=function (url, config) {
  * @since 1.0.1
  * @category request
  * @param {any} [config] The request config
- * @typedef {import('../structure/request')}
- * @returns {Requests<any>} Returns Promise for response.
+ * @returns {any} Returns Promise for response.
  * @example
  *
  * httpInitialize({"baseUrl": "http://localhost:4040/"})
