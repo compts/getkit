@@ -65,7 +65,7 @@ function hostDetails () {
  */
 function getSegmentPath (config, path) {
 
-    if (config.hostArgument === path) {
+    if (config.href === path) {
 
         if (urs.isHttpProtocolValid(path)) {
 
@@ -77,9 +77,9 @@ function getSegmentPath (config, path) {
 
     }
 
-    if (urs.isHttpProtocolValid(config.hostArgument)) {
+    if (urs.isHttpProtocolValid(config.href)) {
 
-        return urs.joinUrlPath(config.hostArgument, path);
+        return urs.joinUrlPath(config.href, path);
 
     }
 
@@ -830,14 +830,13 @@ Requests.prototype.patch =function (path, subconfig) {
  */
 function singleRequest (details, config) {
 
-    var validHttp = urs.isHttps(details.hostArgument);
+    var validHttp = urs.isHttps(details.href);
 
     var api = requestApi({
         "detail": details,
         "isHttps": validHttp
 
     });
-
     var init = new Requests(api, config);
 
     return init;

@@ -85,7 +85,8 @@ function httpInit (api, config, path, methods) {
                 });
 
             };
-
+            console.log(config, ":config");
+            console.log(options,":options");
             const reqServer = req.request(options, callback);
 
             // This is the data we are posting, it needs to be a string or a buffer

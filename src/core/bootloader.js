@@ -19,14 +19,13 @@ const {varExtend} = require("structkit");
  */
 function singleRequest (details, config) {
 
-    const validHttp = isHttps(details.hostArgument);
+    const validHttp = isHttps(details.href);
 
     const api = requestApi({
         "detail": details,
         "isHttps": validHttp
 
     });
-
     const init = new Requests(api, config);
 
     return init;

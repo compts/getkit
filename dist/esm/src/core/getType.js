@@ -66,7 +66,7 @@ function hostDetails () {
  */
 function getSegmentPath (config, path) {
 
-    if (config.hostArgument === path) {
+    if (config.href === path) {
 
         if (isHttpProtocolValid(path)) {
 
@@ -78,9 +78,9 @@ function getSegmentPath (config, path) {
 
     }
 
-    if (isHttpProtocolValid(config.hostArgument)) {
+    if (isHttpProtocolValid(config.href)) {
 
-        return joinUrlPath(config.hostArgument, path);
+        return joinUrlPath(config.href, path);
 
     }
 
