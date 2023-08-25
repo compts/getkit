@@ -31,7 +31,7 @@
   },
   "homepage": "https://getkit.codehyouka.xyz",
   "dependencies": {
-    "structkit": "^1.4.1",
+    "structkit": "^1.4.61",
     "url-assist":"^1.0.2",
     "tsd": "^0.19.1"
   },

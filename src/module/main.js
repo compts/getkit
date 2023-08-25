@@ -8,7 +8,7 @@ const {amdLocal} = require("../core/importScript");
  * @since 1.0.1
  * @category request
  * @param {string} url The url of request
- * @param {any} [config] The request config
+ * @param {any=} config The request config
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
@@ -30,7 +30,7 @@ exports.httpGet = function (url, config) {
  * @since 1.0.1
  * @category request
  * @param {string} url The url of request
- * @param {any} [config] The request config
+ * @param {any=} config The request config
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
@@ -52,7 +52,7 @@ exports.httpDelete = function (url, config) {
  * @since 1.0.1
  * @category request
  * @param {string} url The url of request
- * @param {any} [config] The request config
+ * @param {any=} config The request config
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
@@ -74,7 +74,7 @@ exports.httpPost = function (url, config) {
  * @since 1.0.1
  * @category request
  * @param {string} url The url of request
- * @param {any} [config] The request config
+ * @param {any=} config The request config
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
@@ -96,7 +96,7 @@ exports.httpOptions = function (url, config) {
  * @since 1.0.1
  * @category request
  * @param {string} url The url of request
- * @param {any} [config] The request config
+ * @param {any=} config The request config
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
@@ -118,7 +118,7 @@ exports.httpPut = function (url, config) {
  * @since 1.0.1
  * @category request
  * @param {string} url The url of request
- * @param {any} [config] The request config
+ * @param {any=} config The request config
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
@@ -139,7 +139,7 @@ exports.httpPatch = function (url, config) {
  *
  * @since 1.0.1
  * @category request
- * @param {any} [config] The request config
+ * @param {any=} config The request config
  * @returns {any} Returns Promise for response.
  * @example
  *

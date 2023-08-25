@@ -10,7 +10,7 @@ import {amdLocal} from '../core/importScript';
  * @since 1.0.1
  * @category request
  * @param {string} url The url of request
- * @param {any} [config] The request config
+ * @param {any=} config The request config
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
@@ -32,7 +32,7 @@ const httpGet = function (url, config) {
  * @since 1.0.1
  * @category request
  * @param {string} url The url of request
- * @param {any} [config] The request config
+ * @param {any=} config The request config
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
@@ -54,7 +54,7 @@ const httpDelete = function (url, config) {
  * @since 1.0.1
  * @category request
  * @param {string} url The url of request
- * @param {any} [config] The request config
+ * @param {any=} config The request config
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
@@ -76,7 +76,7 @@ const httpPost = function (url, config) {
  * @since 1.0.1
  * @category request
  * @param {string} url The url of request
- * @param {any} [config] The request config
+ * @param {any=} config The request config
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
@@ -98,7 +98,7 @@ const httpOptions = function (url, config) {
  * @since 1.0.1
  * @category request
  * @param {string} url The url of request
- * @param {any} [config] The request config
+ * @param {any=} config The request config
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
@@ -120,7 +120,7 @@ const httpPut = function (url, config) {
  * @since 1.0.1
  * @category request
  * @param {string} url The url of request
- * @param {any} [config] The request config
+ * @param {any=} config The request config
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
@@ -141,7 +141,7 @@ const httpPatch = function (url, config) {
  *
  * @since 1.0.1
  * @category request
- * @param {any} [config] The request config
+ * @param {any=} config The request config
  * @returns {any} Returns Promise for response.
  * @example
  *

@@ -1004,7 +1004,7 @@ function handleCallback (data, config) {
  * @since 1.0.1
  * @category request
  * @param {string} url The url of request
- * @param {any} [config] The request config
+ * @param {any=} config The request config
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
@@ -1027,7 +1027,7 @@ gtk.httpGet=function (url, config) {
  * @since 1.0.1
  * @category request
  * @param {string} url The url of request
- * @param {any} [config] The request config
+ * @param {any=} config The request config
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
@@ -1050,7 +1050,7 @@ gtk.httpDelete=function (url, config) {
  * @since 1.0.1
  * @category request
  * @param {string} url The url of request
- * @param {any} [config] The request config
+ * @param {any=} config The request config
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
@@ -1073,7 +1073,7 @@ gtk.httpPost=function (url, config) {
  * @since 1.0.1
  * @category request
  * @param {string} url The url of request
- * @param {any} [config] The request config
+ * @param {any=} config The request config
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
@@ -1096,7 +1096,7 @@ gtk.httpOptions=function (url, config) {
  * @since 1.0.1
  * @category request
  * @param {string} url The url of request
- * @param {any} [config] The request config
+ * @param {any=} config The request config
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
@@ -1119,7 +1119,7 @@ gtk.httpPut=function (url, config) {
  * @since 1.0.1
  * @category request
  * @param {string} url The url of request
- * @param {any} [config] The request config
+ * @param {any=} config The request config
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
@@ -1141,7 +1141,7 @@ gtk.httpPatch=function (url, config) {
  *
  * @since 1.0.1
  * @category request
- * @param {any} [config] The request config
+ * @param {any=} config The request config
  * @returns {any} Returns Promise for response.
  * @example
  *
