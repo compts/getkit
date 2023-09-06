@@ -1,6 +1,6 @@
 {
   "name": "getkit",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "HTTP base promised and callback and User agent",
   "main": "src/module/main.js",
   "module": "dist/esm/src/module/main.js",
@@ -29,8 +29,8 @@
   },
   "homepage": "https://getkit.codehyouka.xyz",
   "dependencies": {
-    "structkit": "^1.4.1",
-    "url-assist":"^1.0.2",
+    "structkit": "^1.4.8",
+    "url-assist":"^1.2.1",
     "tsd": "^0.19.1"
   },
   "devDependencies": {
