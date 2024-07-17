@@ -16,7 +16,7 @@ const {amdLocal} = require("../core/importScript");
  * Get('/')
  * // => Promise<any>
  */
-exports.Get = function (url, config) {
+exports.get = function (url, config) {
 
     const details = domainDetails(url);
     const init = singleRequest(details, config);
@@ -38,7 +38,7 @@ exports.Get = function (url, config) {
  * Delete('/')
  * // => Promise<any>
  */
-exports.Delete = function (url, config) {
+exports.delete = function (url, config) {
 
     const details = domainDetails(url);
     const init = singleRequest(details, config);
@@ -60,7 +60,7 @@ exports.Delete = function (url, config) {
  * Post('/')
  * // => Promise<any>
  */
-exports.Post = function (url, config) {
+exports.post = function (url, config) {
 
     const details = domainDetails(url);
     const init = singleRequest(details, config);
@@ -82,7 +82,7 @@ exports.Post = function (url, config) {
  * Options('/')
  * // => Promise<any>
  */
-exports.Options = function (url, config) {
+exports.options = function (url, config) {
 
     const details = domainDetails(url);
     const init = singleRequest(details, config);
@@ -126,7 +126,7 @@ exports.Put = function (url, config) {
  * Patch('/')
  * // => Promise<any>
  */
-exports.Patch = function (url, config) {
+exports.patch = function (url, config) {
 
     const details = domainDetails(url);
     const init = singleRequest(details, config);
