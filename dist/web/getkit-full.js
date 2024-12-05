@@ -1,5 +1,5 @@
 (function(global){
-global.gtk={}
+global.gtk={};
 
 /**
  * Is Exact
@@ -65,7 +65,8 @@ function hostDetails () {
  */
 function getSegmentPath (config, path) {
 
-    if (config.hostArgument === path) {
+    console.log(urs.isHttpProtocolValid(config.href),":Asd",config.href);    
+    if (config.href === path) {
 
         if (urs.isHttpProtocolValid(path)) {
 
@@ -73,26 +74,23 @@ function getSegmentPath (config, path) {
 
         }
 
-        return config.protocol+"://"+path;
+        return urs.joinUrlPath("https://", path);
 
     }
 
-    if (urs.isHttpProtocolValid(config.hostArgument)) {
+    if (urs.isHttpProtocolValid(path)) {
 
-        return urs.joinUrlPath(config.hostArgument, path);
+        return path;
+
+    }
+
+    if (urs.isHttpProtocolValid(config.href)) {
+
+        return config.href;
 
     }
 
-    var defaultPath = urs.joinUrlPath(config.protocol+"://"+config.hostname, config.pathname);
-
-    if (_stk.isEmpty(config.port) === false) {
-
-        defaultPath += ":"+config.port;
-
-    }
-    defaultPath =urs.joinUrlPath(defaultPath, path);
-
-    return defaultPath;
+    return urs.joinUrlPath("https://", config.href, path);
 
 }
 
@@ -112,7 +110,7 @@ function getSegmentPath (config, path) {
  */
 function getRequestDefaultConfig (config, subconfig, method) {
 
-    var referenceConfig = {
+    const referenceConfig = {
         "data": {},
         "header": {},
         "isJson": false,
@@ -134,15 +132,15 @@ function getRequestDefaultConfig (config, subconfig, method) {
 
     };
 
-    var initialConfig = _stk.varExtend(config, subconfig);
+    let initialConfig = _stk.varExtend(config, subconfig);
 
     if (_stk.has(subconfig)) {
 
         initialConfig = _stk.varExtend(subconfig, config);
 
     }
-
-    var referenceValue = _stk.varExtend(referenceConfig, initialConfig);
+    console.log(referenceConfig,"::",initialConfig);
+    const referenceValue = Object.assign(referenceConfig, initialConfig);
 
     if (method !== "get") {
 
@@ -176,7 +174,7 @@ function getRequestDefaultConfig (config, subconfig, method) {
  */
 function checkEnvironmentStatus () {
 
-    var status = 0;
+    let status = 0;
 
     if (typeof XMLHttpRequest !== "undefined" && status === 0 ) {
 
@@ -330,11 +328,11 @@ function setRespondData (param, header, config) {
  */
 function httpInit (api, config, path, methods) {
 
-    var req = api.class;
+    const req = api.class;
 
-    var detail = domainDetails(path);
+    const detail = domainDetails(path);
 
-    var options = {
+    const options = {
         "headers": config.header,
         "hostname": detail.hostname,
         "method": methods,
@@ -343,7 +341,7 @@ function httpInit (api, config, path, methods) {
 
     };
 
-    var dataRequest = config.setRequest({
+    const dataRequest = config.setRequest({
 
         "data": config.data,
         "header": config.header
@@ -356,12 +354,12 @@ function httpInit (api, config, path, methods) {
 
     }
 
-    var myPromise = new Promise((resolve, reject) => {
+    const myPromise = new Promise((resolve, reject) => {
 
         try {
 
-            var str = '';
-            var callback = function (response) {
+            let str = '';
+            const callback = function (response) {
 
                 response.on('data', function (chunk) {
 
@@ -371,13 +369,13 @@ function httpInit (api, config, path, methods) {
 
                 response.on('end', function () {
 
-                    var outputResponse = {
+                    const outputResponse = {
                         "data": setRespondData(str, response.headers, config),
                         "header": response.headers,
                         "status": response.statusCode
                     };
 
-                    var dataResponse = config.setResponse(outputResponse);
+                    const dataResponse = config.setResponse(outputResponse);
 
                     if (_stk.getTypeof(dataResponse) === "json") {
 
@@ -393,7 +391,7 @@ function httpInit (api, config, path, methods) {
 
             };
 
-            var reqServer = req.request(options, callback);
+            const reqServer = req.request(options, callback);
 
             // This is the data we are posting, it needs to be a string or a buffer
             reqServer.write(setRequestParameter(config.data, config.header));
@@ -453,9 +451,9 @@ function setRequestHeader (xhttp, header) {
  */
 function xhrInit (api, config, path, method) {
 
-    var xhttp = api.class;
+    const xhttp = api.class;
 
-    var myPromise = new Promise((resolve, reject) => {
+    const myPromise = new Promise((resolve, reject) => {
 
         try {
 
@@ -463,20 +461,20 @@ function xhrInit (api, config, path, method) {
 
             xhttp.onreadystatechange = function () {
 
-                var rawTextResponseHeader = this.getAllResponseHeaders();
+                const rawTextResponseHeader = this.getAllResponseHeaders();
 
                 // Convert the header string into an array  of individual headers
 
-                var arr = rawTextResponseHeader.trim().split(/[\r\n]+/);
+                const arr = rawTextResponseHeader.trim().split(/[\r\n]+/);
 
                 // Create a map of header names to values
-                var headerMap = {};
+                const headerMap = {};
 
                 arr.forEach(function (line) {
 
-                    var parts = line.split(': ');
-                    var header = parts.shift();
-                    var value = parts.join(': ');
+                    const parts = line.split(': ');
+                    const header = parts.shift();
+                    const value = parts.join(': ');
 
                     headerMap[header] = value;
 
@@ -484,12 +482,12 @@ function xhrInit (api, config, path, method) {
 
                 if (this.readyState === 4) {
 
-                    var outputResponse = {
+                    const outputResponse = {
                         "data": setRespondData(this.response, headerMap, config),
                         "header": headerMap,
                         "status": this.status
                     };
-                    var dataResponse = config.setResponse(outputResponse);
+                    const dataResponse = config.setResponse(outputResponse);
 
                     if (_stk.getTypeof(dataResponse) === "json") {
 
@@ -505,7 +503,7 @@ function xhrInit (api, config, path, method) {
 
             };
 
-            var dataRequest = config.setRequest({
+            const dataRequest = config.setRequest({
 
                 "data": config.data,
                 "header": config.header
@@ -651,9 +649,10 @@ function requestApi (config) {
  */
 function loaderApi (api, config, subconfig, path, method) {
 
-    var defaultPath =getSegmentPath(api.detail, path);
+    console.log(api, config, subconfig, path, method,"::::")
+    const defaultPath =getSegmentPath(api.detail, path);
 
-    var defaultRequestDefaultConfig = getRequestDefaultConfig(config, subconfig, method);
+    const defaultRequestDefaultConfig = getRequestDefaultConfig(config, subconfig, method);
 
     if (urs.isHttpProtocolValid(defaultPath) === false) {
 
@@ -820,15 +819,17 @@ Requests.prototype.patch =function (path, subconfig) {
  */
 function singleRequest (details, config) {
 
-    var validHttp = urs.isHttps(details.hostArgument);
+    const validHttp = urs.isHttps(details.hostArgument);
 
-    var api = requestApi({
+    const api = requestApi({
         "detail": details,
         "isHttps": validHttp
 
     });
 
-    var init = new Requests(api, config);
+    console.log(api, ":api", config);
+
+    const init = new Requests(api, config);
 
     return init;
 
@@ -848,19 +849,19 @@ function singleRequest (details, config) {
  */
 function configRequest (config) {
 
-    var host = hostDetails();
-    var detailsExtend = _stk.varExtend(host, config);
+    const host = hostDetails();
+    const detailsExtend = _stk.varExtend(host, config);
 
-    var details = domainDetails(detailsExtend.baseUrl);
+    const details = domainDetails(detailsExtend.baseUrl);
 
-    var validHttp = urs.isHttps(details.baseUrl);
-
-    var api = requestApi({
+    const validHttp = urs.isHttps(details.baseUrl);
+    console.log(details, validHttp, ":requestApi");
+    const api = requestApi({
         "detail": details,
         "isHttps": validHttp
     });
 
-    var init = new Requests(api, config);
+    const init = new Requests(api, config);
 
     return init;
 
@@ -881,18 +882,18 @@ function configRequest (config) {
  */
 function amdLocal (url, config) {
 
-    var isValidExt = false;
-    var zero = 0;
+    let isValidExt = false;
+    const zero = 0;
 
     if (typeof document !== "undefined") {
 
-        var headHtm = document.getElementsByTagName('head');
+        const headHtm = document.getElementsByTagName('head');
 
         if (urs.isUrlExtValid(url, "js")) {
 
             isValidExt = true;
-            var ps = document.createElement('script');
-            var script = document.getElementsByTagName('script');
+            const ps = document.createElement('script');
+            const script = document.getElementsByTagName('script');
 
             ps.type = 'text/javascript';
             ps.src = url;
@@ -928,7 +929,7 @@ function amdLocal (url, config) {
 
             if (headHtm.length > zero) {
 
-                var link = document.createElement("link");
+                const link = document.createElement("link");
 
                 link.type = "text/css";
                 link.rel = "stylesheet";
@@ -1003,10 +1004,11 @@ function handleCallback (data, config) {
  * // => Promise<any>
  */
 
-gtk.Get=function (url, config) {
+gtk.get=function (url, config) {;
 
-    var details = domainDetails(url);
-    var init = singleRequest(details, config);
+    const details = domainDetails(url);
+
+    const init = singleRequest(details, config);
 
     return init.get(url, config);
 
@@ -1026,10 +1028,10 @@ gtk.Get=function (url, config) {
  * // => Promise<any>
  */
 
-gtk.Delete=function (url, config) {
+gtk.delete=function (url, config) {;
 
-    var details = domainDetails(url);
-    var init = singleRequest(details, config);
+    const details = domainDetails(url);
+    const init = singleRequest(details, config);
 
     return init.delete(url, config);
 
@@ -1049,10 +1051,10 @@ gtk.Delete=function (url, config) {
  * // => Promise<any>
  */
 
-gtk.Post=function (url, config) {
+gtk.post=function (url, config) {;
 
-    var details = domainDetails(url);
-    var init = singleRequest(details, config);
+    const details = domainDetails(url);
+    const init = singleRequest(details, config);
 
     return init.post(url, config);
 
@@ -1072,10 +1074,10 @@ gtk.Post=function (url, config) {
  * // => Promise<any>
  */
 
-gtk.Options=function (url, config) {
+gtk.options=function (url, config) {;
 
-    var details = domainDetails(url);
-    var init = singleRequest(details, config);
+    const details = domainDetails(url);
+    const init = singleRequest(details, config);
 
     return init.options(url, config);
 
@@ -1095,10 +1097,10 @@ gtk.Options=function (url, config) {
  * // => Promise<any>
  */
 
-gtk.Put=function (url, config) {
+gtk.Put=function (url, config) {;
 
-    var details = domainDetails(url);
-    var init = singleRequest(details, config);
+    const details = domainDetails(url);
+    const init = singleRequest(details, config);
 
     return init.put(url, config);
 
@@ -1118,10 +1120,10 @@ gtk.Put=function (url, config) {
  * // => Promise<any>
  */
 
-gtk.Patch=function (url, config) {
+gtk.patch=function (url, config) {;
 
-    var details = domainDetails(url);
-    var init = singleRequest(details, config);
+    const details = domainDetails(url);
+    const init = singleRequest(details, config);
 
     return init.patch(url);
 
@@ -1140,9 +1142,9 @@ gtk.Patch=function (url, config) {
  * // => Promise<any>
  */
 
-gtk.initialize=function (config) {
+gtk.initialize=function (config) {;
 
-    var init = configRequest(config);
+    const init = configRequest(config);
 
     return init;
 
@@ -1162,7 +1164,7 @@ gtk.initialize=function (config) {
  * // => Promise<any>
  */
 
-gtk.importScipt=function (url, config) {
+gtk.importScipt=function (url, config) {;
 
     if (typeof document !== "undefined") {
 

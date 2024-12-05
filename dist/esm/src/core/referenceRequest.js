@@ -1,16 +1,16 @@
-import {isAjax, isNodejsEnv} from './verifyEnv';
+import {isAjax, isNodejsEnv} from './verifyEnv.js';
 
-import DummyReq from '../structure/dummyReq';
+import DummyReq from '../structure/dummyReq.js';
 
-import adapterHttp from '../adapter/http';
+import adapterHttp from '../adapter/http.js';
 
-import adapterXhr from '../adapter/xhr';
+import adapterXhr from '../adapter/xhr.js';
 
 import http from 'http';
 
 import https from 'https';
 
-import {getSegmentPath, getRequestDefaultConfig} from '../core/getType';
+import {getSegmentPath, getRequestDefaultConfig} from '../core/getType.js';
 
 import {isHttpProtocolValid} from 'url-assist';
 
@@ -99,6 +99,7 @@ function requestApi (config) {
  */
 function loaderApi (api, config, subconfig, path, method) {
 
+    console.log(api, config, subconfig, path, method,"::::")
     const defaultPath =getSegmentPath(api.detail, path);
 
     const defaultRequestDefaultConfig = getRequestDefaultConfig(config, subconfig, method);

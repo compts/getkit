@@ -30,15 +30,17 @@
   "homepage": "https://getkit.codehyouka.xyz",
   "dependencies": {
     "structkit": "^1.4.843",
-    "url-assist":"^1.2.1",
-    "tsd": "^0.19.1"
+    "tsd": "^0.19.1",
+    "url-assist": "^1.2.1"
   },
   "devDependencies": {
     "@types/node": "^17.0.22",
     "eslint": "^7.13.0",
     "eslint-config-strongloop": "^2.1.0",
     "esm": "^3.2.25",
+    "express": "^4.21.1",
     "jest": "^27.5.1",
-    "mocha": "^5.2.0"
+    "mocha": "^5.2.0",
+    "supertest": "^7.0.0"
   }
 }

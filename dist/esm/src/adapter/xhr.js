@@ -1,8 +1,8 @@
 import {each, getTypeof} from 'structkit';
 
-import {setRequestParameter} from '../lib/request';
+import {setRequestParameter} from '../lib/request.js';
 
-import {setRespondData} from '../lib/response';
+import {setRespondData} from '../lib/response.js';
 
 /**
  * Check if object or value

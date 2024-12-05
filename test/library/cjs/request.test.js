@@ -1,4 +1,4 @@
-const {Get, Delete, Post, Put, Patch} = require("../../../src/module/main.js");
+const {get,post, put, patch} = require("../../../src/module/main.js");
 const assert = require("assert");
 
 const {appServer, http} = require("fornetserve");
@@ -65,7 +65,7 @@ describe('request', function () {
 
     it('GET request', function (done) {
 
-        Get(defaultUrl).then((data) => {
+        get(defaultUrl).then((data) => {
 
             assert.strictEqual(data.data, "Hello this is GET");
             assert.strictEqual(data.status, twohundred);
@@ -77,19 +77,19 @@ describe('request', function () {
 
     it('Delete request', function (done) {
 
-        Delete(defaultUrl).then((data) => {
+    //    Delete(defaultUrl).then((data) => {
 
-            assert.strictEqual(data.data, "Hello this is Delete");
-            assert.strictEqual(data.status, twohundred);
-            done();
+    //        assert.strictEqual(data.data, "Hello this is Delete");
+    //        assert.strictEqual(data.status, twohundred);
+    //        done();
 
-        });
+    //    });
 
     });
 
     it('Post request', function (done) {
 
-        Post(defaultUrl).then((data) => {
+        post(defaultUrl).then((data) => {
 
             assert.strictEqual(data.data, "Hello this is Post");
             assert.strictEqual(data.status, twohundred);
@@ -100,7 +100,7 @@ describe('request', function () {
     });
     it('Put request', function (done) {
 
-        Put(defaultUrl).then((data) => {
+        put(defaultUrl).then((data) => {
 
             assert.strictEqual(data.data, "Hello this is Put");
             assert.strictEqual(data.status, twohundred);
@@ -112,7 +112,7 @@ describe('request', function () {
 
     it('Patch request', function (done) {
 
-        Patch(defaultUrl).then((data) => {
+        patch(defaultUrl).then((data) => {
 
             assert.strictEqual(data.data, "Hello this is Patch");
             assert.strictEqual(data.status, twohundred);

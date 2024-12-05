@@ -1,4 +1,4 @@
-import {loaderApi} from '../core/referenceRequest';
+import {loaderApi} from '../core/referenceRequest.js';
 
 /**
  * A getkit intiator

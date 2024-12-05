@@ -19,6 +19,7 @@ const {amdLocal} = require("../core/importScript");
 exports.get = function (url, config) {
 
     const details = domainDetails(url);
+
     const init = singleRequest(details, config);
 
     return init.get(url, config);

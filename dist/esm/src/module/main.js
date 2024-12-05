@@ -1,8 +1,8 @@
-import {singleRequest, configRequest} from '../core/bootloader';
+import {singleRequest, configRequest} from '../core/bootloader.js';
 
-import {domainDetails, getSegmentPath} from '../core/getType';
+import {domainDetails, getSegmentPath} from '../core/getType.js';
 
-import {amdLocal} from '../core/importScript';
+import {amdLocal} from '../core/importScript.js';
 
 /**
  * Request Get
@@ -17,9 +17,10 @@ import {amdLocal} from '../core/importScript';
  * Get('/')
  * // => Promise<any>
  */
-const Get = function (url, config) {
+const get = function (url, config) {
 
     const details = domainDetails(url);
+
     const init = singleRequest(details, config);
 
     return init.get(url, config);
@@ -39,7 +40,7 @@ const Get = function (url, config) {
  * Delete('/')
  * // => Promise<any>
  */
-const Delete = function (url, config) {
+const delete = function (url, config) {
 
     const details = domainDetails(url);
     const init = singleRequest(details, config);
@@ -61,7 +62,7 @@ const Delete = function (url, config) {
  * Post('/')
  * // => Promise<any>
  */
-const Post = function (url, config) {
+const post = function (url, config) {
 
     const details = domainDetails(url);
     const init = singleRequest(details, config);
@@ -83,7 +84,7 @@ const Post = function (url, config) {
  * Options('/')
  * // => Promise<any>
  */
-const Options = function (url, config) {
+const options = function (url, config) {
 
     const details = domainDetails(url);
     const init = singleRequest(details, config);
@@ -127,7 +128,7 @@ const Put = function (url, config) {
  * Patch('/')
  * // => Promise<any>
  */
-const Patch = function (url, config) {
+const patch = function (url, config) {
 
     const details = domainDetails(url);
     const init = singleRequest(details, config);
@@ -183,4 +184,4 @@ const importScipt = function (url, config) {
 
 };
 
-export {Get,Delete,Post,Options,Put,Patch,initialize,importScipt};
+export {get,delete,post,options,Put,patch,initialize,importScipt};

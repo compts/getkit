@@ -1,10 +1,10 @@
-import {domainDetails, hostDetails} from './getType';
+import {domainDetails, hostDetails} from './getType.js';
 
 import {isHttps} from 'url-assist';
 
-import {requestApi} from './referenceRequest';
+import {requestApi} from './referenceRequest.js';
 
-import Requests from '../structure/request';
+import Requests from '../structure/request.js';
 
 import {varExtend} from 'structkit';
 
@@ -30,6 +30,8 @@ function singleRequest (details, config) {
         "isHttps": validHttp
 
     });
+
+    console.log(api, ":api", config);
 
     const init = new Requests(api, config);
 
@@ -57,7 +59,7 @@ function configRequest (config) {
     const details = domainDetails(detailsExtend.baseUrl);
 
     const validHttp = isHttps(details.baseUrl);
-
+    console.log(details, validHttp, ":requestApi");
     const api = requestApi({
         "detail": details,
         "isHttps": validHttp

@@ -66,7 +66,8 @@ function hostDetails () {
  */
 function getSegmentPath (config, path) {
 
-    if (config.hostArgument === path) {
+    console.log(isHttpProtocolValid(config.href),":Asd",config.href);    
+    if (config.href === path) {
 
         if (isHttpProtocolValid(path)) {
 
@@ -74,26 +75,23 @@ function getSegmentPath (config, path) {
 
         }
 
-        return config.protocol+"://"+path;
+        return joinUrlPath("https://", path);
 
     }
 
-    if (isHttpProtocolValid(config.hostArgument)) {
+    if (isHttpProtocolValid(path)) {
 
-        return joinUrlPath(config.hostArgument, path);
+        return path;
+
+    }
+
+    if (isHttpProtocolValid(config.href)) {
+
+        return config.href;
 
     }
 
-    let defaultPath = joinUrlPath(config.protocol+"://"+config.hostname, config.pathname);
-
-    if (isEmpty(config.port) === false) {
-
-        defaultPath += ":"+config.port;
-
-    }
-    defaultPath =joinUrlPath(defaultPath, path);
-
-    return defaultPath;
+    return joinUrlPath("https://", config.href, path);
 
 }
 
@@ -142,8 +140,8 @@ function getRequestDefaultConfig (config, subconfig, method) {
         initialConfig = varExtend(subconfig, config);
 
     }
-
-    const referenceValue = varExtend(referenceConfig, initialConfig);
+    console.log(referenceConfig,"::",initialConfig);
+    const referenceValue = Object.assign(referenceConfig, initialConfig);
 
     if (method !== "get") {
 
