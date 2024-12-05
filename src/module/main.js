@@ -16,7 +16,7 @@ const {amdLocal} = require("../core/importScript");
  * Get('/')
  * // => Promise<any>
  */
-exports.get = function (url, config) {
+exports.nget = function (url, config) {
 
     const details = domainDetails(url);
 
@@ -39,7 +39,7 @@ exports.get = function (url, config) {
  * Delete('/')
  * // => Promise<any>
  */
-exports.delete = function (url, config) {
+exports.ndelete = function (url, config) {
 
     const details = domainDetails(url);
     const init = singleRequest(details, config);
@@ -61,7 +61,7 @@ exports.delete = function (url, config) {
  * Post('/')
  * // => Promise<any>
  */
-exports.post = function (url, config) {
+exports.npost = function (url, config) {
 
     const details = domainDetails(url);
     const init = singleRequest(details, config);
@@ -83,7 +83,7 @@ exports.post = function (url, config) {
  * Options('/')
  * // => Promise<any>
  */
-exports.options = function (url, config) {
+exports.noptions = function (url, config) {
 
     const details = domainDetails(url);
     const init = singleRequest(details, config);
@@ -105,7 +105,7 @@ exports.options = function (url, config) {
  * Put('/')
  * // => Promise<any>
  */
-exports.Put = function (url, config) {
+exports.nput = function (url, config) {
 
     const details = domainDetails(url);
     const init = singleRequest(details, config);
@@ -127,7 +127,7 @@ exports.Put = function (url, config) {
  * Patch('/')
  * // => Promise<any>
  */
-exports.patch = function (url, config) {
+exports.npatch = function (url, config) {
 
     const details = domainDetails(url);
     const init = singleRequest(details, config);
@@ -142,7 +142,7 @@ exports.patch = function (url, config) {
  * @since 1.0.1
  * @category request
  * @param {any} [config] The request config
- * @returns {Promise<any>} Returns Promise for response.
+ * @returns {any} Returns Promise for response.
  * @example
  *
  * initialize({"baseUrl": "http://localhost:4040/"})

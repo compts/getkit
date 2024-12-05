@@ -132,11 +132,11 @@ function getRequestDefaultConfig (config, subconfig, method) {
 
     };
 
-    let initialConfig = _stk.varExtend(config, subconfig);
+    let initialConfig = Object.assign(config, subconfig);//_stk.varExtend(config, subconfig);
 
     if (_stk.has(subconfig)) {
 
-        initialConfig = _stk.varExtend(subconfig, config);
+        initialConfig = Object.assign(subconfig, config); //_stk.varExtend(subconfig, config);
 
     }
     console.log(referenceConfig,"::",initialConfig);
@@ -1004,7 +1004,7 @@ function handleCallback (data, config) {
  * // => Promise<any>
  */
 
-gtk.get=function (url, config) {;
+gtk.nget=function (url, config) {;
 
     const details = domainDetails(url);
 
@@ -1028,7 +1028,7 @@ gtk.get=function (url, config) {;
  * // => Promise<any>
  */
 
-gtk.delete=function (url, config) {;
+gtk.ndelete=function (url, config) {;
 
     const details = domainDetails(url);
     const init = singleRequest(details, config);
@@ -1051,7 +1051,7 @@ gtk.delete=function (url, config) {;
  * // => Promise<any>
  */
 
-gtk.post=function (url, config) {;
+gtk.npost=function (url, config) {;
 
     const details = domainDetails(url);
     const init = singleRequest(details, config);
@@ -1074,7 +1074,7 @@ gtk.post=function (url, config) {;
  * // => Promise<any>
  */
 
-gtk.options=function (url, config) {;
+gtk.noptions=function (url, config) {;
 
     const details = domainDetails(url);
     const init = singleRequest(details, config);
@@ -1097,7 +1097,7 @@ gtk.options=function (url, config) {;
  * // => Promise<any>
  */
 
-gtk.Put=function (url, config) {;
+gtk.nput=function (url, config) {;
 
     const details = domainDetails(url);
     const init = singleRequest(details, config);
@@ -1120,7 +1120,7 @@ gtk.Put=function (url, config) {;
  * // => Promise<any>
  */
 
-gtk.patch=function (url, config) {;
+gtk.npatch=function (url, config) {;
 
     const details = domainDetails(url);
     const init = singleRequest(details, config);
@@ -1135,7 +1135,7 @@ gtk.patch=function (url, config) {;
  * @since 1.0.1
  * @category request
  * @param {any} [config] The request config
- * @returns {Promise<any>} Returns Promise for response.
+ * @returns {any} Returns Promise for response.
  * @example
  *
  * initialize({"baseUrl": "http://localhost:4040/"})

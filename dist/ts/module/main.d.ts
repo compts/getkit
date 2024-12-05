@@ -11,7 +11,7 @@
  * Get('/')
  * // => Promise<any>
  */
-export function Get(url: string, config?: any): Promise<any>;
+export function nget(url: string, config?: any): Promise<any>;
 /**
  * Request Delete
  *
@@ -25,7 +25,7 @@ export function Get(url: string, config?: any): Promise<any>;
  * Delete('/')
  * // => Promise<any>
  */
-export function Delete(url: string, config?: any): Promise<any>;
+export function ndelete(url: string, config?: any): Promise<any>;
 /**
  * Request Post
  *
@@ -39,7 +39,7 @@ export function Delete(url: string, config?: any): Promise<any>;
  * Post('/')
  * // => Promise<any>
  */
-export function Post(url: string, config?: any): Promise<any>;
+export function npost(url: string, config?: any): Promise<any>;
 /**
  * Request Options
  *
@@ -53,7 +53,7 @@ export function Post(url: string, config?: any): Promise<any>;
  * Options('/')
  * // => Promise<any>
  */
-export function Options(url: string, config?: any): Promise<any>;
+export function noptions(url: string, config?: any): Promise<any>;
 /**
  * Request Put
  *
@@ -67,7 +67,7 @@ export function Options(url: string, config?: any): Promise<any>;
  * Put('/')
  * // => Promise<any>
  */
-export function Put(url: string, config?: any): Promise<any>;
+export function nput(url: string, config?: any): Promise<any>;
 /**
  * Request Patch
  *
@@ -81,20 +81,20 @@ export function Put(url: string, config?: any): Promise<any>;
  * Patch('/')
  * // => Promise<any>
  */
-export function Patch(url: string, config?: any): Promise<any>;
+export function npatch(url: string, config?: any): Promise<any>;
 /**
  * Request initialize
  *
  * @since 1.0.1
  * @category request
  * @param {any} [config] The request config
- * @returns {Promise<any>} Returns Promise for response.
+ * @returns {any} Returns Promise for response.
  * @example
  *
  * initialize({"baseUrl": "http://localhost:4040/"})
  * // => Promise<any>
  */
-export function initialize(config?: any): Promise<any>;
+export function initialize(config?: any): any;
 /**
  * Importing JS in CDN, this is experimental feature
  *

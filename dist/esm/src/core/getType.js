@@ -133,11 +133,11 @@ function getRequestDefaultConfig (config, subconfig, method) {
 
     };
 
-    let initialConfig = varExtend(config, subconfig);
+    let initialConfig = Object.assign(config, subconfig);//varExtend(config, subconfig);
 
     if (has(subconfig)) {
 
-        initialConfig = varExtend(subconfig, config);
+        initialConfig = Object.assign(subconfig, config); //varExtend(subconfig, config);
 
     }
     console.log(referenceConfig,"::",initialConfig);

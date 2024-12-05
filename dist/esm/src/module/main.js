@@ -17,7 +17,7 @@ import {amdLocal} from '../core/importScript.js';
  * Get('/')
  * // => Promise<any>
  */
-const get = function (url, config) {
+const nget = function (url, config) {
 
     const details = domainDetails(url);
 
@@ -40,7 +40,7 @@ const get = function (url, config) {
  * Delete('/')
  * // => Promise<any>
  */
-const delete = function (url, config) {
+const ndelete = function (url, config) {
 
     const details = domainDetails(url);
     const init = singleRequest(details, config);
@@ -62,7 +62,7 @@ const delete = function (url, config) {
  * Post('/')
  * // => Promise<any>
  */
-const post = function (url, config) {
+const npost = function (url, config) {
 
     const details = domainDetails(url);
     const init = singleRequest(details, config);
@@ -84,7 +84,7 @@ const post = function (url, config) {
  * Options('/')
  * // => Promise<any>
  */
-const options = function (url, config) {
+const noptions = function (url, config) {
 
     const details = domainDetails(url);
     const init = singleRequest(details, config);
@@ -106,7 +106,7 @@ const options = function (url, config) {
  * Put('/')
  * // => Promise<any>
  */
-const Put = function (url, config) {
+const nput = function (url, config) {
 
     const details = domainDetails(url);
     const init = singleRequest(details, config);
@@ -128,7 +128,7 @@ const Put = function (url, config) {
  * Patch('/')
  * // => Promise<any>
  */
-const patch = function (url, config) {
+const npatch = function (url, config) {
 
     const details = domainDetails(url);
     const init = singleRequest(details, config);
@@ -143,7 +143,7 @@ const patch = function (url, config) {
  * @since 1.0.1
  * @category request
  * @param {any} [config] The request config
- * @returns {Promise<any>} Returns Promise for response.
+ * @returns {any} Returns Promise for response.
  * @example
  *
  * initialize({"baseUrl": "http://localhost:4040/"})
@@ -184,4 +184,4 @@ const importScipt = function (url, config) {
 
 };
 
-export {get,delete,post,options,Put,patch,initialize,importScipt};
+export {nget,ndelete,npost,noptions,nput,npatch,initialize,importScipt};
