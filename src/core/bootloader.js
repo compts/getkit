@@ -55,7 +55,7 @@ function configRequest (config) {
     const details = domainDetails(detailsExtend.baseUrl);
 
     const validHttp = isHttps(details.baseUrl);
-    console.log(details, validHttp, ":requestApi");
+
     const api = requestApi({
         "detail": details,
         "isHttps": validHttp

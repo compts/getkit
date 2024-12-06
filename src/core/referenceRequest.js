@@ -97,7 +97,6 @@ function requestApi (config) {
  */
 function loaderApi (api, config, subconfig, path, method) {
 
-    console.log(api, config, subconfig, path, method,"::::")
     const defaultPath =getSegmentPath(api.detail, path);
 
     const defaultRequestDefaultConfig = getRequestDefaultConfig(config, subconfig, method);

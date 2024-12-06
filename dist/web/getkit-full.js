@@ -65,7 +65,6 @@ function hostDetails () {
  */
 function getSegmentPath (config, path) {
 
-    console.log(urs.isHttpProtocolValid(config.href),":Asd",config.href);    
     if (config.href === path) {
 
         if (urs.isHttpProtocolValid(path)) {
@@ -74,7 +73,7 @@ function getSegmentPath (config, path) {
 
         }
 
-        return urs.joinUrlPath("https://", path);
+        return urs.joinUrlPath(config.protocol+":/", path);
 
     }
 
@@ -90,7 +89,7 @@ function getSegmentPath (config, path) {
 
     }
 
-    return urs.joinUrlPath("https://", config.href, path);
+    return urs.joinUrlPath(config.protocol+":/", config.href, path);
 
 }
 
@@ -132,15 +131,15 @@ function getRequestDefaultConfig (config, subconfig, method) {
 
     };
 
-    let initialConfig = Object.assign(config, subconfig);//_stk.varExtend(config, subconfig);
+    let initialConfig = _stk.varExtend(config, subconfig);
 
     if (_stk.has(subconfig)) {
 
-        initialConfig = Object.assign(subconfig, config); //_stk.varExtend(subconfig, config);
+        initialConfig = _stk.varExtend(subconfig, config);
 
     }
-    console.log(referenceConfig,"::",initialConfig);
-    const referenceValue = Object.assign(referenceConfig, initialConfig);
+
+    const referenceValue = _stk.varExtend(referenceConfig, initialConfig);
 
     if (method !== "get") {
 
@@ -855,7 +854,7 @@ function configRequest (config) {
     const details = domainDetails(detailsExtend.baseUrl);
 
     const validHttp = urs.isHttps(details.baseUrl);
-    console.log(details, validHttp, ":requestApi");
+
     const api = requestApi({
         "detail": details,
         "isHttps": validHttp
