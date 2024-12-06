@@ -27,8 +27,6 @@ function singleRequest (details, config) {
 
     });
 
-    console.log(api, ":api", config);
-
     const init = new Requests(api, config);
 
     return init;

@@ -89,7 +89,7 @@ function getSegmentPath (config, path) {
 
     if (isHttpProtocolValid(config.href)) {
 
-        return config.href;
+        return joinUrlPath(config.href, path);
 
     }
 

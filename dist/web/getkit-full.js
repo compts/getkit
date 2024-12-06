@@ -85,7 +85,7 @@ function getSegmentPath (config, path) {
 
     if (urs.isHttpProtocolValid(config.href)) {
 
-        return config.href;
+        return urs.joinUrlPath(config.href, path);
 
     }
 
@@ -824,8 +824,6 @@ function singleRequest (details, config) {
         "isHttps": validHttp
 
     });
-
-    console.log(api, ":api", config);
 
     const init = new Requests(api, config);
 
