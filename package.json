@@ -31,6 +31,7 @@
   "dependencies": {
     "structkit": "^1.4.843",
     "tsd": "^0.19.1",
+    "typescript": "^5.7.2",
     "url-assist": "^1.2.1"
   },
   "devDependencies": {
