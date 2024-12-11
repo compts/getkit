@@ -1,8 +1,10 @@
-import {each, getTypeof} from 'structkit';
+import {each, getTypeof, isEmpty} from 'structkit';
 
 import {setRequestParameter} from '../lib/request.js';
 
 import {setRespondData} from '../lib/response.js';
+
+import {qsStringify} from 'url-assist';
 
 /**
  * Check if object or value
@@ -43,6 +45,14 @@ function setRequestHeader (xhttp, header) {
  * // => {'as':2}
  */
 function xhrInit (api, config, path, method) {
+
+    let definePath = path;
+
+    if (isEmpty(config.query) === false) {
+
+        definePath = definePath+"/?"+qsStringify(config.query);
+
+    }
 
     const xhttp = api.class;
 
@@ -103,7 +113,7 @@ function xhrInit (api, config, path, method) {
 
             });
 
-            xhttp.open(method, path, method !== "get");
+            xhttp.open(method, definePath, method !== "get");
 
             if (getTypeof(dataRequest) ==="json") {
 
@@ -114,13 +124,14 @@ function xhrInit (api, config, path, method) {
                 setRequestHeader(xhttp, config.header);
 
             }
-           // xhttp.timeout = config.timeout;
+            // Sxhttp.timeout = config.timeout;
 
-           // xhttp.ontimeout = function (e) {
-                // XMLHttpRequest timed out. Do something here.
-           // };
+            // Sxhttp.ontimeout = function (e) {
 
-           
+            // XMLHttpRequest timed out. Do something here.
+
+            // S};
+
             if (getTypeof(config.onDownloadProgress) === "function") {
 
                 xhttp.addEventListener('progress', config.onDownloadProgress);

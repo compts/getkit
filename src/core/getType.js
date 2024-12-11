@@ -120,6 +120,7 @@ function getRequestDefaultConfig (config, subconfig, method) {
         "isJson": false,
         "onDownloadProgress": null,
         "onUploadProgress": null,
+        "query": {},
         "timeout": 0,
         "withCredential": false
     };

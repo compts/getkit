@@ -115,6 +115,7 @@ function getRequestDefaultConfig (config, subconfig, method) {
         "isJson": false,
         "onDownloadProgress": null,
         "onUploadProgress": null,
+        "query": {},
         "timeout": 0,
         "withCredential": false
     };
@@ -340,6 +341,12 @@ function httpInit (api, config, path, methods) {
 
     };
 
+    if (_stk.isEmpty(config.query)) {
+
+        options.qs = config.query;
+
+    }
+
     const dataRequest = config.setRequest({
 
         "data": config.data,
@@ -450,6 +457,14 @@ function setRequestHeader (xhttp, header) {
  */
 function xhrInit (api, config, path, method) {
 
+    let definePath = path;
+
+    if (_stk.isEmpty(config.query) === false) {
+
+        definePath = definePath+"/?"+urs.qsStringify(config.query);
+
+    }
+
     const xhttp = api.class;
 
     const myPromise = new Promise((resolve, reject) => {
@@ -509,7 +524,7 @@ function xhrInit (api, config, path, method) {
 
             });
 
-            xhttp.open(method, path, method !== "get");
+            xhttp.open(method, definePath, method !== "get");
 
             if (_stk.getTypeof(dataRequest) ==="json") {
 
@@ -520,13 +535,14 @@ function xhrInit (api, config, path, method) {
                 setRequestHeader(xhttp, config.header);
 
             }
-           // xhttp.timeout = config.timeout;
+            // Sxhttp.timeout = config.timeout;
 
-           // xhttp.ontimeout = function (e) {
-                // XMLHttpRequest timed out. Do something here.
-           // };
+            // Sxhttp.ontimeout = function (e) {
 
-           
+            // XMLHttpRequest timed out. Do something here.
+
+            // S};
+
             if (_stk.getTypeof(config.onDownloadProgress) === "function") {
 
                 xhttp.addEventListener('progress', config.onDownloadProgress);

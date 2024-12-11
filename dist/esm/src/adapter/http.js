@@ -1,6 +1,6 @@
 import {domainDetails} from '../core/getType.js';
 
-import {getTypeof} from 'structkit';
+import {getTypeof, isEmpty} from 'structkit';
 
 import {setRequestParameter} from '../lib/request.js';
 
@@ -35,6 +35,12 @@ function httpInit (api, config, path, methods) {
         "port": detail.port
 
     };
+
+    if (isEmpty(config.query)) {
+
+        options.qs = config.query;
+
+    }
 
     const dataRequest = config.setRequest({
 

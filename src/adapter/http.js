@@ -1,5 +1,5 @@
 const {domainDetails} = require("../core/getType");
-const {getTypeof} = require("structkit");
+const {getTypeof, isEmpty} = require("structkit");
 const {setRequestParameter} = require("../lib/request");
 const {setRespondData} = require("../lib/response");
 
@@ -33,6 +33,12 @@ function httpInit (api, config, path, methods) {
 
 
     };
+
+    if (isEmpty(config.query)) {
+
+        options.qs = config.query;
+
+    }
 
     const dataRequest = config.setRequest({
 
