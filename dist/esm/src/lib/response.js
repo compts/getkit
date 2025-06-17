@@ -16,7 +16,9 @@ import {indexOf} from 'structkit';
  */
 function setRespondData (param, header, config) {
 
-    if (indexOf(["application/json"], header["content-type"]?header["content-type"].toLowerCase():"") >= 0) {
+    if (indexOf(["application/json"], header["content-type"]
+        ?header["content-type"].toLowerCase()
+        :"") >= 0) {
 
         return JSON.parse(param.trim());
 

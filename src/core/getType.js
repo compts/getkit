@@ -1,4 +1,4 @@
-const {isEmpty, has, varExtend} = require("structkit");
+const {has, varExtend} = require("structkit");
 const {getHostDetails, isHttpProtocolValid, joinUrlPath} = require("url-assist");
 
 

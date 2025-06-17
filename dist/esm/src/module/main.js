@@ -1,6 +1,6 @@
 import {singleRequest, configRequest} from '../core/bootloader.js';
 
-import {domainDetails, getSegmentPath} from '../core/getType.js';
+import {domainDetails} from '../core/getType.js';
 
 import {amdLocal} from '../core/importScript.js';
 

@@ -1,4 +1,4 @@
-import {isEmpty, has, varExtend} from 'structkit';
+import {has, varExtend} from 'structkit';
 
 import {getHostDetails, isHttpProtocolValid, joinUrlPath} from 'url-assist';
 

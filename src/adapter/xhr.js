@@ -18,7 +18,7 @@ const {qsStringify} = require("url-assist");
  */
 function setRequestHeader (xhttp, header) {
 
-    each(header, function (key, val) {
+    each(header, function (val, key) {
 
         xhttp.setRequestHeader(key, val);
 

@@ -1,5 +1,5 @@
 const {singleRequest, configRequest} = require("../core/bootloader");
-const {domainDetails, getSegmentPath} = require("../core/getType");
+const {domainDetails} = require("../core/getType");
 const {amdLocal} = require("../core/importScript");
 
 

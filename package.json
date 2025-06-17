@@ -29,10 +29,8 @@
   },
   "homepage": "https://getkit.codehyouka.xyz",
   "dependencies": {
-    "structkit": "^1.4.843",
-    "tsd": "^0.19.1",
-    "typescript": "^5.7.2",
-    "url-assist": "^1.2.1"
+    "structkit": "^1.4.871",
+    "url-assist": "^1.2.7"
   },
   "devDependencies": {
     "@types/node": "^20.5.9",
@@ -42,6 +40,8 @@
     "express": "^4.21.1",
     "jest": "^27.5.1",
     "mocha": "^5.2.0",
-    "supertest": "^7.0.0"
+    "supertest": "^7.0.0",
+    "typescript": "^5.7.2",
+    "tsd": "^0.19.1"
   }
 }
