@@ -48,26 +48,55 @@ const routes = {
     }
 };
 
-const server = http.createServer((req, res) => {
+function startServer () {
 
-    const {method} = req;
-    const {url} = req;
+    const server = http.createServer((req, res) => {
 
-    if (routes[method] && routes[method][url]) {
+        const {method} = req;
+        const {url} = req;
 
-        routes[method][url](req, res);
+        if (routes[method] && routes[method][url]) {
 
-    } else {
+            routes[method][url](req, res);
 
-        res.writeHead(404, {'Content-Type': 'text/plain'});
-        res.end('Not Found');
+        } else {
 
-    }
+            res.writeHead(404, {'Content-Type': 'text/plain'});
+            res.end('Not Found');
 
-});
+        }
 
-server.listen(3000, () => {
+    });
+
+    return server;
+
+}
+
+exports.startServer = startServer;
+
+
+function listenServer (server) {
+    server.listen(3000, () => {
 
     console.log('Server running at http://localhost:3000/');
 
 });
+}
+
+exports.listenServer = listenServer;
+
+
+function stopServer (server) {
+    
+    if (server) {
+
+        if (typeof server.closeAllConnections === 'function' ) {
+            server.closeAllConnections()
+        }
+
+        server.close();
+
+    }
+}
+
+exports.stopServer = stopServer;

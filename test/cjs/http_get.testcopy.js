@@ -1,10 +1,9 @@
 const {nget} = require("../../src/module/main");
 const {startServer, listenServer, stopServer} = require("../packager/server");
-// Let request = require("supertest");
-
 
 const assert = require("assert");
 const server = startServer();
+
 
 
 const host = "http://0.0.0.0:3000/";
@@ -12,7 +11,6 @@ const host = "http://0.0.0.0:3000/";
 describe('CJS: NGET than method', function () {
 
     listenServer(server);
-    // Const request_test = request(server);
 
     it('should return a response for a valid GET request', async function () {
 
@@ -56,5 +54,6 @@ describe('CJS: NGET than method', function () {
 
     });
 
+    stopServer(server);
 
 });
