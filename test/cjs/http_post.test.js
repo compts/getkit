@@ -1,4 +1,4 @@
-const {nget} = require("../../src/module/main");
+const {npost} = require("../../src/module/main");
 const {startServer, listenServer, stopServer} = require("../packager/server");
 // Let request = require("supertest");
 
@@ -7,16 +7,16 @@ const assert = require("assert");
 const server = startServer();
 
 
-const host = "http://0.0.0.0:3000/";
+const host = "http://0.0.0.0:3001/";
 
-describe('CJS: NGET than method', function () {
+describe('CJS: NPOST than method', function () {
 
-    listenServer(server, 3000);
+    listenServer(server, 3001);
     // Const request_test = request(server);
 
     it('should return a response for a valid GET request', async function () {
 
-        const response = await nget(host);
+        const response = await npost(host);
 
         assert(response, "Expected a response object");
 
@@ -26,7 +26,7 @@ describe('CJS: NGET than method', function () {
 
         try {
 
-            await nget("http://invalidhost:9999/");
+            await npost("http://invalidhost:9999/");
             assert.fail("Expected error was not thrown");
 
         } catch (err) {
@@ -39,7 +39,7 @@ describe('CJS: NGET than method', function () {
 
     it('should return status 200 for a valid endpoint', async function () {
 
-        const response = await nget(host);
+        const response = await npost(host);
 
         assert.strictEqual(response.status, 200, "Expected status 200");
 
@@ -47,7 +47,7 @@ describe('CJS: NGET than method', function () {
 
     it('should return JSON data if endpoint returns JSON', async function () {
 
-        const response = await nget(host + "api", {"isJson": true});
+        const response = await npost(host + "api", {"isJson": true});
 
         assert(response.header['content-type'].includes('application/json'), "Expected JSON response");
         const {data} = response;
