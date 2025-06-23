@@ -6,10 +6,11 @@
   "module": "dist/esm/src/module/main.js",
   "types": "dist/ts/module/main.d.ts",
   "scripts": {
-    "es_linter": "eslint   src/module/*/*.js src/lib/*/*.js src/core/*.js *.js --fix",
+    "es_linter": "eslint   src/module/*.js src/lib/*.js src/core/*.js --fix",
     "test_esm": "mocha test/library/cjs/*.test.js --timeout 4000 --exit",
-    "test_cjs": "mocha test/library/cjs/*.test.js --timeout 4000 --exit",
+    "test_cjs": "mocha test/cjs/*.test.js --timeout 4000 --exit",
     "validate": "npm run style && npm run test",
+    "run_server": "node test/packager/server.js",
     "test": "jest"
   },
   "tsd": {
@@ -37,10 +38,10 @@
     "eslint": "^7.13.0",
     "eslint-config-strongloop": "^2.1.0",
     "esm": "^3.2.25",
-    "express": "^4.21.1",
+    "express": "^5.1.0",
     "jest": "^27.5.1",
     "mocha": "^5.2.0",
-    "supertest": "^7.0.0",
+    "supertest": "^7.1.1",
     "typescript": "^5.7.2",
     "tsd": "^0.19.1"
   }

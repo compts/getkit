@@ -1,0 +1,50 @@
+const {nget} = require("../../src/module/main");
+const assert = require("assert");
+
+const host = "http://0.0.0.0:3000/";
+
+describe('CJS: NGET than method', function () {
+
+    it('should return a response for a valid GET request', async function () {
+
+        const response = await nget(host);
+
+        assert(response, "Expected a response object");
+
+    });
+
+    it('should throw an error for an invalid URL', async function () {
+
+        try {
+
+            await nget("http://invalidhost:9999/");
+            assert.fail("Expected error was not thrown");
+
+        } catch (err) {
+
+            assert(err, "Expected an error to be thrown");
+
+        }
+
+    });
+
+    it('should return status 200 for a valid endpoint', async function () {
+
+        const response = await nget(host);
+
+        assert.strictEqual(response.status, 200, "Expected status 200");
+
+    });
+
+    it('should return JSON data if endpoint returns JSON', async function () {
+
+        const response = await nget(host + "api", {"isJson": true});
+
+        assert(response.header['content-type'].includes('application/json'), "Expected JSON response");
+        const {data} = response;
+
+        assert(data, "Expected response data");
+
+    });
+
+});

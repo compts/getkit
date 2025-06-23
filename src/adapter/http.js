@@ -1,4 +1,5 @@
 const {domainDetails} = require("../core/getType");
+const {appendPrefxPath} = require("../core/cleanup");
 const {getTypeof, isEmpty} = require("structkit");
 const {setRequestParameter} = require("../lib/request");
 const {setRespondData} = require("../lib/response");
@@ -28,7 +29,7 @@ function httpInit (api, config, path, methods) {
         "headers": config.header,
         "hostname": detail.hostname,
         "method": methods,
-        "path": detail.pathname,
+        "path": appendPrefxPath(detail.pathname),
         "port": detail.port
 
 

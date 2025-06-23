@@ -1,5 +1,7 @@
 import {domainDetails} from '../core/getType.js';
 
+import {appendPrefxPath} from '../core/cleanup.js';
+
 import {getTypeof, isEmpty} from 'structkit';
 
 import {setRequestParameter} from '../lib/request.js';
@@ -31,7 +33,7 @@ function httpInit (api, config, path, methods) {
         "headers": config.header,
         "hostname": detail.hostname,
         "method": methods,
-        "path": detail.pathname,
+        "path": appendPrefxPath(detail.pathname),
         "port": detail.port
 
     };

@@ -1,8 +1,8 @@
 
-const main = gtk.initialize({"baseUrl": "http://0.0.0.0:4040"});
+const main = gtk.initialize({"baseUrl": "http://0.0.0.0:3000"});
 
 
-gtk.nget("http://0.0.0.0:4040/api", {isJson:true,timeout:1000, setResponse:function(daa) { 
+gtk.nget("http://0.0.0.0:3000/api", {isJson:true,timeout:1000, setResponse:function(daa) { 
     
     daa.data = "gudnam";
     return daa;
@@ -14,7 +14,7 @@ gtk.nget("http://0.0.0.0:4040/api", {isJson:true,timeout:1000, setResponse:funct
 
  }}).then( function(data) {
     
-    //? console.log(data,"yahoo");
+     console.log(data,"yahoo");
 
 })
 .catch (function(data) {

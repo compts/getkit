@@ -15,22 +15,22 @@ function checkEnvironmentStatus () {
 
     let status = 0;
 
-    if (typeof XMLHttpRequest !== "undefined" && status === 0 ) {
+    if (typeof XMLHttpRequest !== "undefined" && status === 0) {
 
         status = 1;
 
     }
-    if (typeof ActiveXObject !== "undefined" && status === 0 ) {
+    if (typeof ActiveXObject !== "undefined" && status === 0) {
 
         status = 2;
 
     }
-    if (typeof XDomainRequest !== "undefined" && status === 0 ) {
+    if (typeof XDomainRequest !== "undefined" && status === 0) {
 
         status = 3;
 
     }
-    if (typeof process !== "undefined" && status === 0 ) {
+    if (typeof process !== "undefined" && status === 0) {
 
         status = 4;
 
@@ -53,7 +53,11 @@ function checkEnvironmentStatus () {
  */
 function isAjax () {
 
-    return indexOf([1, 2, 3], checkEnvironmentStatus())!==-1;
+    return indexOf([
+        1,
+        2,
+        3
+    ], checkEnvironmentStatus())!==-1;
 
 }
 

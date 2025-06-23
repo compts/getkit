@@ -28,7 +28,7 @@ function Requests (api, config) {
  * append({'as':1}, 'as',2)
  * // => {'as':2}
  */
-Requests.prototype.get =function (path, subconfig) {
+Requests.prototype.get = function (path, subconfig) {
 
     return loaderApi(this.api, this.config, subconfig, path, "get");
 
@@ -47,7 +47,7 @@ Requests.prototype.get =function (path, subconfig) {
  * append({'as':1}, 'as',2)
  * // => {'as':2}
  */
-Requests.prototype.delete =function (path, subconfig) {
+Requests.prototype.delete = function (path, subconfig) {
 
     return loaderApi(this.api, this.config, subconfig, path, "delete");
 
@@ -66,7 +66,7 @@ Requests.prototype.delete =function (path, subconfig) {
  * append({'as':1}, 'as',2)
  * // => {'as':2}
  */
-Requests.prototype.post =function (path, subconfig) {
+Requests.prototype.post = function (path, subconfig) {
 
     return loaderApi(this.api, this.config, subconfig, path, "post");
 
@@ -85,7 +85,7 @@ Requests.prototype.post =function (path, subconfig) {
  * append({'as':1}, 'as',2)
  * // => {'as':2}
  */
-Requests.prototype.options =function (path, subconfig) {
+Requests.prototype.options = function (path, subconfig) {
 
     return loaderApi(this.api, this.config, subconfig, path, "options");
 
@@ -104,7 +104,7 @@ Requests.prototype.options =function (path, subconfig) {
  * append({'as':1}, 'as',2)
  * // => {'as':2}
  */
-Requests.prototype.put =function (path, subconfig) {
+Requests.prototype.put = function (path, subconfig) {
 
     return loaderApi(this.api, this.config, subconfig, path, "put");
 
@@ -123,7 +123,7 @@ Requests.prototype.put =function (path, subconfig) {
  * append({'as':1}, 'as',2)
  * // => {'as':2}
  */
-Requests.prototype.patch =function (path, subconfig) {
+Requests.prototype.patch = function (path, subconfig) {
 
     return loaderApi(this.api, this.config, subconfig, path, "patch");
 

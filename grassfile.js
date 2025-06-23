@@ -22,7 +22,7 @@ exports.module=function (grassconf) {
                     "path": list_package_utility_js
                 },
                 "output": {
-                    "type": "esm" //,esm,cjs,iife,
+                    "type": "esm" // ,esm,cjs,iife,
                 },
                 "plugin": []
             }
