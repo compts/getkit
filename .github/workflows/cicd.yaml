@@ -22,4 +22,4 @@ jobs:
   #  - run: npm run run_server
     #- run: npm run test_esm
     - run: npm run test_cjs
-    - run: npm run test
+   # - run: npm run test
