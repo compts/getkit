@@ -134,16 +134,15 @@ function getRequestDefaultConfig (config, subconfig, method) {
     };
 
     let initialConfig = varExtend(config, subconfig);
-    console.log(initialConfig,":initialConfig1")
+
     if (has(subconfig)) {
 
         initialConfig = varExtend(subconfig, config);
 
     }
-    console.log(initialConfig,":initialConfig2")
 
     const referenceValue = varExtend(referenceConfig, initialConfig);
-    console.log(referenceValue,":referenceValue")
+
     if (method !== "get") {
 
         if (referenceValue.isJson) {

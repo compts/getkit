@@ -35,7 +35,7 @@
     "test_esm": "mocha test/library/cjs/*.test.js --timeout 4000 --exit",
     "test_cjs": "mocha test/cjs/*.test.js --timeout 1000 --exit",
     "validate": "npm run style && npm run test",
-    "run_server": "node test/packager/server.js"
+    "run_server": "node test/local/server.js"
   },
   "tsd": {
     "directory": "test/ts"

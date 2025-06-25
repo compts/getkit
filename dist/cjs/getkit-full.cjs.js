@@ -134,16 +134,15 @@ function getRequestDefaultConfig (config, subconfig, method) {
     };
 
     let initialConfig = _stk.varExtend(config, subconfig);
-    console.log(initialConfig,":initialConfig1")
+
     if (_stk.has(subconfig)) {
 
         initialConfig = _stk.varExtend(subconfig, config);
 
     }
-    console.log(initialConfig,":initialConfig2")
 
     const referenceValue = _stk.varExtend(referenceConfig, initialConfig);
-    console.log(referenceValue,":referenceValue")
+
     if (method !== "get") {
 
         if (referenceValue.isJson) {
@@ -469,7 +468,7 @@ function setRequestHeader (xhttp, header) {
 
     _stk.each(header, function (val, key) {
 
-        xhttp.setRequestHeader(key, val);
+        //xhttp.setRequestHeader(key, val);
 
     });
 
@@ -558,7 +557,7 @@ function xhrInit (api, config, path, method) {
                 "header": config.header
 
             });
-            console.log(dataRequest,config,":::config");
+
             xhttp.open(method, definePath, method !== "get");
 
             setRequestHeader(xhttp, dataRequest.header);

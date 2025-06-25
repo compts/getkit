@@ -53,21 +53,23 @@ exports.module=function (grassconf) {
                 },
                 "plugin": []
             }
-        ).pipe(grassconf.streamPipe(function (data) {
+        )
 
-            let getData = data.readData();
-
-            getData = getData.replace("(function(global){\nglobal.gtk={};", "const _stk = require('structkit');\nconst urs = require('url-assist');\nconst gtk = exports;");
-            getData = getData.replace('})(typeof window !== "undefined" ? window : this);', "\n //end of file");
-            data.writeData(getData);
-            data.done();
-
-        }))
-            .pipe(grass_concat("dist/cjs/getkit-full.cjs.js", {
-                "istruncate": true
-            }))
             //
             .pipe(grass_concat("dist/web/getkit-full.js", {
+                "istruncate": true
+            }))
+            .pipe(grassconf.streamPipe(function (data) {
+
+                let getData = data.readData();
+
+                getData = getData.replace("(function(global){\nglobal.gtk={};", "const _stk = require('structkit');\nconst urs = require('url-assist');\nconst gtk = exports;");
+                getData = getData.replace('})(typeof window !== "undefined" ? window : this);', "\n //end of file");
+                data.writeData(getData);
+                data.done();
+
+            }))
+            .pipe(grass_concat("dist/cjs/getkit-full.cjs.js", {
                 "istruncate": true
             }));
 

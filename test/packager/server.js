@@ -1,7 +1,34 @@
+/* eslint-disable no-magic-numbers */
+/* eslint-disable require-jsdoc */
 const http = require('http');
+const fs = require('fs');
+const https = require('https'); // For HTTPS server
 
+const {isUrlExtValid} = require('url-assist');
+
+function assetJS(req, res,file){
+
+    fs.readFile(process.cwd()+"/test/packager/public/"+file, 'utf8', (__, data) => {
+
+
+                res.writeHead(200, {'Content-Type': 'text/javascript'});
+                res.end(data);
+
+            });
+}
 const routes = {
     'GET': {
+        "/index": (req, res) => {
+
+            fs.readFile(process.cwd()+"/test/packager/public/test1.html", 'utf8', (__, data) => {
+
+
+                res.writeHead(200, {'Content-Type': 'text/html'});
+                res.end(data);
+
+            });
+
+        },
         '/': (req, res) => {
 
             res.writeHead(200, {'Content-Type': 'text/plain'});
@@ -61,6 +88,19 @@ function startServer () {
         const {method} = req;
         const {url} = req;
 
+        const clientHost = req.headers.host;
+        const protocol = req.socket.encrypted
+            ? 'https'
+            : 'http';
+
+        console.log(clientHost, ":clientHost", protocol);
+        console.log(protocol+"://"+clientHost+url, "::url", isUrlExtValid(protocol+"://"+clientHost+url,"js"));
+        if (isUrlExtValid(protocol+"://"+clientHost+url,"js")){
+
+            assetJS(req, res,url);
+            return server;
+        }
+
         if (routes[method] && routes[method][url]) {
 
             routes[method][url](req, res);
@@ -82,27 +122,32 @@ exports.startServer = startServer;
 
 
 function listenServer (server, port) {
+
     server.listen(port, () => {
 
-    console.log('Server running at http://localhost:'+port);
+        console.log('Server running at http://localhost:'+port);
 
-});
+    });
+
 }
 
 exports.listenServer = listenServer;
 
 
 function stopServer (server) {
-    
+
     if (server) {
 
-        if (typeof server.closeAllConnections === 'function' ) {
-            server.closeAllConnections()
+        if (typeof server.closeAllConnections === 'function') {
+
+            server.closeAllConnections();
+
         }
 
         server.close();
 
     }
+
 }
 
 exports.stopServer = stopServer;
