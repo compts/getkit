@@ -111,7 +111,7 @@ function xhrInit (api, config, path, method) {
                 "header": config.header
 
             });
-
+            console.log(dataRequest,config,":::config");
             xhttp.open(method, definePath, method !== "get");
 
 
