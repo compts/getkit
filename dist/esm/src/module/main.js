@@ -184,4 +184,4 @@ const importScipt = function (url, config) {
 
 };
 
-export {nget,ndelete,npost,noptions,nput,npatch,initialize,importScipt};
+export {nget, ndelete, npost, noptions, nput, npatch, initialize, importScipt};

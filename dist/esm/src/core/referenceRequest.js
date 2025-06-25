@@ -124,4 +124,4 @@ function loaderApi (api, config, subconfig, path, method) {
 
 }
 
-export {requestApi,loaderApi};
+export {requestApi, loaderApi};

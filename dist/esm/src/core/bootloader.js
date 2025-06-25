@@ -69,4 +69,4 @@ function configRequest (config) {
 
 }
 
-export {singleRequest,configRequest};
+export {singleRequest, configRequest};

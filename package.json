@@ -2,9 +2,34 @@
   "name": "getkit",
   "version": "0.6.0",
   "description": "HTTP base promised and callback and User agent",
-  "main": "src/module/main.js",
-  "module": "dist/esm/src/module/main.js",
-  "types": "dist/ts/module/main.d.ts",
+  "main": "./dist/cjs/getkit-full.cjs.js",
+  "module": "./dist/esm/src/module/main.js",
+  "types": "./dist/ts/module/main.d.ts",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/getkit-full.cjs.js",
+      "types": {
+        "require": "./dist/ts/module/main.d.ts",
+        "default": "./dist/ts/module/main.d.ts"
+      },
+      "browser": {
+        "require": "./dist/cjs/getkit-full.cjs.js",
+        "default": "./dist/cjs/getkit-full.cjs.js"
+      },
+      "default": {
+        "require": "./dist/cjs/getkit-full.cjs.js",
+        "default": "./dist/cjs/getkit-full.cjs.js"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist/cjs",
+    "dist/esm",
+    "dist/ts"
+  ],
   "scripts": {
     "es_linter": "eslint   src/module/*.js src/lib/*.js src/core/*.js --fix",
     "test_esm": "mocha test/library/cjs/*.test.js --timeout 4000 --exit",
