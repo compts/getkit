@@ -20,7 +20,7 @@ function setRequestHeader (xhttp, header) {
 
     each(header, function (val, key) {
 
-        //xhttp.setRequestHeader(key, val);
+        xhttp.setRequestHeader(key, val);
 
     });
 

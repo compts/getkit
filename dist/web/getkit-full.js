@@ -467,7 +467,7 @@ function setRequestHeader (xhttp, header) {
 
     _stk.each(header, function (val, key) {
 
-        //xhttp.setRequestHeader(key, val);
+        xhttp.setRequestHeader(key, val);
 
     });
 
