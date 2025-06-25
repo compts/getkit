@@ -20,7 +20,7 @@ function setRequestHeader (xhttp, header) {
 
     each(header, function (val, key) {
 
-        xhttp.setRequestHeader(key, val);
+        //xhttp.setRequestHeader(key, val);
 
     });
 
@@ -111,7 +111,7 @@ function xhrInit (api, config, path, method) {
                 "header": config.header
 
             });
-            console.log(dataRequest,config,":::config");
+
             xhttp.open(method, definePath, method !== "get");
 
 
