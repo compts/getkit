@@ -1,7 +1,7 @@
 /**
  * Request config
  *
- * @since 1.0.1
+ * @since 0.6.0
  * @category environment
  * @param {any} param The first number in an addition.
  * @param {any} header The first number in an addition.

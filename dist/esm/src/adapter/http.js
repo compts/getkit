@@ -9,9 +9,9 @@ import {setRequestParameter} from '../lib/request.js';
 import {setRespondData} from '../lib/response.js';
 
 /**
- * Check if object or value
+ * Initiation of nodejs http
  *
- * @since 1.0.1
+ * @since 0.5.0
  * @category environment
  * @param {any} api The first number in an addition.
  * @param {any} config The first number in an addition.

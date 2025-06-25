@@ -7,14 +7,14 @@ import {amdLocal} from '../core/importScript.js';
 /**
  * Request Get
  *
- * @since 1.0.1
+ * @since 0.6.0
  * @category request
  * @param {string} url The url of request
  * @param {any} [config] The request config
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
- * Get('/')
+ * nget('/')
  * // => Promise<any>
  */
 const nget = function (url, config) {
@@ -30,14 +30,14 @@ const nget = function (url, config) {
 /**
  * Request Delete
  *
- * @since 1.0.1
+ * @since 0.6.0
  * @category request
  * @param {string} url The url of request
  * @param {any} [config] The request config
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
- * Delete('/')
+ * ndelete('/')
  * // => Promise<any>
  */
 const ndelete = function (url, config) {
@@ -52,14 +52,14 @@ const ndelete = function (url, config) {
 /**
  * Request Post
  *
- * @since 1.0.1
+ * @since 0.6.0
  * @category request
  * @param {string} url The url of request
  * @param {any} [config] The request config
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
- * Post('/')
+ * npost('/')
  * // => Promise<any>
  */
 const npost = function (url, config) {
@@ -74,14 +74,14 @@ const npost = function (url, config) {
 /**
  * Request Options
  *
- * @since 1.0.1
+ * @since 0.6.0
  * @category request
  * @param {string} url The url of request
  * @param {any} [config] The request config
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
- * Options('/')
+ * noptions('/')
  * // => Promise<any>
  */
 const noptions = function (url, config) {
@@ -96,14 +96,14 @@ const noptions = function (url, config) {
 /**
  * Request Put
  *
- * @since 1.0.1
+ * @since 0.6.0
  * @category request
  * @param {string} url The url of request
  * @param {any} [config] The request config
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
- * Put('/')
+ * nput('/')
  * // => Promise<any>
  */
 const nput = function (url, config) {
@@ -118,14 +118,14 @@ const nput = function (url, config) {
 /**
  * Request Patch
  *
- * @since 1.0.1
+ * @since 0.6.0
  * @category request
  * @param {string} url The url of request
  * @param {any} [config] The request config
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
- * Patch('/')
+ * npatch('/')
  * // => Promise<any>
  */
 const npatch = function (url, config) {
@@ -140,7 +140,7 @@ const npatch = function (url, config) {
 /**
  * Request initialize
  *
- * @since 1.0.1
+ * @since 0.6.0
  * @category request
  * @param {any} [config] The request config
  * @returns {any} Returns Promise for response.
@@ -160,7 +160,7 @@ const initialize = function (config) {
 /**
  * Importing JS in CDN, this is experimental feature
  *
- * @since 1.0.1
+ * @since 0.6.0
  * @category request
  * @param {string} url The url of request
  * @param {any} [config] The request config

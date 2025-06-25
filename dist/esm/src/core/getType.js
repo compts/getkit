@@ -3,16 +3,32 @@ import {has, varExtend} from 'structkit';
 import {getHostDetails, isHttpProtocolValid, joinUrlPath} from 'url-assist';
 
 /**
- * Is Exact
+ * Get request host details
  *
- * @since 1.0.1
+ * @since 0.6.0
  * @category Seq
  * @param {string} host The first number in an addition.
  * @returns {any} Returns the total.
  * @example
  *
- * isExact({"test": 11,"test2": 11}, {"test2": 11})
- * // => true
+ * domainDetails('https://example.com')
+ *  => {
+ *            "domainDetails": {
+ *                "domain": "example",
+ *                "domainWithTld": "example.com",
+ *               "subdomain": "www",
+ *                 "tld": "com"
+ *            },
+ *            "hash": "",
+ *            "hostname": 'www.example.com',
+ *            "href": 'https://www.example.com',
+ *            "password": "",
+ *            "pathname": "",
+ *            "port": "",
+ *            "protocol": "https",
+ *            "search": '',
+ *            "user": ''
+ *         }
  */
 function domainDetails (host) {
 
@@ -21,15 +37,19 @@ function domainDetails (host) {
 }
 
 /**
- * Is Exact
+ * Get default host details if the developer has not provided it
  *
- * @since 1.0.1
+ * @since 0.6.0
  * @category Seq
  * @returns {any} Returns the total.
  * @example
  *
- * isExact({"test": 11,"test2": 11}, {"test2": 11})
- * // => true
+ * hostDetails ()
+ * // => {
+ *        "baseUrl": "http://localhost:4040",
+ *        "headers": {},
+ *        "type": "http"
+ *    }
  */
 function hostDetails () {
 
@@ -52,17 +72,17 @@ function hostDetails () {
 }
 
 /**
- * Check if object or value
+ * Get the segment path to make whole url
  *
- * @since 1.0.1
+ * @since 0.6.0
  * @category environment
  * @param {any} config The first number in an addition.
  * @param {any} path The first number in an addition.
  * @returns {string} Returns the total.
  * @example
  *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
+ * getSegmentPath(config, '/as')
+ * // => http://example.com/as
  */
 function getSegmentPath (config, path) {
 
@@ -95,18 +115,18 @@ function getSegmentPath (config, path) {
 }
 
 /**
- * Check if object or value
+ * Get the details for http adapter
  *
- * @since 1.0.1
+ * @since 0.6.0
  * @category environment
- * @param {any} config The first number in an addition.
- * @param {any} subconfig The first number in an addition.
- * @param {any} method The first number in an addition.
- * @returns {string} Returns the total.
+ * @param {any} config The config details
+ * @param {any} subconfig The subconfig details.
+ * @param {any} method The request method.
+ * @returns {any} Returns the details.
  * @example
  *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
+ * getRequestDefaultConfig (config, subconfig, "get")
+ * // => {}
  */
 function getRequestDefaultConfig (config, subconfig, method) {
 

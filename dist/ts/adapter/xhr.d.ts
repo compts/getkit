@@ -1,8 +1,8 @@
 export default xhrInit;
 /**
- * Check if object or value
+ * Initiation of ajax http in browser
  *
- * @since 1.0.1
+ * @since 0.5.0
  * @category environment
  * @param {any} api The first number in an addition.
  * @param {any} config The first number in an addition.
@@ -11,7 +11,7 @@ export default xhrInit;
  * @returns {Promise<any>} Returns the total.
  * @example
  *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
+ * xhrInit(api, config, "/", "get")
+ * // => Promise<any>
  */
 declare function xhrInit(api: any, config: any, path: any, method: any): Promise<any>;

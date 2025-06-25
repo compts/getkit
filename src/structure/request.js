@@ -18,7 +18,7 @@ function Requests (api, config) {
 /**
  * Request Get
  *
- * @since 1.0.0
+ * @since 0.5.0
  * @category request
  * @param {any} path The first number in an addition.
  * @param {any} subconfig The first number in an addition.
@@ -37,7 +37,7 @@ Requests.prototype.get = function (path, subconfig) {
 /**
  * Request Delete
  *
- * @since 1.0.0
+ * @since 0.5.0
  * @category request
  * @param {any} path The first number in an addition.
  * @param {any} subconfig The first number in an addition.
@@ -56,7 +56,7 @@ Requests.prototype.delete = function (path, subconfig) {
 /**
  * Request Post
  *
- * @since 1.0.0
+ * @since 0.5.0
  * @category request
  * @param {any} path The first number in an addition.
  * @param {any} subconfig The first number in an addition.
@@ -94,7 +94,7 @@ Requests.prototype.options = function (path, subconfig) {
 /**
  * Request Put
  *
- * @since 1.0.0
+ * @since 0.5.0
  * @category request
  * @param {any} path The first number in an addition.
  * @param {any} subconfig The first number in an addition.
@@ -113,7 +113,7 @@ Requests.prototype.put = function (path, subconfig) {
 /**
  * Request Patch
  *
- * @since 1.0.0
+ * @since 0.5.0
  * @category request
  * @param {any} path The first number in an addition.
  * @param {any} subconfig The first number in an addition.

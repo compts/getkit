@@ -3,16 +3,32 @@ const urs = require('url-assist');
 const gtk = exports;
 
 /**
- * Is Exact
+ * Get request host details
  *
- * @since 1.0.1
+ * @since 0.6.0
  * @category Seq
  * @param {string} host The first number in an addition.
  * @returns {any} Returns the total.
  * @example
  *
- * isExact({"test": 11,"test2": 11}, {"test2": 11})
- * // => true
+ * domainDetails('https://example.com')
+ *  => {
+ *            "domainDetails": {
+ *                "domain": "example",
+ *                "domainWithTld": "example.com",
+ *               "subdomain": "www",
+ *                 "tld": "com"
+ *            },
+ *            "hash": "",
+ *            "hostname": 'www.example.com',
+ *            "href": 'https://www.example.com',
+ *            "password": "",
+ *            "pathname": "",
+ *            "port": "",
+ *            "protocol": "https",
+ *            "search": '',
+ *            "user": ''
+ *         }
  */
 function domainDetails (host) {
 
@@ -21,15 +37,19 @@ function domainDetails (host) {
 }
 
 /**
- * Is Exact
+ * Get default host details if the developer has not provided it
  *
- * @since 1.0.1
+ * @since 0.6.0
  * @category Seq
  * @returns {any} Returns the total.
  * @example
  *
- * isExact({"test": 11,"test2": 11}, {"test2": 11})
- * // => true
+ * hostDetails ()
+ * // => {
+ *        "baseUrl": "http://localhost:4040",
+ *        "headers": {},
+ *        "type": "http"
+ *    }
  */
 function hostDetails () {
 
@@ -52,17 +72,17 @@ function hostDetails () {
 }
 
 /**
- * Check if object or value
+ * Get the segment path to make whole url
  *
- * @since 1.0.1
+ * @since 0.6.0
  * @category environment
  * @param {any} config The first number in an addition.
  * @param {any} path The first number in an addition.
  * @returns {string} Returns the total.
  * @example
  *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
+ * getSegmentPath(config, '/as')
+ * // => http://example.com/as
  */
 function getSegmentPath (config, path) {
 
@@ -95,18 +115,18 @@ function getSegmentPath (config, path) {
 }
 
 /**
- * Check if object or value
+ * Get the details for http adapter
  *
- * @since 1.0.1
+ * @since 0.6.0
  * @category environment
- * @param {any} config The first number in an addition.
- * @param {any} subconfig The first number in an addition.
- * @param {any} method The first number in an addition.
- * @returns {string} Returns the total.
+ * @param {any} config The config details
+ * @param {any} subconfig The subconfig details.
+ * @param {any} method The request method.
+ * @returns {any} Returns the details.
  * @example
  *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
+ * getRequestDefaultConfig (config, subconfig, "get")
+ * // => {}
  */
 function getRequestDefaultConfig (config, subconfig, method) {
 
@@ -162,39 +182,46 @@ function getRequestDefaultConfig (config, subconfig, method) {
 
 }
 
+const negOne = -1;
+const zero = 0;
+const one = 1;
+const two = 2;
+const three = 3;
+const four = 4;
+
 /**
  * Check if object or value
  *
- * @since 1.0.1
+ * @since 0.5.0
  * @category environment
- * @returns {number} Returns the total.
+ * @returns {number} Returns the status number.
  * @example
  *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
+ * checkEnvironmentStatus()
+ * // => 1
  */
 function checkEnvironmentStatus () {
 
-    let status = 0;
+    let status = zero;
 
-    if (typeof XMLHttpRequest !== "undefined" && status === 0) {
+    if (typeof XMLHttpRequest !== "undefined" && status === zero) {
 
-        status = 1;
-
-    }
-    if (typeof ActiveXObject !== "undefined" && status === 0) {
-
-        status = 2;
+        status = one;
 
     }
-    if (typeof XDomainRequest !== "undefined" && status === 0) {
+    if (typeof ActiveXObject !== "undefined" && status === zero) {
 
-        status = 3;
+        status = two;
 
     }
-    if (typeof process !== "undefined" && status === 0) {
+    if (typeof XDomainRequest !== "undefined" && status === zero) {
 
-        status = 4;
+        status = three;
+
+    }
+    if (typeof process !== "undefined" && status === zero) {
+
+        status = four;
 
     }
 
@@ -203,43 +230,44 @@ function checkEnvironmentStatus () {
 }
 
 /**
- * Check if object or value
+ * To check if it`s browser environment
  *
- * @since 1.0.1
+ * @since 0.5.0
  * @category environment
- * @returns {boolean} Returns the total.
+ * @returns {boolean} Returns if it`s valid.
  * @example
  *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
+ * isAjax()
+ * // => true
  */
 function isAjax () {
 
     return _stk.indexOf([
-        1,
-        2,
-        3
-    ], checkEnvironmentStatus())!==-1;
+        one,
+        two,
+        three
+    ], checkEnvironmentStatus())!==negOne;
 
 }
 
 /**
- * Check if object or value
+ * To check if it`s nodejs environment
  *
- * @since 1.0.1
+ * @since 0.5.0
  * @category environment
- * @returns {boolean} Returns the total.
+ * @returns {boolean} Returns if it`s valid.
  * @example
  *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
+ * isNodejsEnv()
+ * // => true
  */
 function isNodejsEnv () {
 
-    return _stk.indexOf([4], checkEnvironmentStatus())!==-1;
+    return _stk.indexOf([four], checkEnvironmentStatus())!==negOne;
 
 }
 
+/* eslint-disable no-empty-function */
 /**
  * A getkit intiator
  * @class
@@ -250,16 +278,16 @@ function DummyReq () {
 }
 
 /**
- * Is Exact
+ * To append the pathname with slash if not found
  *
- * @since 0.6
+ * @since 0.6.0
  * @category Seq
  * @param {string} path The first number in an addition.
- * @returns {any} Returns the total.
+ * @returns {string} Returns the total.
  * @example
  *
- * isExact({"test": 11,"test2": 11}, {"test2": 11})
- * // => true
+ * appendPrefxPath("test")
+ * // => /test
  */
 function appendPrefxPath (path) {
 
@@ -274,17 +302,17 @@ function appendPrefxPath (path) {
 }
 
 /**
- * Request config
+ * Define request header to its parameter
  *
- * @since 1.0.1
+ * @since 0.6.0
  * @category environment
- * @param {any} param The first number in an addition.
- * @param {any} header The first number in an addition.
- * @returns {any} Returns the total.
+ * @param {any} param The request parameter
+ * @param {any} header The request header.
+ * @returns {any} Returns the date in query string
  * @example
  *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
+ * setRequestParameter({'as':1}, {'as':1})
+ * // => as=2
  */
 function setRequestParameter (param, header) {
 
@@ -298,12 +326,12 @@ function setRequestParameter (param, header) {
 
     }
 
-    if (_stk.indexOf(["application/json"], header["content-type"]) >= 0 && _stk.indexOf([
+    if (_stk.indexOf(["application/json"], header["content-type"]) >= zero && _stk.indexOf([
         "json",
         "array"
-    ], _stk.getTypeof(param)) >= 0) {
+    ], _stk.getTypeof(param)) >= zero) {
 
-        return JSON.stringify(param);
+        return _stk.parseString(param);
 
     }
 
@@ -314,7 +342,7 @@ function setRequestParameter (param, header) {
 /**
  * Request config
  *
- * @since 1.0.1
+ * @since 0.6.0
  * @category environment
  * @param {any} param The first number in an addition.
  * @param {any} header The first number in an addition.
@@ -329,15 +357,15 @@ function setRespondData (param, header, config) {
 
     if (_stk.indexOf(["application/json"], header["content-type"]
         ?header["content-type"].toLowerCase()
-        :"") >= 0) {
+        :"") >= zero) {
 
-        return JSON.parse(param.trim());
+        return _stk.parseJson(param.trim());
 
     }
 
     if (config.isJson) {
 
-        return JSON.parse(param.trim());
+        return _stk.parseJson(param.trim());
 
     }
 
@@ -346,9 +374,9 @@ function setRespondData (param, header, config) {
 }
 
 /**
- * Check if object or value
+ * Initiation of nodejs http
  *
- * @since 1.0.1
+ * @since 0.5.0
  * @category environment
  * @param {any} api The first number in an addition.
  * @param {any} config The first number in an addition.
@@ -452,17 +480,17 @@ function httpInit (api, config, path, methods) {
 adapterHttp=httpInit
 
 /**
- * Check if object or value
+ * Adding preferred request header
  *
- * @since 1.0.1
+ * @since 0.5.0
  * @category environment
  * @param {any} xhttp The first number in an addition.
  * @param {any} header The first number in an addition.
- * @returns {any} Returns the total.
+ * @returns {null} Returns the total.
  * @example
  *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
+ * setRequestHeader(xhr, {'content-type':"text/plain"})
+ * // => null
  */
 function setRequestHeader (xhttp, header) {
 
@@ -475,9 +503,9 @@ function setRequestHeader (xhttp, header) {
 }
 
 /**
- * Check if object or value
+ * Initiation of ajax http in browser
  *
- * @since 1.0.1
+ * @since 0.5.0
  * @category environment
  * @param {any} api The first number in an addition.
  * @param {any} config The first number in an addition.
@@ -486,8 +514,8 @@ function setRequestHeader (xhttp, header) {
  * @returns {Promise<any>} Returns the total.
  * @example
  *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
+ * xhrInit(api, config, "/", "get")
+ * // => Promise<any>
  */
 function xhrInit (api, config, path, method) {
 
@@ -528,7 +556,7 @@ function xhrInit (api, config, path, method) {
 
                 });
 
-                if (this.readyState === 4) {
+                if (this.readyState === four) {
 
                     const outputResponse = {
                         "data": setRespondData(this.response, headerMap, config),
@@ -607,16 +635,16 @@ function xhrInit (api, config, path, method) {
 adapterXhr=xhrInit
 
 /**
- * Check if object or value
+ * Check the environment if nodejs or browser
  *
- * @since 1.0.1
+ * @since 0.5.0
  * @category environment
- * @param {any} config The first number in an addition.
- * @returns {any} Returns the total.
+ * @param {any} config The config of url to be request
+ * @returns {any} Return details of environment.
  * @example
  *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
+ * requestApi({})
+ * // => {}
  */
 function requestApi (config) {
 
@@ -674,20 +702,20 @@ function requestApi (config) {
 }
 
 /**
- * Check if object or value
+ * To initiate what environment to use, if nodejs or browser
  *
- * @since 1.0.1
+ * @since 0.5.0
  * @category environment
- * @param {any} api The first number in an addition.
- * @param {any} config The first number in an addition.
- * @param {any} subconfig The first number in an addition.
- * @param {any} path The first number in an addition.
- * @param {any} method The first number in an addition.
- * @returns {any} Returns the total.
+ * @param {any} api The api details.
+ * @param {any} config The config details.
+ * @param {any} subconfig The subconfig details.
+ * @param {any} path The path details.
+ * @param {any} method The method details.
+ * @returns {any} Returns the class.
  * @example
  *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
+ * loaderApi(api, config, subconfig, "/path", "get")
+ * // => <class>
  */
 function loaderApi (api, config, subconfig, path, method) {
 
@@ -734,7 +762,7 @@ function Requests (api, config) {
 /**
  * Request Get
  *
- * @since 1.0.0
+ * @since 0.5.0
  * @category request
  * @param {any} path The first number in an addition.
  * @param {any} subconfig The first number in an addition.
@@ -753,7 +781,7 @@ Requests.prototype.get = function (path, subconfig) {
 /**
  * Request Delete
  *
- * @since 1.0.0
+ * @since 0.5.0
  * @category request
  * @param {any} path The first number in an addition.
  * @param {any} subconfig The first number in an addition.
@@ -772,7 +800,7 @@ Requests.prototype.delete = function (path, subconfig) {
 /**
  * Request Post
  *
- * @since 1.0.0
+ * @since 0.5.0
  * @category request
  * @param {any} path The first number in an addition.
  * @param {any} subconfig The first number in an addition.
@@ -810,7 +838,7 @@ Requests.prototype.options = function (path, subconfig) {
 /**
  * Request Put
  *
- * @since 1.0.0
+ * @since 0.5.0
  * @category request
  * @param {any} path The first number in an addition.
  * @param {any} subconfig The first number in an addition.
@@ -829,7 +857,7 @@ Requests.prototype.put = function (path, subconfig) {
 /**
  * Request Patch
  *
- * @since 1.0.0
+ * @since 0.5.0
  * @category request
  * @param {any} path The first number in an addition.
  * @param {any} subconfig The first number in an addition.
@@ -846,16 +874,16 @@ Requests.prototype.patch = function (path, subconfig) {
 };
 
 /**
- * Check if object or value
+ * It was design to single request type only
  *
- * @since 1.0.1
+ * @since 0.6.0
  * @category environment
- * @param {any} details The first number in an addition.
- * @param {any} config The first number in an addition.
- * @returns {boolean} Returns the total.
+ * @param {any} details The details url
+ * @param {any} config The configuration set by developer
+ * @returns {any} Return config details.
  * @example
  *
- * append({'as':1}, 'as',2)
+ * singleRequest({'as':1}, 'as',2)
  * // => {'as':2}
  */
 function singleRequest (details, config) {
@@ -875,15 +903,15 @@ function singleRequest (details, config) {
 }
 
 /**
- * Check if object or value
+ * It was design for multiple request type
  *
- * @since 1.0.1
+ * @since 0.6.0
  * @category environment
- * @param {any} config The first number in an addition.
- * @returns {boolean} Returns the total.
+ * @param {any} config The configuration set by developer
+ * @returns {any} Return config details.
  * @example
  *
- * append({'as':1}, 'as',2)
+ * configRequest({'as':1}, 'as',2)
  * // => {'as':2}
  */
 function configRequest (config) {
@@ -909,7 +937,7 @@ function configRequest (config) {
 /**
  * Request initialize
  *
- * @since 1.0.1
+ * @since 0.5.0
  * @category request
  * @param {string} url The url of request
  * @param {any} [config] The request config
@@ -1009,7 +1037,7 @@ function amdLocal (url, config) {
 /**
  * Handle callback
  *
- * @since 1.0.1
+ * @since 0.5.0
  * @category request
  * @param {string} data The url of request
  * @param {any} [config] The request config
@@ -1032,14 +1060,14 @@ function handleCallback (data, config) {
 /**
  * Request Get
  *
- * @since 1.0.1
+ * @since 0.6.0
  * @category request
  * @param {string} url The url of request
  * @param {any} [config] The request config
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
- * Get('/')
+ * nget('/')
  * // => Promise<any>
  */
 
@@ -1056,14 +1084,14 @@ gtk.nget=function (url, config) {
 /**
  * Request Delete
  *
- * @since 1.0.1
+ * @since 0.6.0
  * @category request
  * @param {string} url The url of request
  * @param {any} [config] The request config
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
- * Delete('/')
+ * ndelete('/')
  * // => Promise<any>
  */
 
@@ -1079,14 +1107,14 @@ gtk.ndelete=function (url, config) {
 /**
  * Request Post
  *
- * @since 1.0.1
+ * @since 0.6.0
  * @category request
  * @param {string} url The url of request
  * @param {any} [config] The request config
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
- * Post('/')
+ * npost('/')
  * // => Promise<any>
  */
 
@@ -1102,14 +1130,14 @@ gtk.npost=function (url, config) {
 /**
  * Request Options
  *
- * @since 1.0.1
+ * @since 0.6.0
  * @category request
  * @param {string} url The url of request
  * @param {any} [config] The request config
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
- * Options('/')
+ * noptions('/')
  * // => Promise<any>
  */
 
@@ -1125,14 +1153,14 @@ gtk.noptions=function (url, config) {
 /**
  * Request Put
  *
- * @since 1.0.1
+ * @since 0.6.0
  * @category request
  * @param {string} url The url of request
  * @param {any} [config] The request config
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
- * Put('/')
+ * nput('/')
  * // => Promise<any>
  */
 
@@ -1148,14 +1176,14 @@ gtk.nput=function (url, config) {
 /**
  * Request Patch
  *
- * @since 1.0.1
+ * @since 0.6.0
  * @category request
  * @param {string} url The url of request
  * @param {any} [config] The request config
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
- * Patch('/')
+ * npatch('/')
  * // => Promise<any>
  */
 
@@ -1171,7 +1199,7 @@ gtk.npatch=function (url, config) {
 /**
  * Request initialize
  *
- * @since 1.0.1
+ * @since 0.6.0
  * @category request
  * @param {any} [config] The request config
  * @returns {any} Returns Promise for response.
@@ -1192,7 +1220,7 @@ gtk.initialize=function (config) {
 /**
  * Importing JS in CDN, this is experimental feature
  *
- * @since 1.0.1
+ * @since 0.6.0
  * @category request
  * @param {string} url The url of request
  * @param {any} [config] The request config

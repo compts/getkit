@@ -1,30 +1,30 @@
 /**
- * Check if object or value
+ * Check the environment if nodejs or browser
  *
- * @since 1.0.1
+ * @since 0.5.0
  * @category environment
- * @param {any} config The first number in an addition.
- * @returns {any} Returns the total.
+ * @param {any} config The config of url to be request
+ * @returns {any} Return details of environment.
  * @example
  *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
+ * requestApi({})
+ * // => {}
  */
 export function requestApi(config: any): any;
 /**
- * Check if object or value
+ * To initiate what environment to use, if nodejs or browser
  *
- * @since 1.0.1
+ * @since 0.5.0
  * @category environment
- * @param {any} api The first number in an addition.
- * @param {any} config The first number in an addition.
- * @param {any} subconfig The first number in an addition.
- * @param {any} path The first number in an addition.
- * @param {any} method The first number in an addition.
- * @returns {any} Returns the total.
+ * @param {any} api The api details.
+ * @param {any} config The config details.
+ * @param {any} subconfig The subconfig details.
+ * @param {any} path The path details.
+ * @param {any} method The method details.
+ * @returns {any} Returns the class.
  * @example
  *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
+ * loaderApi(api, config, subconfig, "/path", "get")
+ * // => <class>
  */
 export function loaderApi(api: any, config: any, subconfig: any, path: any, method: any): any;

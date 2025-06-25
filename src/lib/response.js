@@ -1,9 +1,11 @@
-const {indexOf} = require("structkit");
+const {indexOf, parseJson} = require("structkit");
+const {zero} = require("../config/defaultValue");
+
 
 /**
  * Request config
  *
- * @since 1.0.1
+ * @since 0.6.0
  * @category environment
  * @param {any} param The first number in an addition.
  * @param {any} header The first number in an addition.
@@ -18,15 +20,15 @@ function setRespondData (param, header, config) {
 
     if (indexOf(["application/json"], header["content-type"]
         ?header["content-type"].toLowerCase()
-        :"") >= 0) {
+        :"") >= zero) {
 
-        return JSON.parse(param.trim());
+        return parseJson(param.trim());
 
     }
 
     if (config.isJson) {
 
-        return JSON.parse(param.trim());
+        return parseJson(param.trim());
 
     }
 

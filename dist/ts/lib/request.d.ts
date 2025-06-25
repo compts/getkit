@@ -1,14 +1,14 @@
 /**
- * Request config
+ * Define request header to its parameter
  *
- * @since 1.0.1
+ * @since 0.6.0
  * @category environment
- * @param {any} param The first number in an addition.
- * @param {any} header The first number in an addition.
- * @returns {any} Returns the total.
+ * @param {any} param The request parameter
+ * @param {any} header The request header.
+ * @returns {any} Returns the date in query string
  * @example
  *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
+ * setRequestParameter({'as':1}, {'as':1})
+ * // => as=2
  */
 export function setRequestParameter(param: any, header: any): any;

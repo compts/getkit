@@ -1,91 +1,91 @@
 /**
  * Request Get
  *
- * @since 1.0.1
+ * @since 0.6.0
  * @category request
  * @param {string} url The url of request
  * @param {any} [config] The request config
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
- * Get('/')
+ * nget('/')
  * // => Promise<any>
  */
 export function nget(url: string, config?: any): Promise<any>;
 /**
  * Request Delete
  *
- * @since 1.0.1
+ * @since 0.6.0
  * @category request
  * @param {string} url The url of request
  * @param {any} [config] The request config
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
- * Delete('/')
+ * ndelete('/')
  * // => Promise<any>
  */
 export function ndelete(url: string, config?: any): Promise<any>;
 /**
  * Request Post
  *
- * @since 1.0.1
+ * @since 0.6.0
  * @category request
  * @param {string} url The url of request
  * @param {any} [config] The request config
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
- * Post('/')
+ * npost('/')
  * // => Promise<any>
  */
 export function npost(url: string, config?: any): Promise<any>;
 /**
  * Request Options
  *
- * @since 1.0.1
+ * @since 0.6.0
  * @category request
  * @param {string} url The url of request
  * @param {any} [config] The request config
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
- * Options('/')
+ * noptions('/')
  * // => Promise<any>
  */
 export function noptions(url: string, config?: any): Promise<any>;
 /**
  * Request Put
  *
- * @since 1.0.1
+ * @since 0.6.0
  * @category request
  * @param {string} url The url of request
  * @param {any} [config] The request config
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
- * Put('/')
+ * nput('/')
  * // => Promise<any>
  */
 export function nput(url: string, config?: any): Promise<any>;
 /**
  * Request Patch
  *
- * @since 1.0.1
+ * @since 0.6.0
  * @category request
  * @param {string} url The url of request
  * @param {any} [config] The request config
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
- * Patch('/')
+ * npatch('/')
  * // => Promise<any>
  */
 export function npatch(url: string, config?: any): Promise<any>;
 /**
  * Request initialize
  *
- * @since 1.0.1
+ * @since 0.6.0
  * @category request
  * @param {any} [config] The request config
  * @returns {any} Returns Promise for response.
@@ -98,7 +98,7 @@ export function initialize(config?: any): any;
 /**
  * Importing JS in CDN, this is experimental feature
  *
- * @since 1.0.1
+ * @since 0.6.0
  * @category request
  * @param {string} url The url of request
  * @param {any} [config] The request config

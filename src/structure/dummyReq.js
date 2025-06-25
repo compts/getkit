@@ -1,3 +1,4 @@
+/* eslint-disable no-empty-function */
 /**
  * A getkit intiator
  * @class

@@ -23,7 +23,7 @@ declare class Requests {
     /**
      * Request Get
      *
-     * @since 1.0.0
+     * @since 0.5.0
      * @category request
      * @param {any} path The first number in an addition.
      * @param {any} subconfig The first number in an addition.
@@ -37,7 +37,7 @@ declare class Requests {
     /**
      * Request Delete
      *
-     * @since 1.0.0
+     * @since 0.5.0
      * @category request
      * @param {any} path The first number in an addition.
      * @param {any} subconfig The first number in an addition.
@@ -51,7 +51,7 @@ declare class Requests {
     /**
      * Request Post
      *
-     * @since 1.0.0
+     * @since 0.5.0
      * @category request
      * @param {any} path The first number in an addition.
      * @param {any} subconfig The first number in an addition.
@@ -79,7 +79,7 @@ declare class Requests {
     /**
      * Request Put
      *
-     * @since 1.0.0
+     * @since 0.5.0
      * @category request
      * @param {any} path The first number in an addition.
      * @param {any} subconfig The first number in an addition.
@@ -93,7 +93,7 @@ declare class Requests {
     /**
      * Request Patch
      *
-     * @since 1.0.0
+     * @since 0.5.0
      * @category request
      * @param {any} path The first number in an addition.
      * @param {any} subconfig The first number in an addition.

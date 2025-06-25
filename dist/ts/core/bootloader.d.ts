@@ -1,27 +1,27 @@
 /**
- * Check if object or value
+ * It was design to single request type only
  *
- * @since 1.0.1
+ * @since 0.6.0
  * @category environment
- * @param {any} details The first number in an addition.
- * @param {any} config The first number in an addition.
- * @returns {boolean} Returns the total.
+ * @param {any} details The details url
+ * @param {any} config The configuration set by developer
+ * @returns {any} Return config details.
  * @example
  *
- * append({'as':1}, 'as',2)
+ * singleRequest({'as':1}, 'as',2)
  * // => {'as':2}
  */
-export function singleRequest(details: any, config: any): boolean;
+export function singleRequest(details: any, config: any): any;
 /**
- * Check if object or value
+ * It was design for multiple request type
  *
- * @since 1.0.1
+ * @since 0.6.0
  * @category environment
- * @param {any} config The first number in an addition.
- * @returns {boolean} Returns the total.
+ * @param {any} config The configuration set by developer
+ * @returns {any} Return config details.
  * @example
  *
- * append({'as':1}, 'as',2)
+ * configRequest({'as':1}, 'as',2)
  * // => {'as':2}
  */
-export function configRequest(config: any): boolean;
+export function configRequest(config: any): any;

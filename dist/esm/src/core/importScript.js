@@ -5,7 +5,7 @@ import {getTypeof} from 'structkit';
 /**
  * Request initialize
  *
- * @since 1.0.1
+ * @since 0.5.0
  * @category request
  * @param {string} url The url of request
  * @param {any} [config] The request config
@@ -105,7 +105,7 @@ function amdLocal (url, config) {
 /**
  * Handle callback
  *
- * @since 1.0.1
+ * @since 0.5.0
  * @category request
  * @param {string} data The url of request
  * @param {any} [config] The request config

@@ -6,18 +6,20 @@ import {setRespondData} from '../lib/response.js';
 
 import {qsStringify} from 'url-assist';
 
+import {four} from '../config/defaultValue.js';
+
 /**
- * Check if object or value
+ * Adding preferred request header
  *
- * @since 1.0.1
+ * @since 0.5.0
  * @category environment
  * @param {any} xhttp The first number in an addition.
  * @param {any} header The first number in an addition.
- * @returns {any} Returns the total.
+ * @returns {null} Returns the total.
  * @example
  *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
+ * setRequestHeader(xhr, {'content-type':"text/plain"})
+ * // => null
  */
 function setRequestHeader (xhttp, header) {
 
@@ -30,9 +32,9 @@ function setRequestHeader (xhttp, header) {
 }
 
 /**
- * Check if object or value
+ * Initiation of ajax http in browser
  *
- * @since 1.0.1
+ * @since 0.5.0
  * @category environment
  * @param {any} api The first number in an addition.
  * @param {any} config The first number in an addition.
@@ -41,8 +43,8 @@ function setRequestHeader (xhttp, header) {
  * @returns {Promise<any>} Returns the total.
  * @example
  *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
+ * xhrInit(api, config, "/", "get")
+ * // => Promise<any>
  */
 function xhrInit (api, config, path, method) {
 
@@ -83,7 +85,7 @@ function xhrInit (api, config, path, method) {
 
                 });
 
-                if (this.readyState === 4) {
+                if (this.readyState === four) {
 
                     const outputResponse = {
                         "data": setRespondData(this.response, headerMap, config),

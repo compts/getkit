@@ -1,19 +1,21 @@
 import {qsStringify} from 'url-assist';
 
-import {indexOf, getTypeof} from 'structkit';
+import {indexOf, getTypeof, parseString} from 'structkit';
+
+import {zero} from '../config/defaultValue.js';
 
 /**
- * Request config
+ * Define request header to its parameter
  *
- * @since 1.0.1
+ * @since 0.6.0
  * @category environment
- * @param {any} param The first number in an addition.
- * @param {any} header The first number in an addition.
- * @returns {any} Returns the total.
+ * @param {any} param The request parameter
+ * @param {any} header The request header.
+ * @returns {any} Returns the date in query string
  * @example
  *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
+ * setRequestParameter({'as':1}, {'as':1})
+ * // => as=2
  */
 function setRequestParameter (param, header) {
 
@@ -27,12 +29,12 @@ function setRequestParameter (param, header) {
 
     }
 
-    if (indexOf(["application/json"], header["content-type"]) >= 0 && indexOf([
+    if (indexOf(["application/json"], header["content-type"]) >= zero && indexOf([
         "json",
         "array"
-    ], getTypeof(param)) >= 0) {
+    ], getTypeof(param)) >= zero) {
 
-        return JSON.stringify(param);
+        return parseString(param);
 
     }
 

@@ -1,36 +1,36 @@
 /**
  * Check if object or value
  *
- * @since 1.0.1
+ * @since 0.5.0
  * @category environment
- * @returns {number} Returns the total.
+ * @returns {number} Returns the status number.
  * @example
  *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
+ * checkEnvironmentStatus()
+ * // => 1
  */
 export function checkEnvironmentStatus(): number;
 /**
- * Check if object or value
+ * To check if it`s browser environment
  *
- * @since 1.0.1
+ * @since 0.5.0
  * @category environment
- * @returns {boolean} Returns the total.
+ * @returns {boolean} Returns if it`s valid.
  * @example
  *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
+ * isAjax()
+ * // => true
  */
 export function isAjax(): boolean;
 /**
- * Check if object or value
+ * To check if it`s nodejs environment
  *
- * @since 1.0.1
+ * @since 0.5.0
  * @category environment
- * @returns {boolean} Returns the total.
+ * @returns {boolean} Returns if it`s valid.
  * @example
  *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
+ * isNodejsEnv()
+ * // => true
  */
 export function isNodejsEnv(): boolean;

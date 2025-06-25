@@ -1,38 +1,40 @@
 import {indexOf} from 'structkit';
 
+import {negOne, zero, one, two, three, four} from '../config/defaultValue.js';
+
 /**
  * Check if object or value
  *
- * @since 1.0.1
+ * @since 0.5.0
  * @category environment
- * @returns {number} Returns the total.
+ * @returns {number} Returns the status number.
  * @example
  *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
+ * checkEnvironmentStatus()
+ * // => 1
  */
 function checkEnvironmentStatus () {
 
-    let status = 0;
+    let status = zero;
 
-    if (typeof XMLHttpRequest !== "undefined" && status === 0) {
+    if (typeof XMLHttpRequest !== "undefined" && status === zero) {
 
-        status = 1;
-
-    }
-    if (typeof ActiveXObject !== "undefined" && status === 0) {
-
-        status = 2;
+        status = one;
 
     }
-    if (typeof XDomainRequest !== "undefined" && status === 0) {
+    if (typeof ActiveXObject !== "undefined" && status === zero) {
 
-        status = 3;
+        status = two;
 
     }
-    if (typeof process !== "undefined" && status === 0) {
+    if (typeof XDomainRequest !== "undefined" && status === zero) {
 
-        status = 4;
+        status = three;
+
+    }
+    if (typeof process !== "undefined" && status === zero) {
+
+        status = four;
 
     }
 
@@ -41,40 +43,40 @@ function checkEnvironmentStatus () {
 }
 
 /**
- * Check if object or value
+ * To check if it`s browser environment
  *
- * @since 1.0.1
+ * @since 0.5.0
  * @category environment
- * @returns {boolean} Returns the total.
+ * @returns {boolean} Returns if it`s valid.
  * @example
  *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
+ * isAjax()
+ * // => true
  */
 function isAjax () {
 
     return indexOf([
-        1,
-        2,
-        3
-    ], checkEnvironmentStatus())!==-1;
+        one,
+        two,
+        three
+    ], checkEnvironmentStatus())!==negOne;
 
 }
 
 /**
- * Check if object or value
+ * To check if it`s nodejs environment
  *
- * @since 1.0.1
+ * @since 0.5.0
  * @category environment
- * @returns {boolean} Returns the total.
+ * @returns {boolean} Returns if it`s valid.
  * @example
  *
- * append({'as':1}, 'as',2)
- * // => {'as':2}
+ * isNodejsEnv()
+ * // => true
  */
 function isNodejsEnv () {
 
-    return indexOf([4], checkEnvironmentStatus())!==-1;
+    return indexOf([four], checkEnvironmentStatus())!==negOne;
 
 }
 
