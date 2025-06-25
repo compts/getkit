@@ -14,7 +14,7 @@ describe('CJS: NPOST than method', function () {
     listenServer(server, 3001);
     // Const request_test = request(server);
 
-    it('should return a response for a valid GET request', async function () {
+    it('should return a response for a valid POST request', async function () {
 
         const response = await npost(host);
 
