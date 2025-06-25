@@ -114,15 +114,9 @@ function xhrInit (api, config, path, method) {
 
             xhttp.open(method, definePath, method !== "get");
 
-            if (getTypeof(dataRequest) ==="json") {
 
-                setRequestHeader(xhttp, dataRequest.header);
+            setRequestHeader(xhttp, dataRequest.header);
 
-            } else {
-
-                setRequestHeader(xhttp, config.header);
-
-            }
             // Sxhttp.timeout = config.timeout;
 
             // Sxhttp.ontimeout = function (e) {
