@@ -54,15 +54,14 @@
   },
   "homepage": "https://getkit.codehyouka.xyz",
   "dependencies": {
-    "structkit": "^1.4.871",
-    "url-assist": "^1.2.7"
+    "structkit": "^1.4.872",
+    "url-assist": "^1.2.71"
   },
   "devDependencies": {
     "@types/node": "^20.5.9",
     "eslint": "^7.13.0",
     "eslint-config-strongloop": "^2.1.0",
     "esm": "^3.2.25",
-    "express": "^5.1.0",
     "jest": "^27.5.1",
     "mocha": "^5.2.0",
     "supertest": "^7.1.1",
