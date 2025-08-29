@@ -345,7 +345,7 @@ function isJson (value, valueType) {
 
     if (getValueTypeRef === "string") {
 
-        if (!(/\[(.*?)\]/g).test(value) && !(/\{(.*?)\}/g).test(value)) {
+        if (!(value.includes('[') || value.includes('{'))) {
 
             return false;
 
@@ -1419,8 +1419,6 @@ function arrayConcat () {
 
 _stk.arrayConcat=arrayConcat;
 
-_stk.arraySlice=arraySlice;
-
 
 /**
  * Generate array of data from specific limit or where the index to start
@@ -1513,6 +1511,8 @@ function arrayRepeat (value, valueRepetion) {
 }
 
 _stk.arrayRepeat=arrayRepeat;
+
+_stk.arraySlice=arraySlice;
 
 
 /**
@@ -2095,7 +2095,7 @@ function defaultTo (defaultValue, value2) {
 
     return curryArg(function (aa, bb) {
 
-        if (isNaN(bb)) {
+        if (isNaN(bb) && getTypeofInternal(bb) === "number") {
 
             return aa;
 
@@ -2117,9 +2117,9 @@ function defaultTo (defaultValue, value2) {
 
 _stk.defaultTo=defaultTo;
 
-_stk.each=each;
-
 _stk.divide=divide;
+
+_stk.each=each;
 
 _stk.empty=empty;
 
@@ -3027,6 +3027,35 @@ _stk.getValue=getValue;
 
 
 /**
+ *  To check if the two arguments are greater
+ *
+ * @since 1.4.8
+ * @category Relation
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean} Returns true or false.
+ * @example
+ *
+ * gt(1, 2)
+ * // => false
+ */
+function gt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa > bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.gt=gt;
+
+
+/**
  * To group the value of json or array
  *
  * @since 1.4.8
@@ -3070,35 +3099,6 @@ _stk.groupBy=groupBy;
 
 
 /**
- *  To check if the two arguments are greater
- *
- * @since 1.4.8
- * @category Relation
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean} Returns true or false.
- * @example
- *
- * gt(1, 2)
- * // => false
- */
-function gt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa > bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.gt=gt;
-
-
-/**
  *  To check if the two arguments are greater than to equal
  *
  * @since 1.4.8
@@ -3125,8 +3125,6 @@ function gte (value1, value2) {
 }
 
 _stk.gte=gte;
-
-_stk.has=has;
 
 
 /**
@@ -3168,6 +3166,8 @@ function ifUndefined (objectValue, value1, value2) {
 }
 
 _stk.ifUndefined=ifUndefined;
+
+_stk.has=has;
 
 _stk.inc=inc;
 
@@ -3222,8 +3222,6 @@ _stk.insert=insert;
 _stk.isEmpty=isEmpty;
 
 _stk.isExact=isExact;
-
-_stk.isExactbyRegExp=isExactbyRegExp;
 
 _stk.isJson=isJson;
 
@@ -3291,6 +3289,8 @@ function last (objectValue) {
 }
 
 _stk.last=last;
+
+_stk.isExactbyRegExp=isExactbyRegExp;
 
 
 /**
@@ -3405,6 +3405,35 @@ _stk.limit=limit;
 
 
 /**
+ * To check if the two arguments are less
+ *
+ * @since 1.4.8
+ * @category Boolean
+ * @param {any} value1 Any first value type
+ * @param {any=} value2 Any second value type
+ * @returns {boolean|any} Returns true or false.
+ * @example
+ *
+ * lt(1, 2)
+ * // => true
+ */
+function lt (value1, value2) {
+
+    return curryArg(function (aa, bb) {
+
+        return aa < bb;
+
+    }, [
+        value1,
+        value2
+    ], two);
+
+}
+
+_stk.lt=lt;
+
+
+/**
  * To check if the two arguments are less than to equal
  *
  * @since 1.4.8
@@ -3432,8 +3461,6 @@ function lte (value1, value2) {
 
 _stk.lte=lte;
 
-_stk.map=map;
-
 
 /**
  * A Function to map the data either an array or an object using getData function.
@@ -3460,34 +3487,7 @@ function mapGetData (objectValue, valueFormat) {
 
 _stk.mapGetData=mapGetData;
 
-
-/**
- * To check if the two arguments are less
- *
- * @since 1.4.8
- * @category Boolean
- * @param {any} value1 Any first value type
- * @param {any=} value2 Any second value type
- * @returns {boolean|any} Returns true or false.
- * @example
- *
- * lt(1, 2)
- * // => true
- */
-function lt (value1, value2) {
-
-    return curryArg(function (aa, bb) {
-
-        return aa < bb;
-
-    }, [
-        value1,
-        value2
-    ], two);
-
-}
-
-_stk.lt=lt;
+_stk.map=map;
 
 
 /**
@@ -3866,84 +3866,6 @@ ClassDelay.prototype.cancel = function () {
 
 _stk.onDelay=onDelay;
 
-
-/**
- * On sequence
- *
- * @since 1.4.1
- * @category Function
- * @param {any} func a Callback function
- * @param {object=} wait timer for delay
- * @param {object=} option option for delay
- * @returns {object} Returns object.
- * @example
- *
- *  onSequence(()=>{})
- *=>'11'
- */
-function onSequence (func, wait, option) {
-
-    var zero = 0;
-    var one = 1;
-    var extend = varExtend({
-        "limitCounterClear": 0
-    }, option);
-
-    var valueWaited = wait || zero;
-    var counter = 0;
-
-    var interval = setInterval(function () {
-
-        func();
-        if (extend.limitCounterClear >zero) {
-
-            if (counter === extend.limitCounterClear) {
-
-                clearInterval(interval);
-
-            }
-
-        }
-
-        counter += one;
-
-    }, valueWaited);
-
-    var sequence = new ClassSequence(interval, extend);
-
-    return sequence;
-
-}
-
-/**
- * On wait
- *
- * @since 1.0.1
- * @category Seq
- * @param {any} interval timer for delay
- * @param {object} extend The option for delay
- * @returns {any} Returns the object.
- * @example
- *
- *  onWait(()=>{})
- *=>'11'
- */
-function ClassSequence (interval, extend) {
-
-    this.interval = interval;
-
-    this.extend = extend;
-
-}
-
-ClassSequence.prototype.cancel = function () {
-
-    clearInterval(this.interval);
-
-};
-
-_stk.onSequence=onSequence;
-
 var getWindow = function () {
 
     if (typeof window !== 'undefined') {
@@ -4051,6 +3973,84 @@ _stk.onWait=onWait;
 
 
 /**
+ * On sequence
+ *
+ * @since 1.4.1
+ * @category Function
+ * @param {any} func a Callback function
+ * @param {object=} wait timer for delay
+ * @param {object=} option option for delay
+ * @returns {object} Returns object.
+ * @example
+ *
+ *  onSequence(()=>{})
+ *=>'11'
+ */
+function onSequence (func, wait, option) {
+
+    var zero = 0;
+    var one = 1;
+    var extend = varExtend({
+        "limitCounterClear": 0
+    }, option);
+
+    var valueWaited = wait || zero;
+    var counter = 0;
+
+    var interval = setInterval(function () {
+
+        func();
+        if (extend.limitCounterClear >zero) {
+
+            if (counter === extend.limitCounterClear) {
+
+                clearInterval(interval);
+
+            }
+
+        }
+
+        counter += one;
+
+    }, valueWaited);
+
+    var sequence = new ClassSequence(interval, extend);
+
+    return sequence;
+
+}
+
+/**
+ * On wait
+ *
+ * @since 1.0.1
+ * @category Seq
+ * @param {any} interval timer for delay
+ * @param {object} extend The option for delay
+ * @returns {any} Returns the object.
+ * @example
+ *
+ *  onWait(()=>{})
+ *=>'11'
+ */
+function ClassSequence (interval, extend) {
+
+    this.interval = interval;
+
+    this.extend = extend;
+
+}
+
+ClassSequence.prototype.cancel = function () {
+
+    clearInterval(this.interval);
+
+};
+
+_stk.onSequence=onSequence;
+
+
+/**
  * Get the value in array or json given in only one return the search value was in json
  *
  * @since 1.4.8.7
@@ -4080,6 +4080,13 @@ var entity = [
         "html": " ",
         "hex": "&#xA0;"
     },
+    {
+        "decimal": "&#92;",
+        "entity": "&bsol;",
+        "html": "\\",
+        "hex": "&#x5c;",
+        "title": "backslash"
+    },
     {"decimal": "&#34;",
         "entity": "&quot;",
         "hex": "&#x22;",
@@ -4088,7 +4095,7 @@ var entity = [
     {"decimal": "&#39;",
         "entity": "&apos;",
         "hex": "&#x27;",
-        "html": '"',
+        "html": "'",
         "title": "quotation mark = single quote"},
     {"decimal": "&#38;",
         "entity": "&amp;",
@@ -5409,7 +5416,7 @@ function callbackParse (glb, config) {
 
     if (glb.type === 'json') {
 
-        var encodeStr = encodeStripValueQoute(glb.ret_value, config);
+        var encodeStr = encodeStripValueQoute(glb.ret_value);
 
         var splitKeyValue = encodeStr.str_call.split(":");
 
@@ -5462,7 +5469,7 @@ function callbackParse (glb, config) {
 
     if (glb.type === 'array') {
 
-        var encodeStr = encodeStripValueQoute(glb.ret_value, config);
+        var encodeStr = encodeStripValueQoute(glb.ret_value);
 
         var valueSplit = encodeStr.str_call.split(",");
 
@@ -5539,6 +5546,24 @@ _stk.parseJson=parseJson;
 
 
 /**
+ * String escape qoutes
+ *
+ * @since 1.4.872
+ * @category Collection
+ * @param {any} str Object you want to convert to JSON string
+ * @returns {string} Return JSON string
+ * @example
+ *
+ * escapeQuotes("'" )
+ *=>"\\'"
+ */
+function escapeQuotes (str) {
+
+    return str.replace(/'/g, "&apos;").replace(/"/g, '&quot;');
+
+}
+
+/**
  * Data String from JSON object
  *
  * @since 1.0.1
@@ -5556,14 +5581,14 @@ function datastring (str) {
 
     if (typeof str === "string") {
 
-        str = str.replace(/(["'])/g, "\\$1");
-
         if (str.indexOf("'")) {
 
+            str = escapeQuotes(str);
             data_s='&quot;'+str+'&quot;';
 
         } else if (str.indexOf('"')) {
 
+            str = escapeQuotes(str);
             data_s='&quot;'+str+'&quot;';
 
         } else {
@@ -5938,8 +5963,6 @@ function repeat (value, valueRepetion) {
 
 _stk.repeat=repeat;
 
-_stk.selectInData=selectInData;
-
 
 /**
  * Random Decimal
@@ -5982,6 +6005,109 @@ function roundDecimal (value, maxValue) {
 }
 
 _stk.roundDecimal=roundDecimal;
+
+_stk.selectInData=selectInData;
+
+
+/**
+ * Set Data in array or json using string to search the data either by its key or index, given a value to update the data.
+ *
+ * @since 1.4.87
+ * @category Collection
+ * @param {any=} objectValue Either Json or Array data.
+ * @param {any=} split_str Search key or index.
+ * @param {any=} updateValue Value to update the data.
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * setData({"s":1},"s",2)
+ *=> 2
+ */
+function setData (objectValue, split_str, updateValue) {
+
+    if (!has(objectValue)) {
+
+        return empty(objectValue);
+
+    }
+
+    return curryArg(function (rawObjectValue, rawSplit_str, rawUpdateValue) {
+
+        if (isEmpty(rawSplit_str)) {
+
+            return empty(rawObjectValue);
+
+        }
+
+        var spl= schemaSplitData(rawSplit_str);
+
+        return baseReduce(rawObjectValue, [spl], function (total, value) {
+
+            if (getTypeofInternal(total) === "json") {
+
+                valueToUpdate(total, value, rawUpdateValue);
+
+            }
+            if (getTypeofInternal(total) === "array") {
+
+                var rawTotal = first(total);
+
+                valueToUpdate(rawTotal, value, rawUpdateValue);
+                total = [rawTotal];
+
+            }
+
+            return total;
+
+        });
+
+    }, [
+        objectValue,
+        split_str,
+        updateValue
+    ]);
+
+}
+
+/**
+ * Given a value to update the data in array or json
+ *
+ * @since 1.4.87
+ * @category Collection
+ * @param {any} objectValue Either Json or Array data.
+ * @param {any[]} whereStr Either Json or Array data.
+ * @param {any} updateValue Search key or index.
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * getData({"s":1},"s")
+ *=> 1
+ * @example
+ * getData({"a":{"a":2},"b":{"a":3}},"a:a")
+ *=> {a: 2}
+ */
+function valueToUpdate (objectValue, whereStr, updateValue) {
+
+    var getRmoveValue = remove(whereStr, zero);
+
+    if (isEmpty(getRmoveValue)) {
+
+        objectValue[first(whereStr)] = updateValue;
+
+    } else {
+
+        if (has(objectValue, first(whereStr)) === false) {
+
+            objectValue[first(whereStr)] = {};
+
+        }
+        valueToUpdate(objectValue[first(whereStr)], getRmoveValue, updateValue);
+
+    }
+
+}
+
+_stk.setData=setData;
 
 
 /**
@@ -6260,107 +6386,6 @@ _stk.stringCamelCase=stringCamelCase;
 
 
 /**
- * Set Data in array or json using string to search the data either by its key or index, given a value to update the data.
- *
- * @since 1.4.87
- * @category Collection
- * @param {any=} objectValue Either Json or Array data.
- * @param {any=} split_str Search key or index.
- * @param {any=} updateValue Value to update the data.
- * @returns {any} Returns the total.
- * @example
- *
- * setData({"s":1},"s",2)
- *=> 2
- */
-function setData (objectValue, split_str, updateValue) {
-
-    if (!has(objectValue)) {
-
-        return empty(objectValue);
-
-    }
-
-    return curryArg(function (rawObjectValue, rawSplit_str, rawUpdateValue) {
-
-        if (isEmpty(rawSplit_str)) {
-
-            return empty(rawObjectValue);
-
-        }
-
-        var spl= schemaSplitData(rawSplit_str);
-
-        return baseReduce(rawObjectValue, [spl], function (total, value) {
-
-            if (getTypeofInternal(total) === "json") {
-
-                valueToUpdate(total, value, rawUpdateValue);
-
-            }
-            if (getTypeofInternal(total) === "array") {
-
-                var rawTotal = first(total);
-
-                valueToUpdate(rawTotal, value, rawUpdateValue);
-                total = [rawTotal];
-
-            }
-
-            return total;
-
-        });
-
-    }, [
-        objectValue,
-        split_str,
-        updateValue
-    ]);
-
-}
-
-/**
- * Given a value to update the data in array or json
- *
- * @since 1.4.87
- * @category Collection
- * @param {any} objectValue Either Json or Array data.
- * @param {any[]} whereStr Either Json or Array data.
- * @param {any} updateValue Search key or index.
- * @returns {any} Returns the total.
- * @example
- *
- * getData({"s":1},"s")
- *=> 1
- * @example
- * getData({"a":{"a":2},"b":{"a":3}},"a:a")
- *=> {a: 2}
- */
-function valueToUpdate (objectValue, whereStr, updateValue) {
-
-    var getRmoveValue = remove(whereStr, zero);
-
-    if (isEmpty(getRmoveValue)) {
-
-        objectValue[first(whereStr)] = updateValue;
-
-    } else {
-
-        if (has(objectValue, first(whereStr)) === false) {
-
-            objectValue[first(whereStr)] = {};
-
-        }
-        valueToUpdate(objectValue[first(whereStr)], getRmoveValue, updateValue);
-
-    }
-
-}
-
-_stk.setData=setData;
-
-
-/**
  * String Capitalize
  *
  * @since 1.3.1
@@ -6595,65 +6620,6 @@ _stk.swap=swap;
 
 
 /**
- * Get the value from index zero until the last value
- *
- * @since 1.4.86
- * @category Math
- * @param {any[]|string} rawList Second number
- * @param {number} startIndex Second number
- * @param {number} lastIndex Second number
- * @returns {any} Returns true or false.
- * @example
- *
- * baseTake(1, 1)
- * // => 1
- */
-function baseTake (rawList, startIndex, lastIndex) {
-
-    var refRawList = getTypeofInternal(rawList) === "string"
-        ?rawList.split("")
-        :rawList;
-
-    var varLimit = limit(refRawList, startIndex, lastIndex);
-
-    var rawGetValue = getValue(varLimit);
-
-    return getTypeofInternal(rawList) === "string"
-        ?rawGetValue.join("")
-        :rawGetValue;
-
-}
-
-/**
- * Get the value from index zero until the last value
- *
- * @since 1.4.86
- * @category Math
- * @param {number} value First number, our first index will start at zero
- * @param {any[]|string} valueList Second number
- * @returns {any} Returns true or false.
- * @example
- *
- * take(1, [1])
- * // => 1
- */
-function take (value, valueList) {
-
-    return curryArg(function (rawValue, rawList) {
-
-        return baseTake(rawList, zero, rawValue-one);
-
-    }, [
-        value,
-        valueList
-    ], two);
-
-}
-
-_stk.take=take;
-
-
-/**
  * Template value
  *
  * @since 1.0.1
@@ -6836,6 +6802,52 @@ _stk.toArray=toArray;
 
 
 /**
+ * To extract string invalid boolean and convert to boolean
+ *
+ * @since 1.4.872
+ * @category Boolean
+ * @param {any} value Value you to convert in boolean
+ * @returns {boolean} Return in boolean.
+ * @example
+ *
+ * toBoolean("true")
+ *=>true
+ */
+function toBoolean (value) {
+
+    if (getTypeof(value) === "string") {
+
+        return indexOfExist([
+            'true',
+            't',
+            'yes',
+            'y',
+            'on',
+            '1'
+        ], stringLowerCase(value));
+
+    }
+
+    if (getTypeof(value) === "number") {
+
+        return indexOfExist([one], value);
+
+    }
+
+    if (getTypeof(value) === "boolean") {
+
+        return value;
+
+    }
+
+    return false;
+
+}
+
+_stk.toBoolean=toBoolean;
+
+
+/**
  * Logic in convert string or number to valid number
  *
  * @since 1.0.1
@@ -6881,15 +6893,26 @@ function dataNumberFormat (regexp, defaultVariable, nullReplacement) {
  * @since 1.0.1
  * @category Number
  * @param {any} value Value you to convert in double
+ * @param {any=} config Option you want to set in this function.
  * @returns {number} Return in double.
  * @example
  *
  * toDouble("100.1d1")
  *=>100.11
  */
-function toDouble (value) {
+function toDouble (value, config) {
 
     var zero = 0.00;
+
+    var defaultConfig = varExtend({"decSeparator": "."}, config);
+
+    if (defaultConfig.decSeparator !== ".") {
+
+        var sepRegexp = new RegExp("("+defaultConfig.decSeparator+")", "g");
+
+        value = value.replace(sepRegexp, ".");
+
+    }
 
     return parseFloat(dataNumberFormat(/(\d[.]{0,})/g, zero, value === null
         ?zero
@@ -6898,6 +6921,65 @@ function toDouble (value) {
 }
 
 _stk.toDouble=toDouble;
+
+
+/**
+ * Get the value from index zero until the last value
+ *
+ * @since 1.4.86
+ * @category Math
+ * @param {any[]|string} rawList Second number
+ * @param {number} startIndex Second number
+ * @param {number} lastIndex Second number
+ * @returns {any} Returns true or false.
+ * @example
+ *
+ * baseTake(1, 1)
+ * // => 1
+ */
+function baseTake (rawList, startIndex, lastIndex) {
+
+    var refRawList = getTypeofInternal(rawList) === "string"
+        ?rawList.split("")
+        :rawList;
+
+    var varLimit = limit(refRawList, startIndex, lastIndex);
+
+    var rawGetValue = getValue(varLimit);
+
+    return getTypeofInternal(rawList) === "string"
+        ?rawGetValue.join("")
+        :rawGetValue;
+
+}
+
+/**
+ * Get the value from index zero until the last value
+ *
+ * @since 1.4.86
+ * @category Math
+ * @param {number} value First number, our first index will start at zero
+ * @param {any[]|string} valueList Second number
+ * @returns {any} Returns true or false.
+ * @example
+ *
+ * take(1, [1])
+ * // => 1
+ */
+function take (value, valueList) {
+
+    return curryArg(function (rawValue, rawList) {
+
+        return baseTake(rawList, zero, rawValue-one);
+
+    }, [
+        value,
+        valueList
+    ], two);
+
+}
+
+_stk.take=take;
 
 
 /**
@@ -7175,6 +7257,8 @@ function union () {
 _stk.union=union;
 
 _stk.unique=unique;
+
+_stk.varExtend=varExtend;
 
 _stk.where=where;
 
@@ -7504,8 +7588,6 @@ _stk.isString=isString;
 _stk.isUint16Array=isUint16Array;
 _stk.isUint8Array=isUint8Array;
 _stk.isUndefined=isUndefined;
-_stk.varExtend=varExtend;
-
 _stk.whereOnce=whereOnce;
 
 

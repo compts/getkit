@@ -29,6 +29,17 @@ const routes = {
             });
 
         },
+        "/index2": (req, res) => {
+
+            fs.readFile(process.cwd()+"/test/packager/public/test2.html", 'utf8', (__, data) => {
+
+
+                res.writeHead(200, {'Content-Type': 'text/html'});
+                res.end(data);
+
+            });
+
+        },
         '/': (req, res) => {
 
             res.writeHead(200, {'Content-Type': 'text/plain'});

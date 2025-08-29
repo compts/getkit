@@ -59,6 +59,9 @@ exports.module=function (grassconf) {
             .pipe(grass_concat("dist/web/getkit-full.js", {
                 "istruncate": true
             }))
+            .pipe(grass_concat("test/packager/public/getkit-full.js", {
+                "istruncate": true
+            }))
             .pipe(grassconf.streamPipe(function (data) {
 
                 let getData = data.readData();
