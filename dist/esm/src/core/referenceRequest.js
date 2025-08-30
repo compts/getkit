@@ -1,3 +1,6 @@
+/* eslint-disable no-undefined */
+/* eslint-disable global-require */
+/* eslint-disable init-declarations */
 import {isAjax, isNodejsEnv} from './verifyEnv.js';
 
 import DummyReq from '../structure/dummyReq.js';
@@ -6,10 +9,13 @@ import adapterHttp from '../adapter/http.js';
 
 import adapterXhr from '../adapter/xhr.js';
 
-import http from 'http';
+/*
+ * REMOVE these lines:
+ * import http from 'http';
 
-import https from 'https';
+ * import https from 'https';
 
+ */
 import {getSegmentPath, getRequestDefaultConfig} from '../core/getType.js';
 
 import {isHttpProtocolValid} from 'url-assist';
@@ -53,23 +59,43 @@ function requestApi (config) {
 
     }
 
-    if (isNodejsEnv() && typeof http !== "undefined" && typeof https !== "undefined") {
+    // Only require http/https in Node.js environment
+    if (isNodejsEnv()) {
 
-        if (config.isHttps) {
+        let http, https;
+
+        try {
+
+            http = require("http");
+            https = require("https");
+
+        } catch (__) {
+
+            // Fallback if require fails
+            http = undefined;
+            https = undefined;
+
+        }
+
+        if (typeof http !== "undefined" && typeof https !== "undefined") {
+
+            if (config.isHttps) {
+
+                return {
+                    "class": https,
+                    "detail": config.detail,
+                    "status": "http"
+                };
+
+            }
 
             return {
-                "class": https,
+                "class": http,
                 "detail": config.detail,
                 "status": "http"
             };
 
         }
-
-        return {
-            "class": http,
-            "detail": config.detail,
-            "status": "http"
-        };
 
     }
 

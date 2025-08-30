@@ -182,6 +182,10 @@ function getRequestDefaultConfig (config, subconfig, method) {
 
 }
 
+/* eslint-disable no-undefined */
+/* eslint-disable global-require */
+/* eslint-disable init-declarations */
+
 const negOne = -1;
 const zero = 0;
 const one = 1;
@@ -634,6 +638,12 @@ function xhrInit (api, config, path, method) {
 
 adapterXhr=xhrInit
 
+/*
+ * REMOVE these lines:
+ * 
+ * 
+ */
+
 /**
  * Check the environment if nodejs or browser
  *
@@ -673,23 +683,43 @@ function requestApi (config) {
 
     }
 
-    if (isNodejsEnv() && typeof http !== "undefined" && typeof https !== "undefined") {
+    // Only require http/https in Node.js environment
+    if (isNodejsEnv()) {
 
-        if (config.isHttps) {
+        let http, https;
+
+        try {
+
+            http = require("http");
+            https = require("https");
+
+        } catch (__) {
+
+            // Fallback if require fails
+            http = undefined;
+            https = undefined;
+
+        }
+
+        if (typeof http !== "undefined" && typeof https !== "undefined") {
+
+            if (config.isHttps) {
+
+                return {
+                    "class": https,
+                    "detail": config.detail,
+                    "status": "http"
+                };
+
+            }
 
             return {
-                "class": https,
+                "class": http,
                 "detail": config.detail,
                 "status": "http"
             };
 
         }
-
-        return {
-            "class": http,
-            "detail": config.detail,
-            "status": "http"
-        };
 
     }
 
