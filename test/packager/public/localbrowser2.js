@@ -1,5 +1,5 @@
 
-const main = gtk.initialize({"baseUrl": "https://apis.codehyouka.xyz"});
+const main = gtk.initHttp({"baseUrl": "https://apis.codehyouka.xyz"});
 
 const query = ` query {
                 getProjectList(name: "structkit",version: "1_4_872") {

@@ -104,8 +104,8 @@ function startServer () {
             ? 'https'
             : 'http';
 
-        console.log(clientHost, ":clientHost", protocol);
-        console.log(protocol+"://"+clientHost+url, "::url", isUrlExtValid(protocol+"://"+clientHost+url,"js"));
+      //  console.log(clientHost, ":clientHost", protocol);
+      //  console.log(protocol+"://"+clientHost+url, "::url", isUrlExtValid(protocol+"://"+clientHost+url,"js"));
         if (isUrlExtValid(protocol+"://"+clientHost+url,"js")){
 
             assetJS(req, res,url);

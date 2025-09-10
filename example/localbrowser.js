@@ -1,5 +1,5 @@
 
-const main = gtk.initialize({"baseUrl": "http://0.0.0.0:3000"});
+const main = gtk.initHttp({"baseUrl": "http://0.0.0.0:3000"});
 
 
 gtk.nget("http://0.0.0.0:3000/api", {isJson:true,timeout:1000, setResponse:function(daa) { 

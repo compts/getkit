@@ -1,4 +1,4 @@
-const {npost} = require("../../src/module/main");
+const {npost} = require("../../src/main");
 const {startServer, listenServer, stopServer} = require("../packager/server");
 // Let request = require("supertest");
 
