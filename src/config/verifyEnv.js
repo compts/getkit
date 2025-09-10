@@ -1,6 +1,5 @@
-import {indexOf} from 'structkit';
-
-import {negOne, zero, one, two, three, four} from '../config/defaultValue.js';
+const {indexOf} = require("structkit");
+const {negOne, zero, one, two, three, four} = require("./defaultValue");
 
 /**
  * Check if object or value
@@ -80,4 +79,7 @@ function isNodejsEnv () {
 
 }
 
-export {checkEnvironmentStatus, isAjax, isNodejsEnv};
+
+exports.checkEnvironmentStatus=checkEnvironmentStatus;
+exports.isAjax=isAjax;
+exports.isNodejsEnv=isNodejsEnv;

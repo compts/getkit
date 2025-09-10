@@ -637,12 +637,6 @@ function xhrInit (api, config, path, method) {
 
 adapterXhr=xhrInit
 
-/*
- * REMOVE these lines:
- * 
- * 
- */
-
 /**
  * Check the environment if nodejs or browser
  *
@@ -781,7 +775,7 @@ function loaderApi (api, config, subconfig, path, method) {
  * @param {any} config request body
  * @name getKit
  */
-function Requests (api, config) {
+function RequestsHttp (api, config) {
 
     this.api =api;
     this.config =config;
@@ -801,7 +795,7 @@ function Requests (api, config) {
  * append({'as':1}, 'as',2)
  * // => {'as':2}
  */
-Requests.prototype.get = function (path, subconfig) {
+RequestsHttp.prototype.get = function (path, subconfig) {
 
     return loaderApi(this.api, this.config, subconfig, path, "get");
 
@@ -820,7 +814,7 @@ Requests.prototype.get = function (path, subconfig) {
  * append({'as':1}, 'as',2)
  * // => {'as':2}
  */
-Requests.prototype.delete = function (path, subconfig) {
+RequestsHttp.prototype.delete = function (path, subconfig) {
 
     return loaderApi(this.api, this.config, subconfig, path, "delete");
 
@@ -839,7 +833,7 @@ Requests.prototype.delete = function (path, subconfig) {
  * append({'as':1}, 'as',2)
  * // => {'as':2}
  */
-Requests.prototype.post = function (path, subconfig) {
+RequestsHttp.prototype.post = function (path, subconfig) {
 
     return loaderApi(this.api, this.config, subconfig, path, "post");
 
@@ -858,7 +852,7 @@ Requests.prototype.post = function (path, subconfig) {
  * append({'as':1}, 'as',2)
  * // => {'as':2}
  */
-Requests.prototype.options = function (path, subconfig) {
+RequestsHttp.prototype.options = function (path, subconfig) {
 
     return loaderApi(this.api, this.config, subconfig, path, "options");
 
@@ -877,7 +871,7 @@ Requests.prototype.options = function (path, subconfig) {
  * append({'as':1}, 'as',2)
  * // => {'as':2}
  */
-Requests.prototype.put = function (path, subconfig) {
+RequestsHttp.prototype.put = function (path, subconfig) {
 
     return loaderApi(this.api, this.config, subconfig, path, "put");
 
@@ -896,18 +890,35 @@ Requests.prototype.put = function (path, subconfig) {
  * append({'as':1}, 'as',2)
  * // => {'as':2}
  */
-Requests.prototype.patch = function (path, subconfig) {
+RequestsHttp.prototype.patch = function (path, subconfig) {
 
     return loaderApi(this.api, this.config, subconfig, path, "patch");
 
 };
+
+// C
+
+/**
+ * A getkit intiator
+ * @category Seq
+ * @class
+ * @param {any} api request body
+ * @param {any} config request body
+ * @name getKit
+ */
+function RequestsWs (api, config) {
+
+    this.api =api;
+    this.config =config;
+
+}
 
 /**
  * It was design to single request type only
  *
  * @since 0.6.0
  * @category environment
- * @param {any} details The details url
+ * @param {string} url The details url
  * @param {any} config The configuration set by developer
  * @returns {any} Return config details.
  * @example
@@ -915,8 +926,9 @@ Requests.prototype.patch = function (path, subconfig) {
  * singleRequest({'as':1}, 'as',2)
  * // => {'as':2}
  */
-function singleRequest (details, config) {
+function singleRequest (url, config) {
 
+    const details = domainDetails(url);
     const validHttp = urs.isHttps(details.hostArgument);
 
     const api = requestApi({
@@ -925,14 +937,14 @@ function singleRequest (details, config) {
 
     });
 
-    const init = new Requests(api, config);
+    const init = new RequestsHttp(api, config);
 
     return init;
 
 }
 
 /**
- * It was design for multiple request type
+ * It was design for multiple request type for http
  *
  * @since 0.6.0
  * @category environment
@@ -940,10 +952,10 @@ function singleRequest (details, config) {
  * @returns {any} Return config details.
  * @example
  *
- * configRequest({'as':1}, 'as',2)
+ * configRequestHttp({'as':1}, 'as',2)
  * // => {'as':2}
  */
-function configRequest (config) {
+function configRequestHttp (config) {
 
     const host = hostDetails();
     const detailsExtend = _stk.varExtend(host, config);
@@ -957,7 +969,39 @@ function configRequest (config) {
         "isHttps": validHttp
     });
 
-    const init = new Requests(api, config);
+    const init = new RequestsHttp(api, config);
+
+    return init;
+
+}
+
+/**
+ * It was design for multiple request type Ws
+ *
+ * @since 0.6.0
+ * @category environment
+ * @param {any} config The configuration set by developer
+ * @returns {any} Return config details.
+ * @example
+ *
+ * configRequestWs({'as':1}, 'as',2)
+ * // => {'as':2}
+ */
+function configRequestWs (config) {
+
+    const host = hostDetails();
+    const detailsExtend = _stk.varExtend(host, config);
+
+    const details = domainDetails(detailsExtend.baseUrl);
+
+    const validHttp = urs.isHttps(details.baseUrl);
+
+    const api = requestApi({
+        "detail": details,
+        "isHttps": validHttp
+    });
+
+    const init = new RequestsWs(api, config);
 
     return init;
 
@@ -1102,9 +1146,7 @@ function handleCallback (data, config) {
 
 gtk.nget=function (url, config) {
 
-    const details = domainDetails(url);
-
-    const init = singleRequest(details, config);
+    const init = singleRequest(url, config);
 
     return init.get(url, config);
 
@@ -1126,8 +1168,7 @@ gtk.nget=function (url, config) {
 
 gtk.ndelete=function (url, config) {
 
-    const details = domainDetails(url);
-    const init = singleRequest(details, config);
+    const init = singleRequest(url, config);
 
     return init.delete(url, config);
 
@@ -1149,8 +1190,7 @@ gtk.ndelete=function (url, config) {
 
 gtk.npost=function (url, config) {
 
-    const details = domainDetails(url);
-    const init = singleRequest(details, config);
+    const init = singleRequest(url, config);
 
     return init.post(url, config);
 
@@ -1172,8 +1212,7 @@ gtk.npost=function (url, config) {
 
 gtk.noptions=function (url, config) {
 
-    const details = domainDetails(url);
-    const init = singleRequest(details, config);
+    const init = singleRequest(url, config);
 
     return init.options(url, config);
 
@@ -1195,8 +1234,7 @@ gtk.noptions=function (url, config) {
 
 gtk.nput=function (url, config) {
 
-    const details = domainDetails(url);
-    const init = singleRequest(details, config);
+    const init = singleRequest(url, config);
 
     return init.put(url, config);
 
@@ -1218,15 +1256,14 @@ gtk.nput=function (url, config) {
 
 gtk.npatch=function (url, config) {
 
-    const details = domainDetails(url);
-    const init = singleRequest(details, config);
+    const init = singleRequest(url, config);
 
     return init.patch(url);
 
 };
 
 /**
- * Request initialize
+ * Request http initialize
  *
  * @since 0.6.0
  * @category request
@@ -1234,13 +1271,34 @@ gtk.npatch=function (url, config) {
  * @returns {any} Returns Promise for response.
  * @example
  *
- * initialize({"baseUrl": "http://localhost:4040/"})
+ * initHttp({"baseUrl": "http://localhost:4040/"})
  * // => Promise<any>
  */
 
-gtk.initialize=function (config) {
+gtk.initHttp=function (config) {
 
-    const init = configRequest(config);
+    const init = configRequestHttp(config);
+
+    return init;
+
+};
+
+/**
+ * Request ws initialize
+ *
+ * @since 0.6.0
+ * @category request
+ * @param {any} [config] The request config
+ * @returns {any} Returns Promise for response.
+ * @example
+ *
+ * initHttp({"baseUrl": "http://localhost:4040/"})
+ * // => Promise<any>
+ */
+
+gtk.initWs=function (config) {
+
+    const init = configRequestWs(config);
 
     return init;
 

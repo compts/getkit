@@ -4,7 +4,7 @@ const list_package_utility_js = [
     "src/*/*/*.js",
     "src/*/*/*/*.js"
 ];
-const list_iife_js = ["src/module/main.js"];
+const list_iife_js = ["src/main.js"];
 
 
 exports.module=function (grassconf) {

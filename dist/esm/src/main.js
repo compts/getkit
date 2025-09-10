@@ -1,3 +1,7 @@
+import {singleRequest, configRequestHttp, configRequestWs} from './core/bootloader.js';
+
+import {amdLocal} from './core/importScript.js';
+
 /**
  * Request Get
  *
@@ -11,7 +15,14 @@
  * nget('/')
  * // => Promise<any>
  */
-export function nget(url: string, config?: any): Promise<any>;
+const nget = function (url, config) {
+
+    const init = singleRequest(url, config);
+
+    return init.get(url, config);
+
+};
+
 /**
  * Request Delete
  *
@@ -25,7 +36,14 @@ export function nget(url: string, config?: any): Promise<any>;
  * ndelete('/')
  * // => Promise<any>
  */
-export function ndelete(url: string, config?: any): Promise<any>;
+const ndelete = function (url, config) {
+
+    const init = singleRequest(url, config);
+
+    return init.delete(url, config);
+
+};
+
 /**
  * Request Post
  *
@@ -39,7 +57,14 @@ export function ndelete(url: string, config?: any): Promise<any>;
  * npost('/')
  * // => Promise<any>
  */
-export function npost(url: string, config?: any): Promise<any>;
+const npost = function (url, config) {
+
+    const init = singleRequest(url, config);
+
+    return init.post(url, config);
+
+};
+
 /**
  * Request Options
  *
@@ -53,7 +78,14 @@ export function npost(url: string, config?: any): Promise<any>;
  * noptions('/')
  * // => Promise<any>
  */
-export function noptions(url: string, config?: any): Promise<any>;
+const noptions = function (url, config) {
+
+    const init = singleRequest(url, config);
+
+    return init.options(url, config);
+
+};
+
 /**
  * Request Put
  *
@@ -67,7 +99,14 @@ export function noptions(url: string, config?: any): Promise<any>;
  * nput('/')
  * // => Promise<any>
  */
-export function nput(url: string, config?: any): Promise<any>;
+const nput = function (url, config) {
+
+    const init = singleRequest(url, config);
+
+    return init.put(url, config);
+
+};
+
 /**
  * Request Patch
  *
@@ -81,9 +120,16 @@ export function nput(url: string, config?: any): Promise<any>;
  * npatch('/')
  * // => Promise<any>
  */
-export function npatch(url: string, config?: any): Promise<any>;
+const npatch = function (url, config) {
+
+    const init = singleRequest(url, config);
+
+    return init.patch(url);
+
+};
+
 /**
- * Request initialize
+ * Request http initialize
  *
  * @since 0.6.0
  * @category request
@@ -91,10 +137,37 @@ export function npatch(url: string, config?: any): Promise<any>;
  * @returns {any} Returns Promise for response.
  * @example
  *
- * initialize({"baseUrl": "http://localhost:4040/"})
+ * initHttp({"baseUrl": "http://localhost:4040/"})
  * // => Promise<any>
  */
-export function initialize(config?: any): any;
+const initHttp = function (config) {
+
+    const init = configRequestHttp(config);
+
+    return init;
+
+};
+
+/**
+ * Request ws initialize
+ *
+ * @since 0.6.0
+ * @category request
+ * @param {any} [config] The request config
+ * @returns {any} Returns Promise for response.
+ * @example
+ *
+ * initHttp({"baseUrl": "http://localhost:4040/"})
+ * // => Promise<any>
+ */
+const initWs = function (config) {
+
+    const init = configRequestWs(config);
+
+    return init;
+
+};
+
 /**
  * Importing JS in CDN, this is experimental feature
  *
@@ -108,4 +181,18 @@ export function initialize(config?: any): any;
  * importScript("http://localhost:4040/")
  * // => Promise<any>
  */
-export function importScript(url: string, config?: any): Promise<any>;
+const importScript = function (url, config) {
+
+    if (typeof document !== "undefined") {
+
+        amdLocal(url, config);
+
+        return;
+
+    }
+
+    throw new Error("This is supported only in browser, but we are working nodejs compability");
+
+};
+
+export {nget, ndelete, npost, noptions, nput, npatch, initHttp, initWs, importScript};

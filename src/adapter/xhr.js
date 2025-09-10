@@ -119,15 +119,6 @@ function xhrInit (api, config, path, method) {
 
             setRequestHeader(xhttp, dataRequest.header);
 
-            // Sxhttp.timeout = config.timeout;
-
-            // Sxhttp.ontimeout = function (e) {
-
-            // XMLHttpRequest timed out. Do something here.
-
-            // S};
-
-
             if (getTypeof(config.onDownloadProgress) === "function") {
 
                 xhttp.addEventListener('progress', config.onDownloadProgress);

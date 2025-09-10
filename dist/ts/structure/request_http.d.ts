@@ -1,4 +1,4 @@
-export default Requests;
+export default RequestsHttp;
 /**
  * A getkit intiator
  * @category Seq
@@ -7,8 +7,8 @@ export default Requests;
  * @param {any} config request body
  * @name getKit
  */
-declare function Requests(api: any, config: any): void;
-declare class Requests {
+declare function RequestsHttp(api: any, config: any): void;
+declare class RequestsHttp {
     /**
      * A getkit intiator
      * @category Seq

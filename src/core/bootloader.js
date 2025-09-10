@@ -1,7 +1,8 @@
 const {domainDetails, hostDetails} = require("./getType");
 const {isHttps} = require("url-assist");
 const {requestApi} = require("./referenceRequest");
-const Requests = require("../structure/request");
+const RequestsHttp = require("../structure/request_http");
+const RequestsWs = require("../structure/request_ws");
 const {varExtend} = require("structkit");
 
 /**
@@ -9,7 +10,7 @@ const {varExtend} = require("structkit");
  *
  * @since 0.6.0
  * @category environment
- * @param {any} details The details url
+ * @param {string} url The details url
  * @param {any} config The configuration set by developer
  * @returns {any} Return config details.
  * @example
@@ -17,8 +18,9 @@ const {varExtend} = require("structkit");
  * singleRequest({'as':1}, 'as',2)
  * // => {'as':2}
  */
-function singleRequest (details, config) {
+function singleRequest (url, config) {
 
+    const details = domainDetails(url);
     const validHttp = isHttps(details.hostArgument);
 
     const api = requestApi({
@@ -27,14 +29,14 @@ function singleRequest (details, config) {
 
     });
 
-    const init = new Requests(api, config);
+    const init = new RequestsHttp(api, config);
 
     return init;
 
 }
 
 /**
- * It was design for multiple request type
+ * It was design for multiple request type for http
  *
  * @since 0.6.0
  * @category environment
@@ -42,10 +44,10 @@ function singleRequest (details, config) {
  * @returns {any} Return config details.
  * @example
  *
- * configRequest({'as':1}, 'as',2)
+ * configRequestHttp({'as':1}, 'as',2)
  * // => {'as':2}
  */
-function configRequest (config) {
+function configRequestHttp (config) {
 
     const host = hostDetails();
     const detailsExtend = varExtend(host, config);
@@ -59,11 +61,44 @@ function configRequest (config) {
         "isHttps": validHttp
     });
 
-    const init = new Requests(api, config);
+    const init = new RequestsHttp(api, config);
+
+    return init;
+
+}
+
+/**
+ * It was design for multiple request type Ws
+ *
+ * @since 0.6.0
+ * @category environment
+ * @param {any} config The configuration set by developer
+ * @returns {any} Return config details.
+ * @example
+ *
+ * configRequestWs({'as':1}, 'as',2)
+ * // => {'as':2}
+ */
+function configRequestWs (config) {
+
+    const host = hostDetails();
+    const detailsExtend = varExtend(host, config);
+
+    const details = domainDetails(detailsExtend.baseUrl);
+
+    const validHttp = isHttps(details.baseUrl);
+
+    const api = requestApi({
+        "detail": details,
+        "isHttps": validHttp
+    });
+
+    const init = new RequestsWs(api, config);
 
     return init;
 
 }
 
 exports.singleRequest = singleRequest;
-exports.configRequest = configRequest;
+exports.configRequestHttp = configRequestHttp;
+exports.configRequestWs = configRequestWs;

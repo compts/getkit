@@ -1,17 +1,13 @@
 /* eslint-disable no-undefined */
 /* eslint-disable global-require */
 /* eslint-disable init-declarations */
-const {isAjax, isNodejsEnv} = require('./verifyEnv');
-const DummyReq = require('../structure/dummyReq');
+const {isAjax, isNodejsEnv} = require('../config/verifyEnv');
+const DummyReq = require('../lib/dummyReq');
 
 const adapterHttp = require('../adapter/http');
 const adapterXhr = require('../adapter/xhr');
 
-/*
- * REMOVE these lines:
- * const http = require("http");
- * const https = require("https");
- */
+
 const {getSegmentPath, getRequestDefaultConfig} = require("../core/getType");
 const {isHttpProtocolValid} = require("url-assist");
 

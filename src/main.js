@@ -1,5 +1,4 @@
-const {singleRequest, configRequest} = require("./core/bootloader");
-const {domainDetails} = require("./core/getType");
+const {singleRequest, configRequestHttp, configRequestWs} = require("./core/bootloader");
 const {amdLocal} = require("./core/importScript");
 
 
@@ -18,9 +17,7 @@ const {amdLocal} = require("./core/importScript");
  */
 exports.nget = function (url, config) {
 
-    const details = domainDetails(url);
-
-    const init = singleRequest(details, config);
+    const init = singleRequest(url, config);
 
     return init.get(url, config);
 
@@ -41,8 +38,7 @@ exports.nget = function (url, config) {
  */
 exports.ndelete = function (url, config) {
 
-    const details = domainDetails(url);
-    const init = singleRequest(details, config);
+    const init = singleRequest(url, config);
 
     return init.delete(url, config);
 
@@ -63,8 +59,7 @@ exports.ndelete = function (url, config) {
  */
 exports.npost = function (url, config) {
 
-    const details = domainDetails(url);
-    const init = singleRequest(details, config);
+    const init = singleRequest(url, config);
 
     return init.post(url, config);
 
@@ -85,8 +80,7 @@ exports.npost = function (url, config) {
  */
 exports.noptions = function (url, config) {
 
-    const details = domainDetails(url);
-    const init = singleRequest(details, config);
+    const init = singleRequest(url, config);
 
     return init.options(url, config);
 
@@ -107,8 +101,7 @@ exports.noptions = function (url, config) {
  */
 exports.nput = function (url, config) {
 
-    const details = domainDetails(url);
-    const init = singleRequest(details, config);
+    const init = singleRequest(url, config);
 
     return init.put(url, config);
 
@@ -129,15 +122,14 @@ exports.nput = function (url, config) {
  */
 exports.npatch = function (url, config) {
 
-    const details = domainDetails(url);
-    const init = singleRequest(details, config);
+    const init = singleRequest(url, config);
 
     return init.patch(url);
 
 };
 
 /**
- * Request initialize
+ * Request http initialize
  *
  * @since 0.6.0
  * @category request
@@ -145,12 +137,33 @@ exports.npatch = function (url, config) {
  * @returns {any} Returns Promise for response.
  * @example
  *
- * initialize({"baseUrl": "http://localhost:4040/"})
+ * initHttp({"baseUrl": "http://localhost:4040/"})
  * // => Promise<any>
  */
-exports.initialize = function (config) {
+exports.initHttp = function (config) {
 
-    const init = configRequest(config);
+    const init = configRequestHttp(config);
+
+    return init;
+
+};
+
+
+/**
+ * Request ws initialize
+ *
+ * @since 0.6.0
+ * @category request
+ * @param {any} [config] The request config
+ * @returns {any} Returns Promise for response.
+ * @example
+ *
+ * initHttp({"baseUrl": "http://localhost:4040/"})
+ * // => Promise<any>
+ */
+exports.initWs = function (config) {
+
+    const init = configRequestWs(config);
 
     return init;
 

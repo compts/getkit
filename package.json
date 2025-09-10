@@ -3,16 +3,16 @@
   "version": "0.6.0",
   "description": "HTTP base promised and callback and User agent",
   "main": "./dist/cjs/getkit-full.cjs.js",
-  "module": "./dist/esm/src/module/main.js",
-  "types": "./dist/ts/module/main.d.ts",
+  "module": "./dist/esm/src/main.js",
+  "types": "./dist/ts/main.d.ts",
   "sideEffects": false,
   "exports": {
     ".": {
-      "import": "./dist/esm/src/module/main.js",
+      "import": "./dist/esm/src/main.js",
       "require": "./dist/cjs/getkit-full.cjs.js",
       "types": {
-        "require": "./dist/ts/module/main.d.ts",
-        "default": "./dist/ts/module/main.d.ts"
+        "require": "./dist/ts/main.d.ts",
+        "default": "./dist/ts/main.d.ts"
       },
       "browser": {
         "require": "./dist/cjs/getkit-full.cjs.js",
@@ -31,7 +31,7 @@
     "dist/ts"
   ],
   "scripts": {
-    "es_linter": "eslint   src/module/*.js src/lib/*.js src/core/*.js --fix",
+    "es_linter": "eslint  src/*.js src/lib/*.js src/core/*.js --fix",
     "test_esm": "mocha test/library/cjs/*.test.js --timeout 4000 --exit",
     "test_cjs": "mocha test/cjs/*.test.js --timeout 1000 --exit",
     "validate": "npm run style && npm run test",
@@ -54,7 +54,7 @@
   },
   "homepage": "https://getkit.codehyouka.xyz",
   "dependencies": {
-    "structkit": "^1.4.872",
+    "structkit": "^1.4.873",
     "url-assist": "^1.2.71"
   },
   "devDependencies": {

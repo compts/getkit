@@ -8,7 +8,7 @@ const {loaderApi} = require("../core/referenceRequest");
  * @param {any} config request body
  * @name getKit
  */
-function Requests (api, config) {
+function RequestsHttp (api, config) {
 
     this.api =api;
     this.config =config;
@@ -28,7 +28,7 @@ function Requests (api, config) {
  * append({'as':1}, 'as',2)
  * // => {'as':2}
  */
-Requests.prototype.get = function (path, subconfig) {
+RequestsHttp.prototype.get = function (path, subconfig) {
 
     return loaderApi(this.api, this.config, subconfig, path, "get");
 
@@ -47,7 +47,7 @@ Requests.prototype.get = function (path, subconfig) {
  * append({'as':1}, 'as',2)
  * // => {'as':2}
  */
-Requests.prototype.delete = function (path, subconfig) {
+RequestsHttp.prototype.delete = function (path, subconfig) {
 
     return loaderApi(this.api, this.config, subconfig, path, "delete");
 
@@ -66,7 +66,7 @@ Requests.prototype.delete = function (path, subconfig) {
  * append({'as':1}, 'as',2)
  * // => {'as':2}
  */
-Requests.prototype.post = function (path, subconfig) {
+RequestsHttp.prototype.post = function (path, subconfig) {
 
     return loaderApi(this.api, this.config, subconfig, path, "post");
 
@@ -85,7 +85,7 @@ Requests.prototype.post = function (path, subconfig) {
  * append({'as':1}, 'as',2)
  * // => {'as':2}
  */
-Requests.prototype.options = function (path, subconfig) {
+RequestsHttp.prototype.options = function (path, subconfig) {
 
     return loaderApi(this.api, this.config, subconfig, path, "options");
 
@@ -104,7 +104,7 @@ Requests.prototype.options = function (path, subconfig) {
  * append({'as':1}, 'as',2)
  * // => {'as':2}
  */
-Requests.prototype.put = function (path, subconfig) {
+RequestsHttp.prototype.put = function (path, subconfig) {
 
     return loaderApi(this.api, this.config, subconfig, path, "put");
 
@@ -123,10 +123,10 @@ Requests.prototype.put = function (path, subconfig) {
  * append({'as':1}, 'as',2)
  * // => {'as':2}
  */
-Requests.prototype.patch = function (path, subconfig) {
+RequestsHttp.prototype.patch = function (path, subconfig) {
 
     return loaderApi(this.api, this.config, subconfig, path, "patch");
 
 };
 
-module.exports = Requests;
+module.exports = RequestsHttp;

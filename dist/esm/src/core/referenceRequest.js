@@ -1,21 +1,14 @@
 /* eslint-disable no-undefined */
 /* eslint-disable global-require */
 /* eslint-disable init-declarations */
-import {isAjax, isNodejsEnv} from './verifyEnv.js';
+import {isAjax, isNodejsEnv} from '../config/verifyEnv.js';
 
-import DummyReq from '../structure/dummyReq.js';
+import DummyReq from '../lib/dummyReq.js';
 
 import adapterHttp from '../adapter/http.js';
 
 import adapterXhr from '../adapter/xhr.js';
 
-/*
- * REMOVE these lines:
- * import http from 'http';
-
- * import https from 'https';
-
- */
 import {getSegmentPath, getRequestDefaultConfig} from '../core/getType.js';
 
 import {isHttpProtocolValid} from 'url-assist';

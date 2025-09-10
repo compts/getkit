@@ -1,9 +1,3 @@
-import {singleRequest, configRequest} from '../core/bootloader.js';
-
-import {domainDetails} from '../core/getType.js';
-
-import {amdLocal} from '../core/importScript.js';
-
 /**
  * Request Get
  *
@@ -17,16 +11,7 @@ import {amdLocal} from '../core/importScript.js';
  * nget('/')
  * // => Promise<any>
  */
-const nget = function (url, config) {
-
-    const details = domainDetails(url);
-
-    const init = singleRequest(details, config);
-
-    return init.get(url, config);
-
-};
-
+export function nget(url: string, config?: any): Promise<any>;
 /**
  * Request Delete
  *
@@ -40,15 +25,7 @@ const nget = function (url, config) {
  * ndelete('/')
  * // => Promise<any>
  */
-const ndelete = function (url, config) {
-
-    const details = domainDetails(url);
-    const init = singleRequest(details, config);
-
-    return init.delete(url, config);
-
-};
-
+export function ndelete(url: string, config?: any): Promise<any>;
 /**
  * Request Post
  *
@@ -62,15 +39,7 @@ const ndelete = function (url, config) {
  * npost('/')
  * // => Promise<any>
  */
-const npost = function (url, config) {
-
-    const details = domainDetails(url);
-    const init = singleRequest(details, config);
-
-    return init.post(url, config);
-
-};
-
+export function npost(url: string, config?: any): Promise<any>;
 /**
  * Request Options
  *
@@ -84,15 +53,7 @@ const npost = function (url, config) {
  * noptions('/')
  * // => Promise<any>
  */
-const noptions = function (url, config) {
-
-    const details = domainDetails(url);
-    const init = singleRequest(details, config);
-
-    return init.options(url, config);
-
-};
-
+export function noptions(url: string, config?: any): Promise<any>;
 /**
  * Request Put
  *
@@ -106,15 +67,7 @@ const noptions = function (url, config) {
  * nput('/')
  * // => Promise<any>
  */
-const nput = function (url, config) {
-
-    const details = domainDetails(url);
-    const init = singleRequest(details, config);
-
-    return init.put(url, config);
-
-};
-
+export function nput(url: string, config?: any): Promise<any>;
 /**
  * Request Patch
  *
@@ -128,17 +81,9 @@ const nput = function (url, config) {
  * npatch('/')
  * // => Promise<any>
  */
-const npatch = function (url, config) {
-
-    const details = domainDetails(url);
-    const init = singleRequest(details, config);
-
-    return init.patch(url);
-
-};
-
+export function npatch(url: string, config?: any): Promise<any>;
 /**
- * Request initialize
+ * Request http initialize
  *
  * @since 0.6.0
  * @category request
@@ -146,17 +91,23 @@ const npatch = function (url, config) {
  * @returns {any} Returns Promise for response.
  * @example
  *
- * initialize({"baseUrl": "http://localhost:4040/"})
+ * initHttp({"baseUrl": "http://localhost:4040/"})
  * // => Promise<any>
  */
-const initialize = function (config) {
-
-    const init = configRequest(config);
-
-    return init;
-
-};
-
+export function initHttp(config?: any): any;
+/**
+ * Request ws initialize
+ *
+ * @since 0.6.0
+ * @category request
+ * @param {any} [config] The request config
+ * @returns {any} Returns Promise for response.
+ * @example
+ *
+ * initHttp({"baseUrl": "http://localhost:4040/"})
+ * // => Promise<any>
+ */
+export function initWs(config?: any): any;
 /**
  * Importing JS in CDN, this is experimental feature
  *
@@ -170,18 +121,4 @@ const initialize = function (config) {
  * importScript("http://localhost:4040/")
  * // => Promise<any>
  */
-const importScript = function (url, config) {
-
-    if (typeof document !== "undefined") {
-
-        amdLocal(url, config);
-
-        return;
-
-    }
-
-    throw new Error("This is supported only in browser, but we are working nodejs compability");
-
-};
-
-export {nget, ndelete, npost, noptions, nput, npatch, initialize, importScript};
+export function importScript(url: string, config?: any): Promise<any>;
