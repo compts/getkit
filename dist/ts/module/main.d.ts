@@ -105,7 +105,7 @@ export function initialize(config?: any): any;
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
- * importScipt("http://localhost:4040/")
+ * importScript("http://localhost:4040/")
  * // => Promise<any>
  */
-export function importScipt(url: string, config?: any): Promise<any>;
+export function importScript(url: string, config?: any): Promise<any>;

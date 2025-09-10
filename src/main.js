@@ -1,6 +1,6 @@
-const {singleRequest, configRequest} = require("../core/bootloader");
-const {domainDetails} = require("../core/getType");
-const {amdLocal} = require("../core/importScript");
+const {singleRequest, configRequest} = require("./core/bootloader");
+const {domainDetails} = require("./core/getType");
+const {amdLocal} = require("./core/importScript");
 
 
 /**
@@ -166,10 +166,10 @@ exports.initialize = function (config) {
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
- * importScipt("http://localhost:4040/")
+ * importScript("http://localhost:4040/")
  * // => Promise<any>
  */
-exports.importScipt = function (url, config) {
+exports.importScript = function (url, config) {
 
 
     if (typeof document !== "undefined") {

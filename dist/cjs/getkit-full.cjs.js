@@ -1257,11 +1257,11 @@ gtk.initialize=function (config) {
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
- * importScipt("http://localhost:4040/")
+ * importScript("http://localhost:4040/")
  * // => Promise<any>
  */
 
-gtk.importScipt=function (url, config) {
+gtk.importScript=function (url, config) {
 
     if (typeof document !== "undefined") {
 

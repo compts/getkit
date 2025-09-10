@@ -167,10 +167,10 @@ const initialize = function (config) {
  * @returns {Promise<any>} Returns Promise for response.
  * @example
  *
- * importScipt("http://localhost:4040/")
+ * importScript("http://localhost:4040/")
  * // => Promise<any>
  */
-const importScipt = function (url, config) {
+const importScript = function (url, config) {
 
     if (typeof document !== "undefined") {
 
@@ -184,4 +184,4 @@ const importScipt = function (url, config) {
 
 };
 
-export {nget, ndelete, npost, noptions, nput, npatch, initialize, importScipt};
+export {nget, ndelete, npost, noptions, nput, npatch, initialize, importScript};
