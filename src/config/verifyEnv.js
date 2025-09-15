@@ -1,5 +1,5 @@
-const {indexOf} = require("structkit");
-const {negOne, zero, one, two, three, four} = require("./defaultValue");
+const {indexOfExist} = require("structkit");
+const {zero, one, two, three, four, five} = require("./defaultValue");
 
 /**
  * Check if object or value
@@ -37,6 +37,12 @@ function checkEnvironmentStatus () {
 
     }
 
+    if (typeof WebSocket !== "undefined" && status === zero) {
+
+        status = five;
+
+    }
+
     return status;
 
 }
@@ -54,13 +60,14 @@ function checkEnvironmentStatus () {
  */
 function isAjax () {
 
-    return indexOf([
+    return indexOfExist([
         one,
         two,
         three
-    ], checkEnvironmentStatus())!==negOne;
+    ], checkEnvironmentStatus());
 
 }
+
 
 /**
  * To check if it`s nodejs environment
@@ -75,7 +82,7 @@ function isAjax () {
  */
 function isNodejsEnv () {
 
-    return indexOf([four], checkEnvironmentStatus())!==negOne;
+    return indexOfExist([four], checkEnvironmentStatus());
 
 }
 

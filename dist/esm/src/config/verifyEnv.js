@@ -1,6 +1,6 @@
-import {indexOf} from 'structkit';
+import {indexOfExist} from 'structkit';
 
-import {negOne, zero, one, two, three, four} from './defaultValue.js';
+import {zero, one, two, three, four, five} from './defaultValue.js';
 
 /**
  * Check if object or value
@@ -38,6 +38,12 @@ function checkEnvironmentStatus () {
 
     }
 
+    if (typeof WebSocket !== "undefined" && status === zero) {
+
+        status = five;
+
+    }
+
     return status;
 
 }
@@ -55,11 +61,11 @@ function checkEnvironmentStatus () {
  */
 function isAjax () {
 
-    return indexOf([
+    return indexOfExist([
         one,
         two,
         three
-    ], checkEnvironmentStatus())!==negOne;
+    ], checkEnvironmentStatus());
 
 }
 
@@ -76,7 +82,7 @@ function isAjax () {
  */
 function isNodejsEnv () {
 
-    return indexOf([four], checkEnvironmentStatus())!==negOne;
+    return indexOfExist([four], checkEnvironmentStatus());
 
 }
 

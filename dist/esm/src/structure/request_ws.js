@@ -1,4 +1,4 @@
-// Cimport {loaderApi} from '../core/referenceRequest.js';
+import {loaderWebsocket} from '../core/referenceRequest.js';
 
 /**
  * A getkit intiator
@@ -12,8 +12,20 @@ function RequestsWs (api, config) {
 
     this.api =api;
     this.config =config;
-
+    this.loaderWS = loaderWebsocket(this.api, this.config);
+    console.log(this.loaderWS,"loaderWS here");
 }
+
+RequestsWs.prototype.send = (msg) => {
+
+    //this.loaderWS.send(msg);
+
+};
+RequestsWs.prototype.close = () => {
+
+    //this.loaderWS.close();
+
+};
 
 export default RequestsWs;
 

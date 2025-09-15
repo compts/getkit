@@ -94,15 +94,7 @@ function xhrInit (api, config, path, method) {
                     };
                     const dataResponse = config.setResponse(outputResponse);
 
-                    if (getTypeof(dataResponse) === "json") {
-
-                        resolve(dataResponse);
-
-                    } else {
-
-                        resolve(outputResponse);
-
-                    }
+                    resolve(dataResponse);
 
                 }
 
@@ -118,14 +110,6 @@ function xhrInit (api, config, path, method) {
             xhttp.open(method, definePath, method !== "get");
 
             setRequestHeader(xhttp, dataRequest.header);
-
-            // Sxhttp.timeout = config.timeout;
-
-            // Sxhttp.ontimeout = function (e) {
-
-            // XMLHttpRequest timed out. Do something here.
-
-            // S};
 
             if (getTypeof(config.onDownloadProgress) === "function") {
 

@@ -9,7 +9,7 @@
   "exports": {
     ".": {
       "import": "./dist/esm/src/main.js",
-      "require": "./dist/cjs/getkit-full.cjs.js",
+      "require": "./src/main.js",
       "types": {
         "require": "./dist/ts/main.d.ts",
         "default": "./dist/ts/main.d.ts"
@@ -60,6 +60,7 @@
   "devDependencies": {
     "@types/node": "^20.5.9",
     "eslint": "^7.13.0",
+    "ws": "^8.18.3",
     "eslint-config-strongloop": "^2.1.0",
     "esm": "^3.2.25",
     "jest": "^27.5.1",

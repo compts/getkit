@@ -11,7 +11,7 @@ export default httpInit;
  * @returns {Promise<any>} Returns the total.
  * @example
  *
- * append({'as':1}, 'as',2)
+ * httpInit({'as':1}, 'as',2)
  * // => {'as':2}
  */
 declare function httpInit(api: any, config: any, path: any, methods: any): Promise<any>;

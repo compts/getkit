@@ -191,6 +191,7 @@ const one = 1;
 const two = 2;
 const three = 3;
 const four = 4;
+const five = 5;
 
 /**
  * Check if object or value
@@ -228,6 +229,12 @@ function checkEnvironmentStatus () {
 
     }
 
+    if (typeof WebSocket !== "undefined" && status === zero) {
+
+        status = five;
+
+    }
+
     return status;
 
 }
@@ -245,11 +252,11 @@ function checkEnvironmentStatus () {
  */
 function isAjax () {
 
-    return _stk.indexOf([
+    return _stk.indexOfExist([
         one,
         two,
         three
-    ], checkEnvironmentStatus())!==negOne;
+    ], checkEnvironmentStatus());
 
 }
 
@@ -266,7 +273,7 @@ function isAjax () {
  */
 function isNodejsEnv () {
 
-    return _stk.indexOf([four], checkEnvironmentStatus())!==negOne;
+    return _stk.indexOfExist([four], checkEnvironmentStatus());
 
 }
 
@@ -388,7 +395,7 @@ function setRespondData (param, header, config) {
  * @returns {Promise<any>} Returns the total.
  * @example
  *
- * append({'as':1}, 'as',2)
+ * httpInit({'as':1}, 'as',2)
  * // => {'as':2}
  */
 function httpInit (api, config, path, methods) {
@@ -448,15 +455,7 @@ function httpInit (api, config, path, methods) {
 
                     const dataResponse = config.setResponse(outputResponse);
 
-                    if (_stk.getTypeof(dataResponse) === "json") {
-
-                        resolve(dataResponse);
-
-                    } else {
-
-                        resolve(outputResponse);
-
-                    }
+                    resolve(dataResponse);
 
                 });
 
@@ -568,15 +567,7 @@ function xhrInit (api, config, path, method) {
                     };
                     const dataResponse = config.setResponse(outputResponse);
 
-                    if (_stk.getTypeof(dataResponse) === "json") {
-
-                        resolve(dataResponse);
-
-                    } else {
-
-                        resolve(outputResponse);
-
-                    }
+                    resolve(dataResponse);
 
                 }
 
@@ -592,14 +583,6 @@ function xhrInit (api, config, path, method) {
             xhttp.open(method, definePath, method !== "get");
 
             setRequestHeader(xhttp, dataRequest.header);
-
-            // Sxhttp.timeout = config.timeout;
-
-            // Sxhttp.ontimeout = function (e) {
-
-            // XMLHttpRequest timed out. Do something here.
-
-            // S};
 
             if (_stk.getTypeof(config.onDownloadProgress) === "function") {
 
@@ -636,6 +619,502 @@ function xhrInit (api, config, path, method) {
 }
 
 adapterXhr=xhrInit
+
+/**
+ * Initiation of nodejs http
+ *
+ * @since 0.5.0
+ * @category environment
+ * @param {any} api The first number in an addition.
+ * @param {any} config The first number in an addition.
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * httpInit({'as':1}, 'as',2)
+ * // => {'as':2}
+ */
+function LocalWs (api, config) {
+
+    let definePath = config.protocol+ '://' + config.hostname;
+
+    if (_stk.isEmpty(config.port) === false) {
+
+        definePath = definePath+ ':' + config.port;
+
+    }
+
+    this.ws = new api.ClassSocket(definePath);
+
+    this.ws.onopen = () => {
+        console.log('Connected to WebSocket server');
+    };
+
+    this.ws.onmessage = (event) => {
+        console.log('Received message:', event.data);
+    };
+
+    this.ws.onclose = () => {
+        console.log('Disconnected from WebSocket server');
+    };
+
+    this.ws.onerror = (error) => {
+        console.error('WebSocket error:', error);
+    };
+
+    return this;
+
+}
+
+LocalWs.prototype.send = (msg) => {
+
+    //this.ws.send(msg);
+
+};
+LocalWs.prototype.close = () => {
+
+    //this.ws.close();
+
+};
+
+/* eslint-disable no-undef */
+/* eslint-disable no-useless-constructor */
+/* eslint-disable class-methods-use-this */
+/* eslint-disable no-empty-function */
+/* eslint-disable no-undef */
+/* eslint-disable global-require */
+
+/**
+ * It was design to single request type only
+ *
+ * @since 0.6.0
+ * @category environment
+ * @returns {any} Return config details.
+ * @example
+ *
+ * singleRequest({'as':1}, 'as',2)
+ * // => {'as':2}
+ */
+function dummyCrypto () {
+
+    if (isNodejsEnv()) {
+
+        
+
+        return crypto;
+
+    }
+
+    return {
+        "randomBytes": (size) => {
+
+            const array = new Uint8Array(size);
+
+            window.crypto.getRandomValues(array);
+
+            return Buffer.from(array);
+
+        }
+    };
+
+}
+
+class EventEmitterDummy {
+
+    constructor () {
+    }
+
+    on () {
+    }
+
+    emit () {
+    }
+
+    removeListener () {
+    }
+
+}
+
+/**
+ * It was design to single request type only
+ *
+ * @since 0.6.0
+ * @category environment
+ * @returns {any} Return config details.
+ * @example
+ *
+ * singleRequest({'as':1}, 'as',2)
+ * // => {'as':2}
+ */
+function dummyEventsEmitter () {
+
+    if (isNodejsEnv()) {
+
+        
+
+        return EventEmitter;
+
+    }
+
+    return EventEmitterDummy;
+
+}
+
+class WebSocketClient extends dummyEventsEmitter {
+
+    constructor (socket, url) {
+
+        super();
+        this.url = url;
+        // This.url = new URL(url);
+        this.socket = null;
+        this.socketExport = socket;
+        this.isSecure = url.protocol === 'wss:';
+        this.port = url.port || (socket.isHttps
+            ? 443
+            : 80);
+        this.handshakeCompleted = false;
+
+    }
+
+    connect () {
+
+        const options = {
+            "host": this.url.hostname,
+            "port": this.port,
+            "servername": this.url.hostname
+        };
+
+        this.socket = this.socketExport.connect(options);
+
+        this.socket.on('connect', () => this._handleConnect());
+        this.socket.on('data', (data) => this._handleData(data));
+        this.socket.on('close', () => this.emit('close'));
+        this.socket.on('error', (err) => this.emit('error', err));
+
+    }
+
+    _handleConnect () {
+
+        // Generate random key for handshake
+        this.key = dummyCrypto().randomBytes(16)
+            .toString('base64');
+
+        const headers = [
+            `GET ${this.url.pathname}${this.url.search} HTTP/1.1`,
+            `Host: ${this.url.host}`,
+            'Upgrade: websocket',
+            'Connection: Upgrade',
+            `Sec-WebSocket-Key: ${this.key}`,
+            'Sec-WebSocket-Version: 13',
+            '',
+            ''
+        ].join('\r\n');
+
+        this.socket.write(headers);
+
+    }
+
+    _handleData (data) {
+
+        if (!this.handshakeCompleted) {
+
+            this._completeHandshake(data);
+
+            return;
+
+        }
+        this._parseMessage(data);
+
+    }
+
+    _completeHandshake (data) {
+
+        const response = data.toString();
+        const lines = response.split('\r\n');
+
+        // Check if handshake was successful
+        if (!response.includes('HTTP/1.1 101')) {
+
+            this.emit('error', new Error('Handshake failed: ' + lines[0]));
+            this.socket.destroy();
+
+            return;
+
+        }
+
+        // Find the Sec-WebSocket-Accept header
+        const acceptHeader = lines.find((line) => line.toLowerCase().startsWith('sec-websocket-accept:'));
+
+        if (!acceptHeader) {
+
+            this.emit('error', new Error('No Sec-WebSocket-Accept header received'));
+            this.socket.destroy();
+
+            return;
+
+        }
+
+        // Validate the accept key
+        const acceptKey = acceptHeader.split(':')[1].trim();
+        const expectedKey = crypto
+            .createHash('sha1')
+            .update(this.key + '258EAFA5-E914-47DA-95CA-C5AB0DC85B11')
+            .digest('base64');
+
+        if (acceptKey !== expectedKey) {
+
+            this.emit('error', new Error('Invalid Sec-WebSocket-Accept key'));
+            this.socket.destroy();
+
+            return;
+
+        }
+
+        this.handshakeCompleted = true;
+        this.emit('open');
+
+    }
+
+    _parseMessage (data) {
+
+        const buffer = Buffer.from(data);
+        let offset = 0;
+
+        while (offset < buffer.length) {
+
+            const firstByte = buffer[offset++];
+            const secondByte = buffer[offset++];
+
+            const opcode = firstByte & 0x0F;
+            const isMasked = (secondByte & 0x80) !== 0;
+            let payloadLength = secondByte & 0x7F;
+
+            if (payloadLength === 126) {
+
+                payloadLength = buffer.readUInt16BE(offset);
+                offset += 2;
+
+            } else if (payloadLength === 127) {
+
+                // For very large payloads (64-bit length)
+                payloadLength = Number(buffer.readBigUInt64BE(offset));
+                offset += 8;
+
+            }
+
+            let maskingKey;
+
+            if (isMasked) {
+
+                maskingKey = buffer.slice(offset, offset + 4);
+                offset += 4;
+
+            }
+
+            const payload = buffer.slice(offset, offset + payloadLength);
+
+            offset += payloadLength;
+
+            if (isMasked) {
+
+                // Unmask the payload
+                for (let i = 0; i < payload.length; i++) {
+
+                    payload[i] ^= maskingKey[i % 4];
+
+                }
+
+            }
+
+            this._handlePayload(opcode, payload);
+
+        }
+
+    }
+
+    _handlePayload (opcode, payload) {
+
+        switch (opcode) {
+
+        case 0x1: // Text frame
+            this.emit('message', payload.toString());
+            break;
+        case 0x2: // Binary frame
+            this.emit('message', payload);
+            break;
+        case 0x8: // Connection close
+            this.socket.end();
+            this.emit('close');
+            break;
+        case 0x9: // Ping
+            this._sendPong(payload);
+            break;
+        case 0xA: // Pong
+            // Ignore pong frames
+            break;
+        default:
+            console.warn('Unknown opcode:', opcode);
+
+        }
+
+    }
+
+    send (data) {
+
+        if (typeof data === 'string') {
+
+            this._sendText(data);
+
+        } else if (Buffer.isBuffer(data)) {
+
+            this._sendBinary(data);
+
+        } else {
+
+            throw new Error('Data must be string or Buffer');
+
+        }
+
+    }
+
+    _sendText (data) {
+
+        const payload = Buffer.from(data);
+
+        this._sendFrame(0x81, payload); // FIN + text frame
+
+    }
+
+    _sendBinary (data) {
+
+        this._sendFrame(0x82, data); // FIN + binary frame
+
+    }
+
+    _sendFrame (opcode, payload) {
+
+        // Masking is required for client-to-server frames
+        const maskingKey = crypto.randomBytes(4);
+        const maskedPayload = Buffer.alloc(payload.length);
+
+        for (let i = 0; i < payload.length; i++) {
+
+            maskedPayload[i] = payload[i] ^ maskingKey[i % 4];
+
+        }
+
+        let headerLength = 2;
+        const payloadLength = payload.length;
+
+        if (payloadLength >= 126 && payloadLength < 65536) {
+
+            headerLength += 2;
+
+        } else if (payloadLength >= 65536) {
+
+            headerLength += 8;
+
+        }
+
+        const header = Buffer.alloc(headerLength + 4); // +4 for masking key
+
+        header[0] = opcode;
+        header[1] = 0x80; // Set MASK bit
+
+        let offset = 2;
+
+        if (payloadLength < 126) {
+
+            header[1] |= payloadLength;
+
+        } else if (payloadLength < 65536) {
+
+            header[1] |= 126;
+            header.writeUInt16BE(payloadLength, offset);
+            offset += 2;
+
+        } else {
+
+            header[1] |= 127;
+            header.writeBigUInt64BE(BigInt(payloadLength), offset);
+            offset += 8;
+
+        }
+
+        maskingKey.copy(header, offset);
+
+        this.socket.write(Buffer.concat([
+            header,
+            maskedPayload
+        ]));
+
+    }
+
+    _sendPong (payload) {
+
+        this._sendFrame(0x8A, payload); // FIN + pong frame
+
+    }
+
+    ping (data) {
+
+        this._sendFrame(0x89, Buffer.from(data || ''));
+
+    }
+
+    close () {
+
+        this._sendFrame(0x88, Buffer.alloc(0)); // FIN + close frame
+        this.socket.end();
+
+    }
+
+}
+
+/**
+ * Initiation of nodejs http
+ *
+ * @since 0.5.0
+ * @category environment
+ * @param {any} api The first number in an addition.
+ * @param {any} config The first number in an addition.
+ * @returns {any} Returns the total.
+ * @example
+ *
+ * httpInit({'as':1}, 'as',2)
+ * // => {'as':2}
+ */
+function nodeWs (api, config) {
+
+    this.ws = new WebSocketClient(api.ClassSocket, config);
+
+    this.ws.on('open', () => {
+
+        console.log('Connected');
+        this.ws.send('Hello Server');
+
+    });
+    this.ws.on('message', (data) => {
+
+        console.log('Received:', data.toString());
+        //  Client.close();
+
+    });
+    this.ws.on('error', (err) => {
+
+        console.error('Error:', err);
+
+    });
+    this.ws.on('close', () => {
+
+        console.log('Connection closed');
+
+    });
+    this.ws.connect();
+
+    return this;
+
+}
 
 /**
  * Check the environment if nodejs or browser
@@ -725,6 +1204,83 @@ function requestApi (config) {
 }
 
 /**
+ * Check the environment if nodejs or browser
+ *
+ * @since 0.5.0
+ * @category environment
+ * @param {any} config The config of url to be request
+ * @returns {any} Return details of environment.
+ * @example
+ *
+ * requestApi({})
+ * // => {}
+ */
+function requestWSApi (config) {
+
+    if (isAjax()) {
+
+        if (window.WebSocket) {
+
+            return {
+                "ClassSocket": WebSocket,
+                "detail": config.detail,
+                "status": "ws_local"
+
+            };
+
+        }
+
+    }
+
+    // Only require http/https in Node.js environment
+    if (isNodejsEnv()) {
+
+        let http, https;
+
+        try {
+
+            http = require("net");
+            https = require("tls");
+
+        } catch (__) {
+
+            // Fallback if require fails
+            http = undefined;
+            https = undefined;
+
+        }
+
+        if (typeof http !== "undefined" && typeof https !== "undefined") {
+
+            if (config.isHttps) {
+
+                return {
+                    "ClassSocket": https,
+                    "detail": config.detail,
+                    "status": "ws_node"
+                };
+
+            }
+
+            return {
+                "ClassSocket": http,
+                "detail": config.detail,
+                "status": "ws_node"
+            };
+
+        }
+
+    }
+
+    return {
+        "ClassSocket": new DummyReq(),
+        "detail": config.detail,
+        "status": "dummy"
+    };
+
+}
+
+/**
  * To initiate what environment to use, if nodejs or browser
  *
  * @since 0.5.0
@@ -760,6 +1316,47 @@ function loaderApi (api, config, subconfig, path, method) {
     if (api.status ==="http") {
 
         return adapterHttp(api, defaultRequestDefaultConfig, defaultPath, method);
+
+    }
+
+    return api.class;
+
+}
+
+/**
+ * To initiate what environment to use, if nodejs or browser
+ *
+ * @since 0.5.0
+ * @category environment
+ * @param {any} api The api details.
+ * @param {any} config The config details.
+ * @param {any} subconfig The subconfig details.
+ * @param {any} path The path details.
+ * @param {any} method The method details.
+ * @returns {any} Returns the class.
+ * @example
+ *
+ * loaderApi(api, config, subconfig, "/path", "get")
+ * // => <class>
+ */
+function loaderWebsocket (api, config) {
+
+    const validWs = urs.isWSProtocolValid(config.href);
+
+    if (validWs === false) {
+
+        return Promise.reject(String("Invalid Http Protocol"));
+
+    }
+
+    if (api.status ==="ws_local") {
+
+        return new LocalWs(api, config);
+
+    }
+    if (api.status ==="ws_node") {
+
+        return nodeWs(api, config);
 
     }
 
@@ -896,8 +1493,6 @@ RequestsHttp.prototype.patch = function (path, subconfig) {
 
 };
 
-// C
-
 /**
  * A getkit intiator
  * @category Seq
@@ -910,8 +1505,20 @@ function RequestsWs (api, config) {
 
     this.api =api;
     this.config =config;
-
+    this.loaderWS = loaderWebsocket(this.api, this.config);
+    console.log(this.loaderWS,"loaderWS here");
 }
+
+RequestsWs.prototype.send = (msg) => {
+
+    //this.loaderWS.send(msg);
+
+};
+RequestsWs.prototype.close = () => {
+
+    //this.loaderWS.close();
+
+};
 
 /**
  * It was design to single request type only
@@ -994,14 +1601,16 @@ function configRequestWs (config) {
 
     const details = domainDetails(detailsExtend.baseUrl);
 
-    const validHttp = urs.isHttps(details.baseUrl);
+    const validHttp = urs.isWSProtocolValid(details.baseUrl, {
+        "isValidFormat": false
+    });
 
-    const api = requestApi({
+    const api = requestWSApi({
         "detail": details,
         "isHttps": validHttp
     });
 
-    const init = new RequestsWs(api, config);
+    const init = new RequestsWs(api, details);
 
     return init;
 

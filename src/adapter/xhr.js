@@ -93,15 +93,7 @@ function xhrInit (api, config, path, method) {
                     };
                     const dataResponse = config.setResponse(outputResponse);
 
-                    if (getTypeof(dataResponse) === "json") {
-
-                        resolve(dataResponse);
-
-                    } else {
-
-                        resolve(outputResponse);
-
-                    }
+                    resolve(dataResponse);
 
                 }
 

@@ -16,7 +16,7 @@ const {setRespondData} = require("../lib/response");
  * @returns {Promise<any>} Returns the total.
  * @example
  *
- * append({'as':1}, 'as',2)
+ * httpInit({'as':1}, 'as',2)
  * // => {'as':2}
  */
 function httpInit (api, config, path, methods) {
@@ -79,15 +79,7 @@ function httpInit (api, config, path, methods) {
 
                     const dataResponse = config.setResponse(outputResponse);
 
-                    if (getTypeof(dataResponse) === "json") {
-
-                        resolve(dataResponse);
-
-                    } else {
-
-                        resolve(outputResponse);
-
-                    }
+                    resolve(dataResponse);
 
                 });
 

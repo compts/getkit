@@ -1,8 +1,8 @@
 import {domainDetails, hostDetails} from './getType.js';
 
-import {isHttps} from 'url-assist';
+import {isHttps, isWSProtocolValid} from 'url-assist';
 
-import {requestApi} from './referenceRequest.js';
+import {requestApi, requestWSApi} from './referenceRequest.js';
 
 import RequestsHttp from '../structure/request_http.js';
 
@@ -91,14 +91,16 @@ function configRequestWs (config) {
 
     const details = domainDetails(detailsExtend.baseUrl);
 
-    const validHttp = isHttps(details.baseUrl);
+    const validHttp = isWSProtocolValid(details.baseUrl, {
+        "isValidFormat": false
+    });
 
-    const api = requestApi({
+    const api = requestWSApi({
         "detail": details,
         "isHttps": validHttp
     });
 
-    const init = new RequestsWs(api, config);
+    const init = new RequestsWs(api, details);
 
     return init;
 

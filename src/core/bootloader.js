@@ -1,6 +1,6 @@
 const {domainDetails, hostDetails} = require("./getType");
-const {isHttps} = require("url-assist");
-const {requestApi} = require("./referenceRequest");
+const {isHttps, isWSProtocolValid} = require("url-assist");
+const {requestApi, requestWSApi} = require("./referenceRequest");
 const RequestsHttp = require("../structure/request_http");
 const RequestsWs = require("../structure/request_ws");
 const {varExtend} = require("structkit");
@@ -86,14 +86,16 @@ function configRequestWs (config) {
 
     const details = domainDetails(detailsExtend.baseUrl);
 
-    const validHttp = isHttps(details.baseUrl);
+    const validHttp = isWSProtocolValid(details.baseUrl, {
+        "isValidFormat": false
+    });
 
-    const api = requestApi({
+    const api = requestWSApi({
         "detail": details,
         "isHttps": validHttp
     });
 
-    const init = new RequestsWs(api, config);
+    const init = new RequestsWs(api, details);
 
     return init;
 

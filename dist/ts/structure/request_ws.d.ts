@@ -20,4 +20,5 @@ declare class RequestsWs {
     constructor(api: any, config: any);
     api: any;
     config: any;
+    loaderWS: any;
 }
