@@ -622,19 +622,20 @@ function xhrInit (api, config, path, method) {
 adapterXhr=xhrInit
 
 /**
- * Initiation of nodejs http
+ * Initiation of web websocket
  *
  * @since 0.5.0
  * @category environment
  * @param {any} api The first number in an addition.
  * @param {any} config The first number in an addition.
+ * @param {any} subMethod The first number in an addition.
  * @returns {any} Returns the total.
  * @example
  *
  * httpInit({'as':1}, 'as',2)
  * // => {'as':2}
  */
-function LocalWs (api, config) {
+function LocalWs (api, config, subMethod) {
 
     let definePath = config.protocol+ '://' + config.hostname;
 
@@ -647,35 +648,29 @@ function LocalWs (api, config) {
     this.ws = new api.ClassSocket(definePath);
 
     this.ws.onopen = () => {
+        this.readyState = this.ws.readyState ===1;
         console.log('Connected to WebSocket server');
     };
 
     this.ws.onmessage = (event) => {
-        console.log('Received message:', event.data);
+    //    console.log('Received message:', event.data);
+        subMethod.onmessage(event.data);
     };
 
     this.ws.onclose = () => {
+
+        this.readyState = this.ws.readyState===1;
         console.log('Disconnected from WebSocket server');
     };
 
     this.ws.onerror = (error) => {
         console.error('WebSocket error:', error);
     };
+    this.readyState = this.ws.readyState===1;
 
     return this;
 
 }
-
-LocalWs.prototype.send = (msg) => {
-
-    //this.ws.send(msg);
-
-};
-LocalWs.prototype.close = () => {
-
-    //this.ws.close();
-
-};
 
 /* eslint-disable no-undef */
 /* eslint-disable no-useless-constructor */
@@ -769,7 +764,7 @@ class WebSocketClient extends dummyEventsEmitter {
         // This.url = new URL(url);
         this.socket = null;
         this.socketExport = socket;
-        this.isSecure = url.protocol === 'wss:';
+        this.isSecure = socket.isHttps;
         this.port = url.port || (socket.isHttps
             ? 443
             : 80);
@@ -785,6 +780,7 @@ class WebSocketClient extends dummyEventsEmitter {
             "servername": this.url.hostname
         };
 
+        console.log(options, "this.options");
         this.socket = this.socketExport.connect(options);
 
         this.socket.on('connect', () => this._handleConnect());
@@ -799,10 +795,16 @@ class WebSocketClient extends dummyEventsEmitter {
         // Generate random key for handshake
         this.key = dummyCrypto().randomBytes(16)
             .toString('base64');
+        const pathname = _stk.isEmpty(this.url.pathname)
+            ? '/'
+            : this.url.pathname;
+        const search = _stk.isEmpty(this.url.search)
+            ? ''
+            : this.url.search;
 
         const headers = [
-            `GET ${this.url.pathname}${this.url.search} HTTP/1.1`,
-            `Host: ${this.url.host}`,
+            `GET ${pathname}${search} HTTP/1.1`,
+            `Host: ${this.url.hostname}`,
             'Upgrade: websocket',
             'Connection: Upgrade',
             `Sec-WebSocket-Key: ${this.key}`,
@@ -857,7 +859,7 @@ class WebSocketClient extends dummyEventsEmitter {
 
         // Validate the accept key
         const acceptKey = acceptHeader.split(':')[1].trim();
-        const expectedKey = crypto
+        const expectedKey = dummyCrypto()
             .createHash('sha1')
             .update(this.key + '258EAFA5-E914-47DA-95CA-C5AB0DC85B11')
             .digest('base64');
@@ -995,7 +997,7 @@ class WebSocketClient extends dummyEventsEmitter {
     _sendFrame (opcode, payload) {
 
         // Masking is required for client-to-server frames
-        const maskingKey = crypto.randomBytes(4);
+        const maskingKey = dummyCrypto().randomBytes(4);
         const maskedPayload = Buffer.alloc(payload.length);
 
         for (let i = 0; i < payload.length; i++) {
@@ -1073,31 +1075,34 @@ class WebSocketClient extends dummyEventsEmitter {
 }
 
 /**
- * Initiation of nodejs http
+ * Initiation of nodejs websocket
  *
  * @since 0.5.0
  * @category environment
  * @param {any} api The first number in an addition.
  * @param {any} config The first number in an addition.
+ * @param {any} subMethod The first number in an addition.
  * @returns {any} Returns the total.
  * @example
  *
  * httpInit({'as':1}, 'as',2)
  * // => {'as':2}
  */
-function nodeWs (api, config) {
+function nodeWs (api, config, subMethod) {
 
     this.ws = new WebSocketClient(api.ClassSocket, config);
-
+    this.ws.connect();
     this.ws.on('open', () => {
 
+        this.readyState = this.ws.handshakeCompleted;
         console.log('Connected');
-        this.ws.send('Hello Server');
+        // This.ws.send('Hello Server');
 
     });
     this.ws.on('message', (data) => {
 
-        console.log('Received:', data.toString());
+     //   console.log('Received:', data.toString());
+        subMethod.onmessage(data);
         //  Client.close();
 
     });
@@ -1108,10 +1113,13 @@ function nodeWs (api, config) {
     });
     this.ws.on('close', () => {
 
+        this.readyState = this.ws.handshakeCompleted;
+
         console.log('Connection closed');
 
     });
-    this.ws.connect();
+
+    this.readyState = this.ws.handshakeCompleted;
 
     return this;
 
@@ -1331,7 +1339,7 @@ function loaderApi (api, config, subconfig, path, method) {
  * @category environment
  * @param {any} api The api details.
  * @param {any} config The config details.
- * @param {any} subconfig The subconfig details.
+ * @param {any} subMethod The subconfig details.
  * @param {any} path The path details.
  * @param {any} method The method details.
  * @returns {any} Returns the class.
@@ -1340,7 +1348,7 @@ function loaderApi (api, config, subconfig, path, method) {
  * loaderApi(api, config, subconfig, "/path", "get")
  * // => <class>
  */
-function loaderWebsocket (api, config) {
+function loaderWebsocket (api, config, subMethod) {
 
     const validWs = urs.isWSProtocolValid(config.href);
 
@@ -1352,12 +1360,12 @@ function loaderWebsocket (api, config) {
 
     if (api.status ==="ws_local") {
 
-        return new LocalWs(api, config);
+        return new LocalWs(api, config, subMethod);
 
     }
     if (api.status ==="ws_node") {
 
-        return nodeWs(api, config);
+        return nodeWs(api, config, subMethod);
 
     }
 
@@ -1506,20 +1514,49 @@ function RequestsWs (api, config) {
 
     this.api =api;
     this.config =config;
-    this.loaderWS = loaderWebsocket(this.api, this.config);
-    console.log(this.loaderWS,"loaderWS here");
+    const subMethod = {};
+    const loaderWS = loaderWebsocket(this.api, this.config, subMethod);
+
+    return new RequestsWsDummy(loaderWS, subMethod);
+
 }
 
-RequestsWs.prototype.send = (msg) => {
+/**
+ * A getkit intiator
+ * @category Seq
+ * @class
+ * @param {any} api request body
+ * @param {any} subMethod request body
+ * @name getKit
+ */
+function RequestsWsDummy (api, subMethod) {
 
-    //this.loaderWS.send(msg);
+    this.send = (msg) => {
 
-};
-RequestsWs.prototype.close = () => {
+        console.log("Send message:", api.readyState, msg);
+        //  Api.ws.send(msg);
 
-    //this.loaderWS.close();
+    };
+    this.received = () => {
 
-};
+        const main = this;
+
+        subMethod.onmessage(function (data) {
+
+            console.log("Received message:", data);
+
+            main.call(main, data);
+
+        });
+
+    };
+    this.close = () => {
+
+        api.ws.close();
+
+    };
+
+}
 
 /**
  * It was design to single request type only

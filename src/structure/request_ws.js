@@ -12,21 +12,50 @@ function RequestsWs (api, config) {
 
     this.api =api;
     this.config =config;
-    this.subMethod = {};
-    this.loaderWS = loaderWebsocket(this.api, this.config, this.subMethod);
-    console.log(this.loaderWS,"loaderWS here");
+    const subMethod = {};
+    const loaderWS = loaderWebsocket(this.api, this.config, subMethod);
+
+    return new RequestsWsDummy(loaderWS, subMethod);
+
 }
 
-RequestsWs.prototype.send = (msg) => {
+/**
+ * A getkit intiator
+ * @category Seq
+ * @class
+ * @param {any} api request body
+ * @param {any} subMethod request body
+ * @name getKit
+ */
+function RequestsWsDummy (api, subMethod) {
 
-    //this.loaderWS.send(msg);
 
-};
-RequestsWs.prototype.close = () => {
+    this.send = (msg) => {
 
-    //this.loaderWS.close();
+        console.log("Send message:", api.readyState, msg);
+        //  Api.ws.send(msg);
 
-};
+    };
+    this.received = () => {
+
+        const main = this;
+
+        subMethod.onmessage(function (data) {
+
+            console.log("Received message:", data);
+
+            main.call(main, data);
+
+        });
+
+    };
+    this.close = () => {
+
+        api.ws.close();
+
+    };
+
+}
 
 
 module.exports = RequestsWs;

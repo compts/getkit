@@ -27,36 +27,30 @@ function LocalWs (api, config, subMethod) {
     this.ws = new api.ClassSocket(definePath);
 
     this.ws.onopen = () => {
+        this.readyState = this.ws.readyState ===1;
         console.log('Connected to WebSocket server');
     };
 
     this.ws.onmessage = (event) => {
-        console.log('Received message:', event.data);
+    //    console.log('Received message:', event.data);
+        subMethod.onmessage(event.data);
     };
 
     this.ws.onclose = () => {
+
+        this.readyState = this.ws.readyState===1;
         console.log('Disconnected from WebSocket server');
     };
 
     this.ws.onerror = (error) => {
         console.error('WebSocket error:', error);
     };
+    this.readyState = this.ws.readyState===1;
 
     return this;
 
 }
 
-
-LocalWs.prototype.send = (msg) => {
-
-    //this.ws.send(msg);
-
-};
-LocalWs.prototype.close = () => {
-
-    //this.ws.close();
-
-};
 
 
 module.exports = LocalWs;

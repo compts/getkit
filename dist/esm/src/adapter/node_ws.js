@@ -1,6 +1,8 @@
 /* eslint-disable no-undef */
 import {dummyCrypto, dummyEventsEmitter} from '../lib/dummyReqNodeWs.js';
 
+import {isEmpty} from 'structkit';
+
 class WebSocketClient extends dummyEventsEmitter {
 
     constructor (socket, url) {
@@ -10,7 +12,7 @@ class WebSocketClient extends dummyEventsEmitter {
         // This.url = new URL(url);
         this.socket = null;
         this.socketExport = socket;
-        this.isSecure = url.protocol === 'wss:';
+        this.isSecure = socket.isHttps;
         this.port = url.port || (socket.isHttps
             ? 443
             : 80);
@@ -26,6 +28,7 @@ class WebSocketClient extends dummyEventsEmitter {
             "servername": this.url.hostname
         };
 
+        console.log(options, "this.options");
         this.socket = this.socketExport.connect(options);
 
         this.socket.on('connect', () => this._handleConnect());
@@ -40,10 +43,16 @@ class WebSocketClient extends dummyEventsEmitter {
         // Generate random key for handshake
         this.key = dummyCrypto().randomBytes(16)
             .toString('base64');
+        const pathname = isEmpty(this.url.pathname)
+            ? '/'
+            : this.url.pathname;
+        const search = isEmpty(this.url.search)
+            ? ''
+            : this.url.search;
 
         const headers = [
-            `GET ${this.url.pathname}${this.url.search} HTTP/1.1`,
-            `Host: ${this.url.host}`,
+            `GET ${pathname}${search} HTTP/1.1`,
+            `Host: ${this.url.hostname}`,
             'Upgrade: websocket',
             'Connection: Upgrade',
             `Sec-WebSocket-Key: ${this.key}`,
@@ -98,7 +107,7 @@ class WebSocketClient extends dummyEventsEmitter {
 
         // Validate the accept key
         const acceptKey = acceptHeader.split(':')[1].trim();
-        const expectedKey = crypto
+        const expectedKey = dummyCrypto()
             .createHash('sha1')
             .update(this.key + '258EAFA5-E914-47DA-95CA-C5AB0DC85B11')
             .digest('base64');
@@ -236,7 +245,7 @@ class WebSocketClient extends dummyEventsEmitter {
     _sendFrame (opcode, payload) {
 
         // Masking is required for client-to-server frames
-        const maskingKey = crypto.randomBytes(4);
+        const maskingKey = dummyCrypto().randomBytes(4);
         const maskedPayload = Buffer.alloc(payload.length);
 
         for (let i = 0; i < payload.length; i++) {
@@ -314,31 +323,34 @@ class WebSocketClient extends dummyEventsEmitter {
 }
 
 /**
- * Initiation of nodejs http
+ * Initiation of nodejs websocket
  *
  * @since 0.5.0
  * @category environment
  * @param {any} api The first number in an addition.
  * @param {any} config The first number in an addition.
+ * @param {any} subMethod The first number in an addition.
  * @returns {any} Returns the total.
  * @example
  *
  * httpInit({'as':1}, 'as',2)
  * // => {'as':2}
  */
-function nodeWs (api, config) {
+function nodeWs (api, config, subMethod) {
 
     this.ws = new WebSocketClient(api.ClassSocket, config);
-
+    this.ws.connect();
     this.ws.on('open', () => {
 
+        this.readyState = this.ws.handshakeCompleted;
         console.log('Connected');
-        this.ws.send('Hello Server');
+        // This.ws.send('Hello Server');
 
     });
     this.ws.on('message', (data) => {
 
-        console.log('Received:', data.toString());
+     //   console.log('Received:', data.toString());
+        subMethod.onmessage(data);
         //  Client.close();
 
     });
@@ -349,10 +361,13 @@ function nodeWs (api, config) {
     });
     this.ws.on('close', () => {
 
+        this.readyState = this.ws.handshakeCompleted;
+
         console.log('Connection closed');
 
     });
-    this.ws.connect();
+
+    this.readyState = this.ws.handshakeCompleted;
 
     return this;
 

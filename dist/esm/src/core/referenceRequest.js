@@ -1,7 +1,7 @@
 /* eslint-disable no-undefined */
 /* eslint-disable global-require */
 /* eslint-disable init-declarations */
-import {isAjax, isNodejsEnv, isLocalWs} from '../config/verifyEnv.js';
+import {isAjax, isNodejsEnv} from '../config/verifyEnv.js';
 
 import DummyReq from '../lib/dummyReq.js';
 
@@ -231,7 +231,7 @@ function loaderApi (api, config, subconfig, path, method) {
  * @category environment
  * @param {any} api The api details.
  * @param {any} config The config details.
- * @param {any} subconfig The subconfig details.
+ * @param {any} subMethod The subconfig details.
  * @param {any} path The path details.
  * @param {any} method The method details.
  * @returns {any} Returns the class.
@@ -240,7 +240,7 @@ function loaderApi (api, config, subconfig, path, method) {
  * loaderApi(api, config, subconfig, "/path", "get")
  * // => <class>
  */
-function loaderWebsocket (api, config) {
+function loaderWebsocket (api, config, subMethod) {
 
     const validWs = isWSProtocolValid(config.href);
 
@@ -252,12 +252,12 @@ function loaderWebsocket (api, config) {
 
     if (api.status ==="ws_local") {
 
-        return new LocalWs(api, config);
+        return new LocalWs(api, config, subMethod);
 
     }
     if (api.status ==="ws_node") {
 
-        return nodeWs(api, config);
+        return nodeWs(api, config, subMethod);
 
     }
 
