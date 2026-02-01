@@ -28,10 +28,10 @@ function setRequestParameter (param, header) {
 
     }
 
-    if (indexOf(["application/json"], header["content-type"]) >= zero && indexOf([
+    if (indexOf(header["content-type"], ["application/json"]) >= zero && indexOf(getTypeof(param), [
         "json",
         "array"
-    ], getTypeof(param)) >= zero) {
+    ]) >= zero) {
 
         return parseString(param);
 

@@ -252,11 +252,11 @@ function checkEnvironmentStatus () {
  */
 function isAjax () {
 
-    return _stk.indexOfExist([
+    return _stk.indexOfExist(checkEnvironmentStatus(), [
         one,
         two,
         three
-    ], checkEnvironmentStatus());
+    ]);
 
 }
 
@@ -273,7 +273,7 @@ function isAjax () {
  */
 function isNodejsEnv () {
 
-    return _stk.indexOfExist([four], checkEnvironmentStatus());
+    return _stk.indexOfExist(checkEnvironmentStatus(), [four]);
 
 }
 
@@ -336,10 +336,10 @@ function setRequestParameter (param, header) {
 
     }
 
-    if (_stk.indexOf(["application/json"], header["content-type"]) >= zero && _stk.indexOf([
+    if (_stk.indexOf(header["content-type"], ["application/json"]) >= zero && _stk.indexOf(_stk.getTypeof(param), [
         "json",
         "array"
-    ], _stk.getTypeof(param)) >= zero) {
+    ]) >= zero) {
 
         return _stk.parseString(param);
 
@@ -365,9 +365,9 @@ function setRequestParameter (param, header) {
  */
 function setRespondData (param, header, config) {
 
-    if (_stk.indexOf(["application/json"], header["content-type"]
+    if (_stk.indexOf(header["content-type"]
         ?header["content-type"].toLowerCase()
-        :"") >= zero) {
+        :"", ["application/json"]) >= zero) {
 
         return _stk.parseJson(param.trim());
 
@@ -642,30 +642,44 @@ function LocalWs (api, config, subMethod) {
 
         definePath = definePath+ ':' + config.port;
 
+    } else {
+
+        definePath = definePath+ ':' + (api.isHttps
+            ? 443
+            : 80);
+
     }
 
     this.ws = new api.ClassSocket(definePath);
 
     this.ws.onopen = () => {
-        this.readyState = this.ws.readyState ===1;
+
+        this.readyState = _stk.toBoolean(this.ws.readyState);
         console.log('Connected to WebSocket server');
+
     };
 
     this.ws.onmessage = (event) => {
-    //    console.log('Received message:', event.data);
+
+        //    console.log('Received message:', event.data);
         subMethod.onmessage(event.data);
+
     };
 
     this.ws.onclose = () => {
 
-        this.readyState = this.ws.readyState===1;
+        this.readyState = _stk.toBoolean(this.ws.readyState);
         console.log('Disconnected from WebSocket server');
+
     };
 
     this.ws.onerror = (error) => {
+
         console.error('WebSocket error:', error);
+
     };
-    this.readyState = this.ws.readyState===1;
+
+    this.readyState = _stk.toBoolean(this.ws.readyState);
 
     return this;
 
@@ -1100,7 +1114,6 @@ function nodeWs (api, config, subMethod) {
     });
     this.ws.on('message', (data) => {
 
-     //   console.log('Received:', data.toString());
         subMethod.onmessage(data);
         //  Client.close();
 

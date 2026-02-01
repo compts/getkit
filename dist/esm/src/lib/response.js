@@ -18,9 +18,9 @@ import {zero} from '../config/defaultValue.js';
  */
 function setRespondData (param, header, config) {
 
-    if (indexOf(["application/json"], header["content-type"]
+    if (indexOf(header["content-type"]
         ?header["content-type"].toLowerCase()
-        :"") >= zero) {
+        :"", ["application/json"]) >= zero) {
 
         return parseJson(param.trim());
 

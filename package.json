@@ -55,7 +55,7 @@
   },
   "homepage": "https://getkit.codehyouka.xyz",
   "dependencies": {
-    "structkit": "^1.4.873",
+    "structkit": "^1.4.9",
     "url-assist": "^1.2.71"
   },
   "devDependencies": {

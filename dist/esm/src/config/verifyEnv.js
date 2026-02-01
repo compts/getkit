@@ -61,11 +61,11 @@ function checkEnvironmentStatus () {
  */
 function isAjax () {
 
-    return indexOfExist([
+    return indexOfExist(checkEnvironmentStatus(), [
         one,
         two,
         three
-    ], checkEnvironmentStatus());
+    ]);
 
 }
 
@@ -82,7 +82,7 @@ function isAjax () {
  */
 function isNodejsEnv () {
 
-    return indexOfExist([four], checkEnvironmentStatus());
+    return indexOfExist(checkEnvironmentStatus(), [four]);
 
 }
 

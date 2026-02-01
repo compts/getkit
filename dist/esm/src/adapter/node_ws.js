@@ -349,7 +349,6 @@ function nodeWs (api, config, subMethod) {
     });
     this.ws.on('message', (data) => {
 
-     //   console.log('Received:', data.toString());
         subMethod.onmessage(data);
         //  Client.close();
 

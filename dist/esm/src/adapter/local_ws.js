@@ -1,4 +1,4 @@
-import {each, getTypeof, isEmpty} from 'structkit';
+import {toBoolean, isEmpty} from 'structkit';
 
 /**
  * Initiation of web websocket
@@ -22,30 +22,44 @@ function LocalWs (api, config, subMethod) {
 
         definePath = definePath+ ':' + config.port;
 
+    } else {
+
+        definePath = definePath+ ':' + (api.isHttps
+            ? 443
+            : 80);
+
     }
 
     this.ws = new api.ClassSocket(definePath);
 
     this.ws.onopen = () => {
-        this.readyState = this.ws.readyState ===1;
+
+        this.readyState = toBoolean(this.ws.readyState);
         console.log('Connected to WebSocket server');
+
     };
 
     this.ws.onmessage = (event) => {
-    //    console.log('Received message:', event.data);
+
+        //    console.log('Received message:', event.data);
         subMethod.onmessage(event.data);
+
     };
 
     this.ws.onclose = () => {
 
-        this.readyState = this.ws.readyState===1;
+        this.readyState = toBoolean(this.ws.readyState);
         console.log('Disconnected from WebSocket server');
+
     };
 
     this.ws.onerror = (error) => {
+
         console.error('WebSocket error:', error);
+
     };
-    this.readyState = this.ws.readyState===1;
+
+    this.readyState = toBoolean(this.ws.readyState);
 
     return this;
 
