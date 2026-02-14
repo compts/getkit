@@ -693,6 +693,44 @@ function LocalWs (api, config, subMethod) {
 /* eslint-disable no-undef */
 /* eslint-disable global-require */
 
+/* eslint-disable class-methods-use-this */
+/* eslint-disable no-empty-function */
+/* eslint-disable no-undef */
+/* eslint-disable global-require */
+
+class EventEmitterDummy {
+
+    // eslint-disable-next-line no-useless-constructor
+    constructor () {}
+
+    on () {}
+
+    emit () {}
+
+    removeListener () {}
+
+}
+
+const platformCrypto = isNodejsEnv()
+    ? crypto
+    : {
+        "randomBytes": (size) => {
+
+            const array = new Uint8Array(size);
+
+            window.crypto.getRandomValues(array);
+
+            return Buffer.from(array);
+
+        }
+    };
+
+const platformEventEmitter = isNodejsEnv()
+    ? EventEmitter
+    : EventEmitterDummy;
+
+ platformEventEmitter};
+
 /**
  * It was design to single request type only
  *
@@ -706,41 +744,7 @@ function LocalWs (api, config, subMethod) {
  */
 function dummyCrypto () {
 
-    if (isNodejsEnv()) {
-
-        
-
-        return crypto;
-
-    }
-
-    return {
-        "randomBytes": (size) => {
-
-            const array = new Uint8Array(size);
-
-            window.crypto.getRandomValues(array);
-
-            return Buffer.from(array);
-
-        }
-    };
-
-}
-
-class EventEmitterDummy {
-
-    constructor () {
-    }
-
-    on () {
-    }
-
-    emit () {
-    }
-
-    removeListener () {
-    }
+    return platformCrypto;
 
 }
 
@@ -757,17 +761,11 @@ class EventEmitterDummy {
  */
 function dummyEventsEmitter () {
 
-    if (isNodejsEnv()) {
-
-        
-
-        return EventEmitter;
-
-    }
-
-    return EventEmitterDummy;
+    return platformEventEmitter;
 
 }
+
+ dummyEventsEmitter};
 
 class WebSocketClient extends dummyEventsEmitter {
 

@@ -4,7 +4,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable global-require */
 
-import {isNodejsEnv} from '../config/verifyEnv.js';
+import {platformCrypto, platformEventEmitter} from './platformNodeAdapters.js';
 
 /**
  * It was design to single request type only
@@ -19,41 +19,7 @@ import {isNodejsEnv} from '../config/verifyEnv.js';
  */
 function dummyCrypto () {
 
-    if (isNodejsEnv()) {
-
-        import crypto from 'crypto';
-
-        return crypto;
-
-    }
-
-    return {
-        "randomBytes": (size) => {
-
-            const array = new Uint8Array(size);
-
-            window.crypto.getRandomValues(array);
-
-            return Buffer.from(array);
-
-        }
-    };
-
-}
-
-class EventEmitterDummy {
-
-    constructor () {
-    }
-
-    on () {
-    }
-
-    emit () {
-    }
-
-    removeListener () {
-    }
+    return platformCrypto;
 
 }
 
@@ -70,16 +36,8 @@ class EventEmitterDummy {
  */
 function dummyEventsEmitter () {
 
-    if (isNodejsEnv()) {
-
-        import {EventEmitter} from 'events';
-
-        return EventEmitter;
-
-    }
-
-    return EventEmitterDummy;
+    return platformEventEmitter;
 
 }
 
-export {dummyCrypto, dummyEventsEmitter()};
+export {dummyCrypto, dummyEventsEmitter};
