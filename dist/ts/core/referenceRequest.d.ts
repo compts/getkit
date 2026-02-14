@@ -48,7 +48,7 @@ export function loaderApi(api: any, config: any, subconfig: any, path: any, meth
  * @category environment
  * @param {any} api The api details.
  * @param {any} config The config details.
- * @param {any} subconfig The subconfig details.
+ * @param {any} subMethod The subconfig details.
  * @param {any} path The path details.
  * @param {any} method The method details.
  * @returns {any} Returns the class.
@@ -57,4 +57,4 @@ export function loaderApi(api: any, config: any, subconfig: any, path: any, meth
  * loaderApi(api, config, subconfig, "/path", "get")
  * // => <class>
  */
-export function loaderWebsocket(api: any, config: any): any;
+export function loaderWebsocket(api: any, config: any, subMethod: any): any;

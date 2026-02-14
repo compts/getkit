@@ -34,15 +34,3 @@ export function isAjax(): boolean;
  * // => true
  */
 export function isNodejsEnv(): boolean;
-/**
- * To check if it`s browser environment
- *
- * @since 0.5.0
- * @category environment
- * @returns {boolean} Returns if it`s valid.
- * @example
- *
- * isAjax()
- * // => true
- */
-export function isLocalWs(): boolean;

@@ -265,4 +265,4 @@ function loaderWebsocket (api, config, subMethod) {
 
 }
 
-export {requestApi, requestWSApi, loaderApi, loaderApi, loaderWebsocket};
+export {requestApi, requestWSApi, loaderApi, loaderWebsocket};

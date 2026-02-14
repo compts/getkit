@@ -270,5 +270,4 @@ function loaderWebsocket (api, config, subMethod) {
 exports.requestApi=requestApi;
 exports.requestWSApi=requestWSApi;
 exports.loaderApi=loaderApi;
-exports.loaderApi=loaderApi;
 exports.loaderWebsocket=loaderWebsocket;
