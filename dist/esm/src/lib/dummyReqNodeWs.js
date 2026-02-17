@@ -4,7 +4,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable global-require */
 
-import {platformCrypto, platformEventEmitter} from './platformNodeAdapters.js';
+import {platformCrypto, platformEmitEvent} from './platformNodeAdapters.js';
 
 /**
  * It was design to single request type only
@@ -36,7 +36,7 @@ function dummyCrypto () {
  */
 function dummyEventsEmitter () {
 
-    return platformEventEmitter;
+    return platformEmitEvent;
 
 }
 

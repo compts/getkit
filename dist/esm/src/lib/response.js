@@ -1,4 +1,4 @@
-import {indexOf, parseJson} from 'structkit';
+import {indexOf, parseJson, isString} from 'structkit';
 
 import {zero} from '../config/defaultValue.js';
 
@@ -18,17 +18,15 @@ import {zero} from '../config/defaultValue.js';
  */
 function setRespondData (param, header, config) {
 
-    if (indexOf(header["content-type"]
-        ?header["content-type"].toLowerCase()
-        :"", ["application/json"]) >= zero) {
+    if (isString(param)) {
 
-        return parseJson(param.trim());
+        if (indexOf(header["content-type"]
+            ?header["content-type"].toLowerCase()
+            :"", ["application/json"]) >= zero || config.isJson) {
 
-    }
+            return parseJson(param.trim());
 
-    if (config.isJson) {
-
-        return parseJson(param.trim());
+        }
 
     }
 

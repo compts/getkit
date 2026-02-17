@@ -20,22 +20,31 @@ class EventEmitterDummy {
 
 }
 
-const platformCrypto = isNodejsEnv()
-    ? crypto
-    : {
-        "randomBytes": (size) => {
+function platformCrypto () {
 
-            const array = new Uint8Array(size);
+    return isNodejsEnv()
+        ? crypto
+        : {
+            "randomBytes": (size) => {
 
-            window.crypto.getRandomValues(array);
+                const array = new Uint8Array(size);
 
-            return Buffer.from(array);
+                window.crypto.getRandomValues(array);
 
-        }
-    };
+                return Buffer.from(array);
 
-const platformEventEmitter = isNodejsEnv()
-    ? EventEmitter
-    : EventEmitterDummy;
+            }
+        };
 
-export {platformCrypto, platformEventEmitter};
+}
+
+function platformEmitEvent () {
+
+    return isNodejsEnv()
+        ? EventEmitter
+        : EventEmitterDummy;
+
+}
+
+exports.platformCrypto = platformCrypto;
+exports.platformEmitEvent = platformEmitEvent;

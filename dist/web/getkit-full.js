@@ -365,17 +365,15 @@ function setRequestParameter (param, header) {
  */
 function setRespondData (param, header, config) {
 
-    if (_stk.indexOf(header["content-type"]
-        ?header["content-type"].toLowerCase()
-        :"", ["application/json"]) >= zero) {
+    if (_stk.isString(param)) {
 
-        return _stk.parseJson(param.trim());
+        if (_stk.indexOf(header["content-type"]
+            ?header["content-type"].toLowerCase()
+            :"", ["application/json"]) >= zero || config.isJson) {
 
-    }
+            return _stk.parseJson(param.trim());
 
-    if (config.isJson) {
-
-        return _stk.parseJson(param.trim());
+        }
 
     }
 
@@ -710,25 +708,31 @@ class EventEmitterDummy {
 
 }
 
-const platformCrypto = isNodejsEnv()
-    ? crypto
-    : {
-        "randomBytes": (size) => {
+function platformCrypto () {
 
-            const array = new Uint8Array(size);
+    return isNodejsEnv()
+        ? crypto
+        : {
+            "randomBytes": (size) => {
 
-            window.crypto.getRandomValues(array);
+                const array = new Uint8Array(size);
 
-            return Buffer.from(array);
+                window.crypto.getRandomValues(array);
 
-        }
-    };
+                return Buffer.from(array);
 
-const platformEventEmitter = isNodejsEnv()
-    ? EventEmitter
-    : EventEmitterDummy;
+            }
+        };
 
- platformEventEmitter};
+}
+
+function platformEmitEvent () {
+
+    return isNodejsEnv()
+        ? EventEmitter
+        : EventEmitterDummy;
+
+}
 
 /**
  * It was design to single request type only
@@ -760,11 +764,9 @@ function dummyCrypto () {
  */
 function dummyEventsEmitter () {
 
-    return platformEventEmitter;
+    return platformEmitEvent;
 
 }
-
- dummyEventsEmitter};
 
 class WebSocketClient extends dummyEventsEmitter {
 
@@ -791,7 +793,6 @@ class WebSocketClient extends dummyEventsEmitter {
             "servername": this.url.hostname
         };
 
-        console.log(options, "this.options");
         this.socket = this.socketExport.connect(options);
 
         this.socket.on('connect', () => this._handleConnect());

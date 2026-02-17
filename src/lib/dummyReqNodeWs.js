@@ -4,7 +4,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable global-require */
 
-const {platformCrypto, platformEventEmitter} = require('./platformNodeAdapters');
+const {platformCrypto, platformEmitEvent} = require('./platformNodeAdapters');
 
 /**
  * It was design to single request type only
@@ -37,8 +37,9 @@ function dummyCrypto () {
  */
 function dummyEventsEmitter () {
 
-    return platformEventEmitter;
+    return platformEmitEvent;
 
 }
 
-export {dummyCrypto, dummyEventsEmitter};
+exports.dummyCrypto = dummyCrypto;
+exports.dummyEventsEmitter = dummyEventsEmitter;

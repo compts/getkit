@@ -15,6 +15,14 @@ apps.get("/", async (req, res) => {
 
 });
 
+apps.get("/t2", async (req, res) => {
+
+    res.status(200);
+    const data = fs.readFileSync('./test2.html', 'utf8');
+
+    res.content(data);
+
+});
 
 apps.get("/api", (req, res) => {
 

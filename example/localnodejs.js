@@ -10,7 +10,7 @@ const gtk = require('../src/module/main');
 //    console.log(data,"Asd");
 //})
 
-const main = gtk.initialize({"baseUrl": "http://localhost:3000"});
+const main = gtk.initialize({"baseUrl": "http://localhost:4040"});
 
 main.get("/api",{
     header:{}

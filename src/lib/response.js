@@ -1,4 +1,4 @@
-const {indexOf, parseJson} = require("structkit");
+const {indexOf, parseJson, isString} = require("structkit");
 const {zero} = require("../config/defaultValue");
 
 
@@ -18,19 +18,18 @@ const {zero} = require("../config/defaultValue");
  */
 function setRespondData (param, header, config) {
 
-    if (indexOf(header["content-type"]
-        ?header["content-type"].toLowerCase()
-        :"", ["application/json"]) >= zero) {
+    if (isString(param)) {
 
-        return parseJson(param.trim());
+        if (indexOf(header["content-type"]
+            ?header["content-type"].toLowerCase()
+            :"", ["application/json"]) >= zero || config.isJson) {
 
-    }
+            return parseJson(param.trim());
 
-    if (config.isJson) {
-
-        return parseJson(param.trim());
+        }
 
     }
+
 
     return param;
 

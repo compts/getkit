@@ -29,7 +29,6 @@ class WebSocketClient extends dummyEventsEmitter {
             "servername": this.url.hostname
         };
 
-        console.log(options, "this.options");
         this.socket = this.socketExport.connect(options);
 
 
