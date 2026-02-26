@@ -1,0 +1,43 @@
+const {qsStringify} = require("url-assist");
+const {indexOf, getTypeof, parseString} = require("structkit");
+const {zero} = require("../../config/defaultValue");
+
+
+/**
+ * Define request header to its parameter
+ *
+ * @since 0.6.0
+ * @category environment
+ * @param {any} param The request parameter
+ * @param {any} header The request header.
+ * @returns {any} Returns the date in query string
+ * @example
+ *
+ * setRequestParameter({'as':1}, {'as':1})
+ * // => as=2
+ */
+function setRequestParameter (param, header) {
+
+    if (typeof FormData !== "undefined") {
+
+        if (param instanceof FormData) {
+
+            return param;
+
+        }
+
+    }
+
+    if (indexOf(header["content-type"], ["application/json"]) >= zero && indexOf(getTypeof(param), [
+        "json",
+        "array"
+    ]) >= zero) {
+
+        return parseString(param);
+
+    }
+
+    return qsStringify(param);
+
+}
+exports.setRequestParameter = setRequestParameter;

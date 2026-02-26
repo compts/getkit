@@ -1,5 +1,5 @@
-const {singleRequest, configRequestHttp, configRequestWs} = require("./core/bootloader");
-const {amdLocal} = require("./core/importScript");
+const {singleRequest, configRequestHttp, configRequestWs} = require("./adapter/bootloader");
+const {amdLocal} = require("./adapter/importScript");
 
 
 /**

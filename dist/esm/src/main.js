@@ -1,6 +1,6 @@
-import {singleRequest, configRequestHttp, configRequestWs} from './core/bootloader.js';
+import {singleRequest, configRequestHttp, configRequestWs} from './adapter/bootloader.js';
 
-import {amdLocal} from './core/importScript.js';
+import {amdLocal} from './adapter/importScript.js';
 
 /**
  * Request Get

@@ -287,6 +287,7 @@ function DummyReq () {
 
 }
 
+//lib/core/getType
 /**
  * To append the pathname with slash if not found
  *
@@ -617,6 +618,140 @@ function xhrInit (api, config, path, method) {
 }
 
 adapterXhr=xhrInit
+
+/**
+ * Check the environment if nodejs or browser
+ *
+ * @since 0.5.0
+ * @category environment
+ * @param {any} config The config of url to be request
+ * @returns {any} Return details of environment.
+ * @example
+ *
+ * requestApi({})
+ * // => {}
+ */
+function requestApi (config) {
+
+    if (isAjax()) {
+
+        if (window.XMLHttpRequest) {
+
+            return {
+                "class": new XMLHttpRequest(),
+                "detail": config.detail,
+                "status": "ajax"
+
+            };
+
+        }
+
+        if (window.ActiveXObject) {
+
+            return {
+                "class": new ActiveXObject("Microsoft.XMLHTTP"),
+                "detail": config.detail,
+                "status": "ajax"
+            };
+
+        }
+
+    }
+
+    // Only require http/https in Node.js environment
+    if (isNodejsEnv()) {
+
+        let http, https;
+
+        try {
+
+            http = require("http");
+            https = require("https");
+
+        } catch (__) {
+
+            // Fallback if require fails
+            http = undefined;
+            https = undefined;
+
+        }
+
+        if (typeof http !== "undefined" && typeof https !== "undefined") {
+
+            if (config.isHttps) {
+
+                return {
+                    "class": https,
+                    "detail": config.detail,
+                    "status": "http"
+                };
+
+            }
+
+            return {
+                "class": http,
+                "detail": config.detail,
+                "status": "http"
+            };
+
+        }
+
+    }
+
+    return {
+        "class": new DummyReq(),
+        "detail": config.detail,
+        "status": "dummy"
+    };
+
+}
+
+/**
+ * To initiate what environment to use, if nodejs or browser
+ *
+ * @since 0.5.0
+ * @category environment
+ * @param {any} api The api details.
+ * @param {any} config The config details.
+ * @param {any} subconfig The subconfig details.
+ * @param {any} path The path details.
+ * @param {any} method The method details.
+ * @returns {any} Returns the class.
+ * @example
+ *
+ * loaderApi(api, config, subconfig, "/path", "get")
+ * // => <class>
+ */
+function loaderApi (api, config, subconfig, path, method) {
+
+    const defaultPath =getSegmentPath(api.detail, path);
+
+    const defaultRequestDefaultConfig = getRequestDefaultConfig(config, subconfig, method);
+
+    if (urs.isHttpProtocolValid(defaultPath) === false) {
+
+        return Promise.reject(String("Invalid Http Protocol"));
+
+    }
+
+    if (api.status ==="ajax") {
+
+        return adapterXhr(api, defaultRequestDefaultConfig, defaultPath, method);
+
+    }
+    if (api.status ==="http") {
+
+        return adapterHttp(api, defaultRequestDefaultConfig, defaultPath, method);
+
+    }
+
+    return api.class;
+
+}
+
+/* eslint-disable no-undefined */
+/* eslint-disable global-require */
+/* eslint-disable init-declarations */
 
 /**
  * Initiation of web websocket
@@ -1148,93 +1283,6 @@ function nodeWs (api, config, subMethod) {
  * requestApi({})
  * // => {}
  */
-function requestApi (config) {
-
-    if (isAjax()) {
-
-        if (window.XMLHttpRequest) {
-
-            return {
-                "class": new XMLHttpRequest(),
-                "detail": config.detail,
-                "status": "ajax"
-
-            };
-
-        }
-
-        if (window.ActiveXObject) {
-
-            return {
-                "class": new ActiveXObject("Microsoft.XMLHTTP"),
-                "detail": config.detail,
-                "status": "ajax"
-            };
-
-        }
-
-    }
-
-    // Only require http/https in Node.js environment
-    if (isNodejsEnv()) {
-
-        let http, https;
-
-        try {
-
-            http = require("http");
-            https = require("https");
-
-        } catch (__) {
-
-            // Fallback if require fails
-            http = undefined;
-            https = undefined;
-
-        }
-
-        if (typeof http !== "undefined" && typeof https !== "undefined") {
-
-            if (config.isHttps) {
-
-                return {
-                    "class": https,
-                    "detail": config.detail,
-                    "status": "http"
-                };
-
-            }
-
-            return {
-                "class": http,
-                "detail": config.detail,
-                "status": "http"
-            };
-
-        }
-
-    }
-
-    return {
-        "class": new DummyReq(),
-        "detail": config.detail,
-        "status": "dummy"
-    };
-
-}
-
-/**
- * Check the environment if nodejs or browser
- *
- * @since 0.5.0
- * @category environment
- * @param {any} config The config of url to be request
- * @returns {any} Return details of environment.
- * @example
- *
- * requestApi({})
- * // => {}
- */
 function requestWSApi (config) {
 
     if (isAjax()) {
@@ -1297,49 +1345,6 @@ function requestWSApi (config) {
         "detail": config.detail,
         "status": "dummy"
     };
-
-}
-
-/**
- * To initiate what environment to use, if nodejs or browser
- *
- * @since 0.5.0
- * @category environment
- * @param {any} api The api details.
- * @param {any} config The config details.
- * @param {any} subconfig The subconfig details.
- * @param {any} path The path details.
- * @param {any} method The method details.
- * @returns {any} Returns the class.
- * @example
- *
- * loaderApi(api, config, subconfig, "/path", "get")
- * // => <class>
- */
-function loaderApi (api, config, subconfig, path, method) {
-
-    const defaultPath =getSegmentPath(api.detail, path);
-
-    const defaultRequestDefaultConfig = getRequestDefaultConfig(config, subconfig, method);
-
-    if (urs.isHttpProtocolValid(defaultPath) === false) {
-
-        return Promise.reject(String("Invalid Http Protocol"));
-
-    }
-
-    if (api.status ==="ajax") {
-
-        return adapterXhr(api, defaultRequestDefaultConfig, defaultPath, method);
-
-    }
-    if (api.status ==="http") {
-
-        return adapterHttp(api, defaultRequestDefaultConfig, defaultPath, method);
-
-    }
-
-    return api.class;
 
 }
 
@@ -1680,8 +1685,7 @@ function configRequestWs (config) {
  */
 function amdLocal (url, config) {
 
-    let isValidExt = false;
-    const zero = 0;
+    const varConf = _stk.varExtend({"enableCache": false}, config);
 
     if (typeof document !== "undefined") {
 
@@ -1689,102 +1693,92 @@ function amdLocal (url, config) {
 
         if (urs.isUrlExtValid(url, "js")) {
 
-            isValidExt = true;
-            const ps = document.createElement('script');
-            const script = document.getElementsByTagName('script');
+            const myPromiseScript = new Promise((resolve, reject) => {
 
-            ps.type = 'text/javascript';
-            ps.src = url;
-            ps.async = true;
-            ps.onload = function (err) {
+                const ps = document.createElement('script');
+                const script = document.getElementsByTagName('script');
 
-                handleCallback(err, config);
+                ps.type = 'text/javascript';
+                ps.src = url+(varConf.enableCache
+                    ?"q="+_stk.getUniq()
+                    :"");
+                ps.async = true;
+                ps.onload = function (err) {
 
-            };
+                    resolve(err);
 
-            ps.onerror = function (err) {
+                };
 
-                handleCallback(err, config);
+                ps.onerror = function (err) {
 
-            };
+                    reject(err);
 
-            if (headHtm.length >zero) {
+                };
 
-                headHtm[zero].appendChild(ps);
+                if (headHtm.length >zero) {
 
-            }
-            if (headHtm.length === zero && script.length > zero) {
+                    headHtm[zero].appendChild(ps);
 
-                script[zero].appendChild(ps);
+                }
+                if (headHtm.length === zero && script.length > zero) {
 
-            }
+                    script[zero].appendChild(ps);
+
+                }
+
+            });
+
+            return myPromiseScript;
 
         }
 
         if (urs.isUrlExtValid(url, "css")) {
 
-            isValidExt = true;
+            const myPromiseStyle = new Promise((resolve, reject) => {
 
-            if (headHtm.length > zero) {
+                if (headHtm.length > zero) {
 
-                const link = document.createElement("link");
+                    const link = document.createElement("link");
 
-                link.type = "text/css";
-                link.rel = "stylesheet";
-                link.href = url;
-                headHtm[zero].appendChild(link);
-
-                link.onload = function (err) {
-
-                    handleCallback(err, config);
-
-                };
-
-                link.onerror = function (err) {
-
-                    handleCallback(err, config);
-
-                };
-                if (headHtm.length >zero) {
-
+                    link.type = "text/css";
+                    link.rel = "stylesheet";
+                    link.href = url+(varConf.enableCache
+                        ?"q="+_stk.getUniq()
+                        :"");
                     headHtm[zero].appendChild(link);
+
+                    link.onload = function (err) {
+
+                        resolve(err);
+
+                    };
+
+                    link.onerror = function (err) {
+
+                        reject(err);
+
+                    };
+                    if (headHtm.length >zero) {
+
+                        headHtm[zero].appendChild(link);
+
+                    }
+
+                } else {
+
+                    throw new Error("No head tag found");
 
                 }
 
-            }
+            });
+
+            return myPromiseStyle;
 
         }
 
     }
 
-    if (!isValidExt) {
-
-        throw new Error("This library supported css and js");
-
-    }
-
-}
-
-/**
- * Handle callback
- *
- * @since 0.5.0
- * @category request
- * @param {string} data The url of request
- * @param {any} [config] The request config
- * @returns {Promise<any>} Returns Promise for response.
- * @example
- *
- * handleCallback('error',()=>{})
- * // => Promise<any>
- */
-function handleCallback (data, config) {
-
-    if (_stk.getTypeof(config) === "function") {
-
-        config(data);
-
-    }
+    throw new Error("This library supported css and js");
 
 }
 
