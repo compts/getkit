@@ -38,6 +38,7 @@ function RequestsWsDummy (api, subMethod) {
     };
     this.received = () => {
 
+        // eslint-disable-next-line consistent-this
         const main = this;
 
         subMethod.onmessage(function (data) {

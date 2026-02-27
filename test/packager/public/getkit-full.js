@@ -2014,11 +2014,9 @@ gtk.initWs=function (config) {
  * // => Promise<any>
  */
 
-gtk.importScript=function (url, config) {
-
     if (typeof document !== "undefined") {
 
-        amdLocal(url, config);
+        await amdLocal(url, config);
 
         return;
 
@@ -2027,5 +2025,7 @@ gtk.importScript=function (url, config) {
     throw new Error("This is supported only in browser, but we are working nodejs compability");
 
 };
+
+gtk.async function (url, config) {=async function (url, config) {
 
 })(typeof window !== "undefined" ? window : this);
