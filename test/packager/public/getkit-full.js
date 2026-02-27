@@ -825,6 +825,8 @@ function LocalWs (api, config, subMethod) {
 /* eslint-disable no-undef */
 /* eslint-disable global-require */
 
+/* eslint-disable no-undefined */
+/* eslint-disable init-declarations */
 /* eslint-disable class-methods-use-this */
 /* eslint-disable no-empty-function */
 /* eslint-disable no-undef */
@@ -863,7 +865,18 @@ function platformCrypto () {
 
     if (isNodejsEnv()) {
 
-        
+        let crypto;
+
+        try {
+
+            crypto = require('crypto');
+
+        } catch (__) {
+
+            // Fallback if require fails
+            crypto = undefined;
+
+        }
 
         return crypto;
 
@@ -903,9 +916,20 @@ function platformEmitEvent () {
 
     if (isNodejsEnv()) {
 
-        
+        let rawEventEmitter;
 
-        return EventEmitter;
+        try {
+
+            rawEventEmitter = require('events').EventEmitter;
+
+        } catch (__) {
+
+            // Fallback if require fails
+            rawEventEmitter = undefined;
+
+        }
+
+        return rawEventEmitter;
 
     }
 

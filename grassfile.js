@@ -101,7 +101,7 @@ exports.execute=function (lib) {
 
         strm.series("web_iife");
         strm.series("esm");
-        strm.series("esm_rewrite");
+    //    strm.series("esm_rewrite");
 
     };
 

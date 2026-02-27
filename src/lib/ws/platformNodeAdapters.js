@@ -1,3 +1,5 @@
+/* eslint-disable no-undefined */
+/* eslint-disable init-declarations */
 /* eslint-disable class-methods-use-this */
 /* eslint-disable no-empty-function */
 /* eslint-disable no-undef */
@@ -38,11 +40,24 @@ function platformCrypto () {
 
     if (isNodejsEnv()) {
 
-        const crypto = require('crypto');
+        let crypto;
+
+        try {
+
+            crypto = require('crypto');
+
+
+        } catch (__) {
+
+            // Fallback if require fails
+            crypto = undefined;
+
+        }
 
         return crypto;
 
     }
+
 
     return {
         "randomBytes": (size) => {
@@ -79,9 +94,21 @@ function platformEmitEvent () {
 
     if (isNodejsEnv()) {
 
-        const {EventEmitter} = require('events');
 
-        return EventEmitter;
+        let rawEventEmitter;
+
+        try {
+
+            rawEventEmitter = require('events').EventEmitter;
+
+        } catch (__) {
+
+            // Fallback if require fails
+            rawEventEmitter = undefined;
+
+        }
+
+        return rawEventEmitter;
 
     }
 
