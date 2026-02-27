@@ -182,14 +182,12 @@ exports.initWs = function (config) {
  * importScript("http://localhost:4040/")
  * // => Promise<any>
  */
-exports.importScript = async function (url, config) {
+exports.importScript = function (url, config) {
 
 
     if (typeof document !== "undefined") {
 
-        await amdLocal(url, config);
-
-        return;
+        return amdLocal(url, config);
 
     }
 

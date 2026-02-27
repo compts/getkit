@@ -1,6 +1,3 @@
-/* eslint-disable id-length */
-/* eslint-disable no-undefined */
-/* eslint-disable prefer-destructuring */
 /* eslint-disable init-declarations */
 /* eslint-disable class-methods-use-this */
 /* eslint-disable no-empty-function */
@@ -12,50 +9,26 @@ import {isNodejsEnv} from '../../config/verifyEnv.js';
 let crypto;
 let EventEmitter;
 
-/*
- * ...existing code...
- * Remove build-time imports that break Angular bundling — resolve Node-only modules at runtime
- * ...existing code...
- */
-try {
+// Load Node.js modules at module load time
+if (isNodejsEnv()) {
 
-    if (isNodejsEnv()) {
+    const loadModules = async () => {
 
-        // Try to obtain CommonJS require at runtime (avoids static bundler resolution in Angular)
-        try {
+        crypto = await import('crypto');
+        const eventsModule = await import('events');
 
-            // This will succeed in Node CommonJS contexts; in ESM it will throw
-            // eslint-disable-next-line no-new-func
-            const req = Function('return require')();
-            const nodeCrypto = req('crypto');
-            const events = req('events');
+        // eslint-disable-next-line prefer-destructuring
+        EventEmitter = eventsModule.EventEmitter;
 
-            crypto = nodeCrypto;
-            EventEmitter = events.EventEmitter;
+    };
 
-        } catch (e) {
+    (async () => {
 
-            /*
-             * Fallbacks for Node ESM or other runtimes:
-             * Don't perform top-level await/import here to avoid Angular build issues.
-             * Defer resolution to runtime call sites (see platformCrypto randomBytes implementation).
-             */
-            crypto = undefined;
-            EventEmitter = undefined;
+        await loadModules();
 
-        }
-
-    }
-
-} catch (e) {
-
-    // Keep safe if environment checks throw
-    crypto = undefined;
-    EventEmitter = undefined;
+    })();
 
 }
-// ...existing code...
-
 class EventEmitterDummy {
 
     // eslint-disable-next-line no-useless-constructor
@@ -89,53 +62,7 @@ function platformCrypto () {
 
     if (isNodejsEnv()) {
 
-        /*
-         * Return an object that uses the Node crypto when available synchronously,
-         * otherwise attempts safe fallbacks (webcrypto or runtime require).
-         */
-        return {
-            "randomBytes": (size) => {
-
-                // Prefer already-resolved crypto module
-                if (crypto && typeof crypto.randomBytes === 'function') {
-
-                    return crypto.randomBytes(size);
-
-                }
-
-                // Try CommonJS require at call time (avoids bundler static analysis)
-                try {
-
-                    // eslint-disable-next-line no-new-func
-                    const req = Function('return require')();
-                    const nodeCrypto = req('crypto');
-
-
-                    return nodeCrypto.randomBytes(size);
-
-                } catch (e) {
-
-                    // Try Web Crypto (Node >= 15 / browsers)
-                    if (globalThis && globalThis.crypto && typeof globalThis.crypto.getRandomValues === 'function') {
-
-                        const array = new Uint8Array(size);
-
-                        globalThis.crypto.getRandomValues(array);
-                        if (typeof Buffer !== 'undefined' && typeof Buffer.from === 'function') {
-
-                            return Buffer.from(array);
-
-                        }
-
-                        return array;
-
-                    }
-                    throw new Error('No secure random source available');
-
-                }
-
-            }
-        };
+        return crypto;
 
     }
 
@@ -144,27 +71,9 @@ function platformCrypto () {
 
             const array = new Uint8Array(size);
 
-            if (typeof globalThis !== 'undefined' && globalThis.crypto && typeof globalThis.crypto.getRandomValues === 'function') {
+            window.crypto.getRandomValues(array);
 
-                globalThis.crypto.getRandomValues(array);
-
-            } else if (typeof window !== 'undefined' && window.crypto && typeof window.crypto.getRandomValues === 'function') {
-
-                window.crypto.getRandomValues(array);
-
-            } else {
-
-                throw new Error('No secure random source available');
-
-            }
-
-            if (typeof Buffer !== 'undefined' && typeof Buffer.from === 'function') {
-
-                return Buffer.from(array);
-
-            }
-
-            return array;
+            return Buffer.from(array);
 
         }
     };
@@ -191,32 +100,12 @@ function platformEmitEvent () {
 
     if (isNodejsEnv()) {
 
-        // If EventEmitter wasn't resolved earlier, try to require at runtime
-        if (EventEmitter) {
-
-            return EventEmitter;
-
-        }
-        try {
-
-            // eslint-disable-next-line no-new-func
-            const req = Function('return require')();
-            const events = req('events');
-
-
-            return events.EventEmitter;
-
-        } catch (e) {
-
-            return EventEmitterDummy;
-
-        }
+        return EventEmitter;
 
     }
 
     return EventEmitterDummy;
 
 }
-// ...existing code...
 
 export {platformCrypto, platformEmitEvent};

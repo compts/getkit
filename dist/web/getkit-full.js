@@ -1599,6 +1599,7 @@ function RequestsWsDummy (api, subMethod) {
     };
     this.received = () => {
 
+        // eslint-disable-next-line consistent-this
         const main = this;
 
         subMethod.onmessage(function (data) {
@@ -2014,18 +2015,16 @@ gtk.initWs=function (config) {
  * // => Promise<any>
  */
 
+gtk.importScript=function (url, config) {
+
     if (typeof document !== "undefined") {
 
-        await amdLocal(url, config);
-
-        return;
+        return amdLocal(url, config);
 
     }
 
     throw new Error("This is supported only in browser, but we are working nodejs compability");
 
 };
-
-gtk.async function (url, config) {=async function (url, config) {
 
 })(typeof window !== "undefined" ? window : this);
