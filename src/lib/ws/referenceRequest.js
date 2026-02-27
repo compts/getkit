@@ -93,7 +93,7 @@ function requestWSApi (config) {
 /**
  * To initiate what environment to use, if nodejs or browser
  *
- * @since 0.5.0
+ * @since 0.6.0
  * @category environment
  * @param {any} api The api details.
  * @param {any} config The config details.

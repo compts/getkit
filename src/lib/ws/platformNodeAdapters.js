@@ -4,8 +4,6 @@
 /* eslint-disable global-require */
 
 const {isNodejsEnv} = require('../../config/verifyEnv');
-const crypto = require('crypto');
-const {EventEmitter} = require('events');
 
 class EventEmitterDummy {
 
@@ -20,29 +18,74 @@ class EventEmitterDummy {
 
 }
 
+/**
+ * To initiate what environment to use, if nodejs or browser
+ *
+ * @since 0.6.0
+ * @category environment
+ * @param {any} api The api details.
+ * @param {any} config The config details.
+ * @param {any} subMethod The subconfig details.
+ * @param {any} path The path details.
+ * @param {any} method The method details.
+ * @returns {any} Returns the class.
+ * @example
+ *
+ * loaderApi(api, config, subconfig, "/path", "get")
+ * // => <class>
+ */
 function platformCrypto () {
 
-    return isNodejsEnv()
-        ? crypto
-        : {
-            "randomBytes": (size) => {
+    if (isNodejsEnv()) {
 
-                const array = new Uint8Array(size);
+        const crypto = require('crypto');
 
-                window.crypto.getRandomValues(array);
+        return crypto;
 
-                return Buffer.from(array);
+    }
 
-            }
-        };
+    return {
+        "randomBytes": (size) => {
+
+            const array = new Uint8Array(size);
+
+            window.crypto.getRandomValues(array);
+
+            return Buffer.from(array);
+
+        }
+    };
 
 }
 
+
+/**
+ * To initiate what environment to use, if nodejs or browser
+ *
+ * @since 0.6.0
+ * @category environment
+ * @param {any} api The api details.
+ * @param {any} config The config details.
+ * @param {any} subMethod The subconfig details.
+ * @param {any} path The path details.
+ * @param {any} method The method details.
+ * @returns {any} Returns the class.
+ * @example
+ *
+ * loaderApi(api, config, subconfig, "/path", "get")
+ * // => <class>
+ */
 function platformEmitEvent () {
 
-    return isNodejsEnv()
-        ? EventEmitter
-        : EventEmitterDummy;
+    if (isNodejsEnv()) {
+
+        const {EventEmitter} = require('events');
+
+        return EventEmitter;
+
+    }
+
+    return EventEmitterDummy;
 
 }
 
