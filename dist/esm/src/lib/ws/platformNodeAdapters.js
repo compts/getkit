@@ -12,21 +12,14 @@ let EventEmitter;
 // Load Node.js modules at module load time
 if (isNodejsEnv()) {
 
-    const loadModules = async () => {
+    // Top-level await works in ESM — ensures modules are loaded before use
+    const cryptoModule = import('crypto');
 
-        crypto = await import('crypto');
-        const eventsModule = await import('events');
+    crypto = cryptoModule;
+    const eventsModule = import('events');
 
-        // eslint-disable-next-line prefer-destructuring
-        EventEmitter = eventsModule.EventEmitter;
-
-    };
-
-    (async () => {
-
-        await loadModules();
-
-    })();
+    // eslint-disable-next-line prefer-destructuring
+    EventEmitter = eventsModule.EventEmitter;
 
 }
 class EventEmitterDummy {
